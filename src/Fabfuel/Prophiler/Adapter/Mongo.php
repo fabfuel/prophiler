@@ -8,6 +8,6 @@ namespace Fabfuel\Prophiler\Adapter;
 use Fabfuel\Prophiler\Profiler;
 use Mongo\Profiler\ProfilerInterface;
 
-class MongoProfiler extends Profiler implements ProfilerInterface
+class Mongo extends Profiler implements ProfilerInterface
 {
 }
