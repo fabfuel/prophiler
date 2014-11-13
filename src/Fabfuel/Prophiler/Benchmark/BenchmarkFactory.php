@@ -10,7 +10,7 @@ class BenchmarkFactory
     /**
      * @param string $name
      * @param array $metadata
-     * @return Benchmark
+     * @return BenchmarkInterface
      */
     public static function getBenchmark($name, $metadata = [])
     {

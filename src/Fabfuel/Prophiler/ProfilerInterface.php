@@ -27,7 +27,7 @@ interface ProfilerInterface
     /**
      * Get the total number of elapsed time in milliseconds
      *
-     * @return float Total number of elapsed milliseconds
+     * @return double Total number of elapsed milliseconds
      */
     public function getDuration();
 }

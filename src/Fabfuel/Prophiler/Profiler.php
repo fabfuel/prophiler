@@ -26,7 +26,7 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function __construct()
     {
-        $this->start = microtime(true);
+        $this->start = (double)microtime(true);
     }
 
     /**
@@ -69,9 +69,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * Get the total number of elapsed time in milliseconds
+     * Get the total number of benchmarks
      *
-     * @return float Total number of elapsed milliseconds
+     * @return int Total number of benchmarks
      */
     public function count()
     {
@@ -81,7 +81,7 @@ class Profiler implements ProfilerInterface, \Countable
     /**
      * Get the total number of elapsed time in milliseconds
      *
-     * @return float Total number of elapsed milliseconds
+     * @return double Total number of elapsed milliseconds
      */
     public function getDuration()
     {
