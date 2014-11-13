@@ -15,8 +15,15 @@
         }
     },
     "require-dev": {
+        "fabfuel/mongo": "0.*",
         "phpunit/phpunit": "4.*",
         "phpmd/phpmd": "1.*",
         "squizlabs/php_codesniffer": "1.*"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://composer.orangecloud.de"
+        }
+    ]
 }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5e8fb39c66f71df45366895254db181",
+    "hash": "9911c2eedbe465af0a5dcf70fe228d01",
     "packages": [],
     "packages-dev": [
         {
@@ -60,6 +60,88 @@
                 "instantiate"
             ],
             "time": "2014-10-13 12:58:55"
+        },
+        {
+            "name": "fabfuel/mongo",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:fabfuel/mongo.git",
+                "reference": "f5872a70ea40c56e885e1cd8c66456ebf88c9952"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://composer.orangecloud.de/dist/fabfuel-mongo-0.3.0-266831.tar",
+                "reference": "f5872a70ea40c56e885e1cd8c66456ebf88c9952",
+                "shasum": "750315da3676af9386a5e8ae3795cef36f9c2b72"
+            },
+            "require": {
+                "ext-mongo": "1.*",
+                "orangecloud/php-helper-array": "1.*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "covex-nn/phpcb": "1.0.4.*",
+                "pdepend/pdepend": "1.1.*",
+                "phploc/phploc": "2.0.*",
+                "phpmd/phpmd": "1.5.*",
+                "phpunit/phpunit": "3.*",
+                "sebastian/phpcpd": "1.4.*",
+                "squizlabs/php_codesniffer": "1.5.*",
+                "theseer/phpdox": "0.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mongo\\": "src/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Fuelling",
+                    "email": "fabian@fabfuel.de"
+                }
+            ],
+            "description": "MongoDB Document Mapper",
+            "time": "2014-10-29 06:46:01"
+        },
+        {
+            "name": "orangecloud/php-helper-array",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:orangecloud/php-helper-array",
+                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://composer.orangecloud.de/dist/orangecloud-php-helper-array-1.3.0-8b90cd.tar",
+                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16",
+                "shasum": "858c940ae4dcbef42aa54a64c6bbe12bdb90e6ff"
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "OC\\Util\\": "src/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Fülling",
+                    "email": "fabian@fabfuel.de"
+                }
+            ],
+            "description": "A collection of array helper functions",
+            "time": "2014-06-19 09:07:47"
         },
         {
             "name": "pdepend/pdepend",
