@@ -1,12 +1,22 @@
 {
     "name": "fabfuel/prophiler",
     "description": "Phalcon profiler including dev toolbar",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "license": "proprietary",
     "authors": [
         {
             "name": "Fabian Fuelling",
             "email": "fabian@fabfuel.de"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Fabfuel\\Prophiler\\": "src/Fabfuel/Prophiler/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "phpmd/phpmd": "1.*",
+        "squizlabs/php_codesniffer": "1.*"
+    }
 }
