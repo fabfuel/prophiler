@@ -1,0 +1,14 @@
+#
+# Git normalization
+#
+build/              export-ignore
+tests/              export-ignore
+tools/              export-ignore
+.gitattributes      export-ignore
+.gitignore          export-ignore
+.idea               export-ignore
+
+*.php   text eol=lf diff=php whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
+*.xml   text eol=lf whitespace=blank-at-eol
+*.xsd   text eol=lf whitespace=blank-at-eol
+*.md    text eol=lf
