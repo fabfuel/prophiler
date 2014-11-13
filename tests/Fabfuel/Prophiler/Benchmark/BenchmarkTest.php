@@ -25,12 +25,12 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $name = 'Lorem\Ipsum::foobar';
-        $options = ['lorem' => 'ipsum'];
+        $metadata = ['lorem' => 'ipsum'];
 
-        $benchmark = new Benchmark($name, $options);
+        $benchmark = new Benchmark($name, $metadata);
 
         $this->assertSame($name, $benchmark->getName());
-        $this->assertSame($options, $benchmark->getMetadata());
+        $this->assertSame($metadata, $benchmark->getMetadata());
     }
 
     /**
@@ -46,9 +46,9 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
 
         $benchmark = new Benchmark($name);
 
-        $this->assertSame(0, $benchmark->getEnd());
-        $this->assertSame(0, $benchmark->getStart());
-        $this->assertSame(0, $benchmark->getDuration());
+        $this->assertSame(0.0, $benchmark->getEnd());
+        $this->assertSame(0.0, $benchmark->getStart());
+        $this->assertSame(0.0, $benchmark->getDuration());
 
         $benchmark->start();
         $benchmark->stop();

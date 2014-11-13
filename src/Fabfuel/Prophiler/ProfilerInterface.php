@@ -11,10 +11,10 @@ interface ProfilerInterface
      * Start a new benchmark
      *
      * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
-     * @param array $options Addtional metadata or data
+     * @param array $metadata Addtional metadata or data
      * @return string identifier token
      */
-    public function start($name, array $options = null);
+    public function start($name, array $metadata = []);
 
     /**
      * Stop a running benchmark

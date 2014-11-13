@@ -19,12 +19,12 @@ class Benchmark implements BenchmarkInterface
     /**
      * @var double Starting time
      */
-    protected $start = 0;
+    protected $start = 0.0;
 
     /**
      * @var double Ending time
      */
-    protected $end = 0;
+    protected $end = 0.0;
 
     /**
      * @var array Custom metadata regarding this benchmark
@@ -33,12 +33,12 @@ class Benchmark implements BenchmarkInterface
 
     /**
      * @param string $name
-     * @param array $options
+     * @param array $metadata
      */
-    public function __construct($name, array $options = null)
+    public function __construct($name, array $metadata = [])
     {
         $this->setName($name);
-        $this->setMetadata($options);
+        $this->setMetadata($metadata);
     }
 
     /**
@@ -48,7 +48,7 @@ class Benchmark implements BenchmarkInterface
      */
     public function start()
     {
-        $this->start = microtime(true);
+        $this->start = (double)microtime(true);
     }
 
     /**
@@ -58,7 +58,7 @@ class Benchmark implements BenchmarkInterface
      */
     public function stop()
     {
-        $this->end = microtime(true);
+        $this->end = (double)microtime(true);
     }
 
     /**
@@ -110,10 +110,10 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @param array $options
+     * @param array $metadata
      */
-    public function setMetadata($options)
+    public function setMetadata($metadata)
     {
-        $this->metadata = $options;
+        $this->metadata = $metadata;
     }
 }
