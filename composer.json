@@ -1,0 +1,12 @@
+{
+    "name": "fabfuel/prophiler",
+    "description": "Phalcon profiler including dev toolbar",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Fabian Fuelling",
+            "email": "fabian@fabfuel.de"
+        }
+    ]
+}
