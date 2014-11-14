@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f812c7cde7bd8e99a1da73afb1ae08b8",
+    "hash": "a8c3e3e6a98c6b8ff0157e9604cdc969",
     "packages": [],
     "packages-dev": [
         {
@@ -65,9 +65,15 @@
             "name": "fabfuel/mongo",
             "version": "dev-feature/profiler-improvements",
             "source": {
-                "type": "git",
-                "url": "git@bitbucket.org:fabfuel/mongo.git",
+                "type": "hg",
+                "url": "https://bitbucket.org/fabfuel/mongo",
                 "reference": "c1f104e110c4d1a2255d0e6f457011713cdc258d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/fabfuel/mongo/get/c1f104e110c4d1a2255d0e6f457011713cdc258d.zip",
+                "reference": "c1f104e110c4d1a2255d0e6f457011713cdc258d",
+                "shasum": ""
             },
             "require": {
                 "ext-mongo": "1.*",
@@ -101,21 +107,21 @@
                 }
             ],
             "description": "MongoDB Document Mapper",
-            "time": "2014-11-13 19:53:02"
+            "time": "2014-11-13 20:53:02"
         },
         {
             "name": "orangecloud/php-helper-array",
             "version": "1.3.0",
             "source": {
-                "type": "git",
-                "url": "git@bitbucket.org:orangecloud/php-helper-array",
-                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16"
+                "type": "hg",
+                "url": "https://bitbucket.org/orangecloud/php-helper-array",
+                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://composer.orangecloud.de/dist/orangecloud-php-helper-array-1.3.0-8b90cd.tar",
-                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16",
-                "shasum": "858c940ae4dcbef42aa54a64c6bbe12bdb90e6ff"
+                "type": "zip",
+                "url": "https://bitbucket.org/orangecloud/php-helper-array/get/0dd1432de6ef2d6335f710f28d50a2420777859c.zip",
+                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3"
@@ -136,7 +142,7 @@
                 }
             ],
             "description": "A collection of array helper functions",
-            "time": "2014-06-19 09:07:47"
+            "time": "2014-06-19 11:07:47"
         },
         {
             "name": "pdepend/pdepend",

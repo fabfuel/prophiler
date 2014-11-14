@@ -15,7 +15,7 @@
         }
     },
     "require-dev": {
-        "fabfuel/mongo": "dev-feature/profiler-improvements",
+        "fabfuel/mongo": "dev-feature/profiler-improvements@dev",
         "phalcon/devtools": "1.3.x-dev",
         "phpunit/phpunit": "4.*",
         "phpmd/phpmd": "1.*",
@@ -25,6 +25,10 @@
         {
             "type": "vcs",
             "url": "https://bitbucket.org/fabfuel/mongo"
+        },
+        {
+            "type": "vcs",
+            "url": "https://bitbucket.org/orangecloud/php-helper-array"
         }
     ]
 }
