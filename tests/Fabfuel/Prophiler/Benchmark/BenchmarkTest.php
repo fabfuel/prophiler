@@ -45,30 +45,53 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getDuration
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStart
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEnd
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStartTime
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEndTime
      */
-    public function testCalculation()
+    public function testTimeCalculation()
     {
         $name = 'Lorem\Ipsum::foobar';
 
         $benchmark = new Benchmark($name);
 
-        $this->assertSame(0.0, $benchmark->getEnd());
-        $this->assertSame(0.0, $benchmark->getStart());
+        $this->assertSame(0.0, $benchmark->getEndTime());
+        $this->assertSame(0.0, $benchmark->getStartTime());
         $this->assertSame(0.0, $benchmark->getDuration());
 
         $benchmark->start();
         $benchmark->stop();
 
-        $this->assertGreaterThan($benchmark->getStart(), microtime(true));
-        $this->assertGreaterThan($benchmark->getEnd(), microtime(true));
-        $this->assertGreaterThan($benchmark->getStart(), $benchmark->getEnd());
+        $this->assertGreaterThan($benchmark->getStartTime(), microtime(true));
+        $this->assertGreaterThan($benchmark->getEndTime(), microtime(true));
+        $this->assertGreaterThan($benchmark->getStartTime(), $benchmark->getEndTime());
 
         $this->assertGreaterThan(0, $benchmark->getDuration());
 
-        $this->assertInternalType('float', $benchmark->getEnd());
-        $this->assertInternalType('float', $benchmark->getStart());
+        $this->assertInternalType('float', $benchmark->getEndTime());
+        $this->assertInternalType('float', $benchmark->getStartTime());
         $this->assertInternalType('float', $benchmark->getDuration());
+    }
+
+    public function testMemoryCalculation()
+    {
+        $name = 'Lorem\Ipsum::foobar';
+
+        $benchmark = new Benchmark($name);
+
+        $benchmark->start();
+        $memoryUsageStart = (double) memory_get_usage();
+
+        $benchmark->stop();
+        $memoryUsageEnd = (double) memory_get_usage();
+        $memoryUsage = $memoryUsageEnd-$memoryUsageStart;
+        $this->assertSame($memoryUsage, $benchmark->getMemoryUsage());
+
+        $this->assertGreaterThan($benchmark->getMemoryUsageStart(), $benchmark->getMemoryUsageEnd());
+
+        $memoryUse = ['lorem' => 'ipsum'];
+        $memoryUse[] = 'foobar';
+
+        $benchmark->stop();
+        $this->assertGreaterThan($memoryUsage, $benchmark->getMemoryUsage());
     }
 }

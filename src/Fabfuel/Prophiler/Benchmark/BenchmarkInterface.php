@@ -47,6 +47,33 @@ interface BenchmarkInterface
     public function getDuration();
 
     /**
+     * @return double Timestamp in microtime
+     */
+    public function getStartTime();
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getEndTime();
+
+    /**
+     * Total elapsed microseconds
+     *
+     * @return string
+     */
+    public function getMemoryUsage();
+
+    /**
+     * @return double Memory usage at benchmark start
+     */
+    public function getMemoryUsageStart();
+
+    /**
+     * @return double Memory usage at benchmark end
+     */
+    public function getMemoryUsageEnd();
+
+    /**
      * Custom metadata regarding this benchmark
      *
      * @return array

@@ -19,12 +19,22 @@ class Benchmark implements BenchmarkInterface
     /**
      * @var double Starting time
      */
-    protected $start = 0.0;
+    protected $startTime = 0.0;
+
+    /**
+     * @var double Starting memory usage
+     */
+    protected $startMemory = 0.0;
 
     /**
      * @var double Ending time
      */
-    protected $end = 0.0;
+    protected $endTime = 0.0;
+
+    /**
+     * @var double Ending memory usage
+     */
+    protected $endMemory = 0.0;
 
     /**
      * @var array Custom metadata regarding this benchmark
@@ -55,7 +65,8 @@ class Benchmark implements BenchmarkInterface
      */
     public function start()
     {
-        $this->start = (double)microtime(true);
+        $this->startTime = (double) microtime(true);
+        $this->startMemory = (double) memory_get_usage();
     }
 
     /**
@@ -65,7 +76,8 @@ class Benchmark implements BenchmarkInterface
      */
     public function stop()
     {
-        $this->end = (double)microtime(true);
+        $this->endTime = (double) microtime(true);
+        $this->endMemory = (double) memory_get_usage();
     }
 
     /**
@@ -89,23 +101,53 @@ class Benchmark implements BenchmarkInterface
      */
     public function getDuration()
     {
-        return $this->getEnd() - $this->getStart();
+        return $this->endTime - $this->startTime;
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsage()
+    {
+        return $this->endMemory - $this->startMemory;
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsageStart()
+    {
+        return $this->startMemory;
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsageEnd()
+    {
+        return $this->endMemory;
     }
 
     /**
      * @return double Timestamp in microtime
      */
-    public function getEnd()
+    public function getEndTime()
     {
-        return $this->end;
+        return $this->endTime;
     }
 
     /**
      * @return double Timestamp in microtime
      */
-    public function getStart()
+    public function getStartTime()
     {
-        return $this->start;
+        return $this->startTime;
     }
 
     /**
