@@ -5,7 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Adapter;
 
-use Mongo\Profiler\ProfilerInterface;
+use Fabfuel\Prophiler\ProfilerInterface;
 
 abstract class AdapterAbstract
 {
