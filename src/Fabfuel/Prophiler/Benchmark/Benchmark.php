@@ -32,13 +32,20 @@ class Benchmark implements BenchmarkInterface
     protected $metadata = [];
 
     /**
-     * @param string $name
-     * @param array $metadata
+     * @var string
      */
-    public function __construct($name, array $metadata = [])
+    protected $component;
+
+    /**
+     * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
+     * @param array $metadata Additional metadata
+     * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
+     */
+    public function __construct($name, array $metadata = [], $component = null)
     {
         $this->setName($name);
         $this->setMetadata($metadata);
+        $this->setComponent($component);
     }
 
     /**
@@ -115,5 +122,21 @@ class Benchmark implements BenchmarkInterface
     public function setMetadata($metadata)
     {
         $this->metadata = $metadata;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComponent()
+    {
+        return $this->component;
+    }
+
+    /**
+     * @param string $component
+     */
+    public function setComponent($component)
+    {
+        $this->component = $component;
     }
 }

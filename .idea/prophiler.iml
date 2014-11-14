@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/fabfuel/mongo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pdepend/pdepend" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpmd/phpmd" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
@@ -53,6 +54,7 @@
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
           <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
@@ -75,6 +77,7 @@
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
           <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />

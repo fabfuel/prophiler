@@ -30,7 +30,7 @@ class Mongo extends AdapterAbstract implements ProfilerInterface
      */
     public function start($name, array $metadata = [])
     {
-        return $this->getProfiler()->start($name, $metadata);
+        return $this->getProfiler()->start($name, $metadata, 'MongoDB');
     }
 
     /**

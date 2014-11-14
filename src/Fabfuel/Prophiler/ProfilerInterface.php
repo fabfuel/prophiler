@@ -12,9 +12,10 @@ interface ProfilerInterface
      *
      * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
      * @param array $metadata Addtional metadata or data
+     * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
      * @return string identifier token
      */
-    public function start($name, array $metadata = []);
+    public function start($name, array $metadata = [], $component = null);
 
     /**
      * Stop a running benchmark

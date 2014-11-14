@@ -19,6 +19,13 @@ interface BenchmarkInterface
     public function getName();
 
     /**
+     * Name of the component which triggered the benchmark, e.g. "App", "Database"
+     *
+     * @return string
+     */
+    public function getComponent();
+
+    /**
      * Start the benchmark
      *
      * @return void

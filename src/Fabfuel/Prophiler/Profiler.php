@@ -34,11 +34,12 @@ class Profiler implements ProfilerInterface, \Countable
      *
      * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
      * @param array $metadata Additional metadata
+     * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
      * @return string Benchmark identifier token
      */
-    public function start($name, array $metadata = [])
+    public function start($name, array $metadata = [], $component = null)
     {
-        $benchmark = BenchmarkFactory::getBenchmark($name, $metadata);
+        $benchmark = BenchmarkFactory::getBenchmark($name, $metadata, $component);
         $benchmark->start();
         return $this->addBenchmark($benchmark);
     }
