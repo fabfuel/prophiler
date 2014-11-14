@@ -31,14 +31,14 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/pdepend/pdepend/src/site/rst/static_reflection/releases/staticReflection-0.1.1.phar" />
+          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/pdepend/pdepend/src/site/rst/static_reflection/releases/staticReflection-0.1.1.phar" />
+          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
         </SOURCES>
       </library>
     </orderEntry>

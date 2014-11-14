@@ -23,8 +23,8 @@
     },
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://composer.orangecloud.de"
+            "type": "vcs",
+            "url": "https://bitbucket.org/fabfuel/mongo"
         }
     ]
 }
