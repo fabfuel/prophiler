@@ -15,7 +15,7 @@
         }
     },
     "require-dev": {
-        "fabfuel/mongo": "0.*",
+        "fabfuel/mongo": "dev-feature/profiler-improvements",
         "phpunit/phpunit": "4.*",
         "phpmd/phpmd": "1.*",
         "squizlabs/php_codesniffer": "1.*"

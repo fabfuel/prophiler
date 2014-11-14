@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9911c2eedbe465af0a5dcf70fe228d01",
+    "hash": "f7467955130b00e893a7bb9972b9165f",
     "packages": [],
     "packages-dev": [
         {
@@ -63,17 +63,11 @@
         },
         {
             "name": "fabfuel/mongo",
-            "version": "0.3.0",
+            "version": "dev-feature/profiler-improvements",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:fabfuel/mongo.git",
-                "reference": "f5872a70ea40c56e885e1cd8c66456ebf88c9952"
-            },
-            "dist": {
-                "type": "tar",
-                "url": "http://composer.orangecloud.de/dist/fabfuel-mongo-0.3.0-266831.tar",
-                "reference": "f5872a70ea40c56e885e1cd8c66456ebf88c9952",
-                "shasum": "750315da3676af9386a5e8ae3795cef36f9c2b72"
+                "reference": "c1f104e110c4d1a2255d0e6f457011713cdc258d"
             },
             "require": {
                 "ext-mongo": "1.*",
@@ -92,8 +86,9 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Mongo\\": "src/"
+                "psr-4": {
+                    "Mongo\\": "src/",
+                    "Mongo\\Test\\": "tests/"
                 }
             },
             "license": [
@@ -106,7 +101,7 @@
                 }
             ],
             "description": "MongoDB Document Mapper",
-            "time": "2014-10-29 06:46:01"
+            "time": "2014-11-13 19:53:02"
         },
         {
             "name": "orangecloud/php-helper-array",
@@ -980,7 +975,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "fabfuel/mongo": 20
+    },
     "prefer-stable": false,
     "platform": [],
     "platform-dev": []
