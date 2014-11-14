@@ -41,6 +41,6 @@ class Mongo extends AdapterAbstract implements ProfilerInterface
      */
     public function stop($token)
     {
-        $this->getProfiler()->start($token);
+        $this->getProfiler()->stop($token);
     }
 }
