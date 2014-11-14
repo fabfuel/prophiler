@@ -16,7 +16,7 @@ abstract class AdapterAbstract
 
     public function __construct(ProfilerInterface $profiler)
     {
-        $this->profiler = $profiler;
+        $this->setProfiler($profiler);
     }
 
     /**

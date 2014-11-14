@@ -29,9 +29,12 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Profiler::__construct
      * @covers Fabfuel\Prophiler\Profiler::count
      * @covers Fabfuel\Prophiler\Profiler::addBenchmark
      * @covers Fabfuel\Prophiler\Profiler::getBenchmarks
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
     public function testAddAndCountBenchmarks()
     {
@@ -58,7 +61,13 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Profiler::__construct
+     * @covers Fabfuel\Prophiler\Profiler::addBenchmark
+     * @covers Fabfuel\Prophiler\Profiler::getBenchmarks
+     * @covers Fabfuel\Prophiler\Profiler::count
      * @covers Fabfuel\Prophiler\Profiler::start
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
     public function testStart()
     {
@@ -78,8 +87,13 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Profiler::__construct
+     * @covers Fabfuel\Prophiler\Profiler::addBenchmark
+     * @covers Fabfuel\Prophiler\Profiler::getBenchmarks
      * @covers Fabfuel\Prophiler\Profiler::start
      * @covers Fabfuel\Prophiler\Profiler::stop
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
     public function testStop()
     {

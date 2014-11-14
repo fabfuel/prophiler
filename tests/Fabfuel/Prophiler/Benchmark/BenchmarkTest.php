@@ -38,6 +38,10 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::__construct
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setName
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setMetadata
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setComponent
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getDuration
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
