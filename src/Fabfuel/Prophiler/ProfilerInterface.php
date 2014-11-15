@@ -21,9 +21,10 @@ interface ProfilerInterface
      * Stop a running benchmark
      *
      * @param string $token benchmark identifier
+     * @param array $metadata Addtional metadata or data
      * @return void
      */
-    public function stop($token);
+    public function stop($token, array $metadata = []);
 
     /**
      * Get the total number of elapsed time in milliseconds

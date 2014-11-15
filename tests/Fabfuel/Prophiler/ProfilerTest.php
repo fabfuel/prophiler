@@ -98,18 +98,24 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     public function testStop()
     {
         $name = 'foobar';
-        $metadata = ['lorem' => 'ipsum'];
+        $metadataStart = ['lorem' => 'ipsum'];
+        $metadataStop = ['additional' => 'stop'];
 
-        $token = $this->profiler->start($name, $metadata);
+        $token = $this->profiler->start($name, $metadataStart);
         $benchmarks = $this->profiler->getBenchmarks();
         $benchmark = $benchmarks[$token];
 
+        $this->assertSame($metadataStart, $benchmark->getMetadata());
+
         $this->assertLessThan(0, $benchmark->getDuration());
-        $this->profiler->stop($token);
+        $this->profiler->stop($token, $metadataStop);
         $this->assertGreaterThan(0, $benchmark->getDuration());
 
         $duration = $benchmark->getDuration();
         $this->assertSame($duration, $benchmark->getDuration());
+
+        $this->assertArrayHasKey('additional', $benchmark->getMetadata());
+        $this->assertSame(array_merge($metadataStart, $metadataStop), $benchmark->getMetadata());
     }
 
     /**

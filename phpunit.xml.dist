@@ -12,6 +12,12 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
     <logging>
         <log type="coverage-html" target="build/coverage" title="Prophiler - A Phalcon profiler and dev toolbar"
              charset="UTF-8" yui="true" highlight="true"

@@ -7,6 +7,7 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
 use Fabfuel\Prophiler\ProfilerInterface;
 use Phalcon\DI\Injectable;
+use Phalcon\Events\Event;
 
 /**
  * Class Dispatcher
@@ -25,17 +26,30 @@ class Dispatcher extends Injectable
      */
     private $tokenRoute;
 
-    public function beforeDispatchLoop()
+    /**
+     * Start dispatch loop benchmark
+     *
+     * @param Event $event
+     */
+    public function beforeDispatchLoop(Event $event)
     {
-        $this->tokenDispatch = $this->profiler->start('Phalcon\Mvc\Dispatcher::dispatchLoop', [], 'Dispatcher');
+        $this->tokenDispatch = $this->profiler->start(get_class($event->getSource()) . '::dispatchLoop', [], 'Dispatcher');
     }
 
+    /**
+     * Stop dispatch loop benchmark
+     */
     public function afterDispatchLoop()
     {
         $this->profiler->stop($this->tokenDispatch);
     }
 
-    public function beforeExecuteRoute()
+    /**
+     * Start execute route benchmark
+     *
+     * @param Event $event
+     */
+    public function beforeExecuteRoute(Event $event)
     {
         $metadata = [
             'module' => $this->router->getModuleName(),
@@ -45,9 +59,12 @@ class Dispatcher extends Injectable
             'class' => get_class($this->dispatcher->getActiveController()),
         ];
 
-        $this->tokenRoute = $this->profiler->start('Phalcon\Mvc\Dispatcher::executeRoute', $metadata, 'Dispatcher');
+        $this->tokenRoute = $this->profiler->start(get_class($event->getSource()) . '::executeRoute', $metadata, 'Dispatcher');
     }
 
+    /**
+     * Stop dispatch loop benchmark
+     */
     public function afterExecuteRoute()
     {
         $this->profiler->stop($this->tokenRoute);

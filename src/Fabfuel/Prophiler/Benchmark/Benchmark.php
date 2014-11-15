@@ -54,7 +54,7 @@ class Benchmark implements BenchmarkInterface
     public function __construct($name, array $metadata = [], $component = null)
     {
         $this->setName($name);
-        $this->setMetadata($metadata);
+        $this->addMetadata($metadata);
         $this->setComponent($component);
     }
 
@@ -159,11 +159,13 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @param array $metadata
+     * Add interesting metadata to the benchmark
+     *
+     * @param array $metadata Additional metadata
      */
-    public function setMetadata($metadata)
+    public function addMetadata(array $metadata)
     {
-        $this->metadata = $metadata;
+        $this->metadata = array_merge($this->metadata, $metadata);
     }
 
     /**

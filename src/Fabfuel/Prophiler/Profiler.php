@@ -48,13 +48,15 @@ class Profiler implements ProfilerInterface, \Countable
      * Stop a running benchmark
      *
      * @param string $token Benchmark identifier
+     * @param array $metadata Additional metadata
      * @throws UnknownBenchmarkException
      */
-    public function stop($token)
+    public function stop($token, array $metadata = [])
     {
         if (!isset($this->benchmarks[$token])) {
             throw new UnknownBenchmarkException('Undefined benchmark: ' . $token);
         }
+        $this->benchmarks[$token]->addMetadata($metadata);
         $this->benchmarks[$token]->stop();
     }
 

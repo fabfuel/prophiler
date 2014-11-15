@@ -44,8 +44,16 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             ->method('stop')
             ->with($token);
 
-        $this->dispatcherPlugin->beforeDispatchLoop();
-        $this->dispatcherPlugin->afterDispatchLoop();
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $event->expects($this->exactly(1))
+            ->method('getSource')
+            ->willReturn(new \Phalcon\Mvc\Dispatcher);
+
+        $this->dispatcherPlugin->beforeDispatchLoop($event);
+        $this->dispatcherPlugin->afterDispatchLoop($event);
     }
 
     public function testExecuteRoute()
@@ -95,7 +103,15 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             ->method('stop')
             ->with($token);
 
-        $this->dispatcherPlugin->beforeExecuteRoute();
-        $this->dispatcherPlugin->afterExecuteRoute();
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $event->expects($this->exactly(1))
+            ->method('getSource')
+            ->willReturn(new \Phalcon\Mvc\Dispatcher);
+
+        $this->dispatcherPlugin->beforeExecuteRoute($event);
+        $this->dispatcherPlugin->afterExecuteRoute($event);
     }
 }
