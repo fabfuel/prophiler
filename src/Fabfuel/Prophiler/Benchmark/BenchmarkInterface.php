@@ -43,6 +43,7 @@ interface BenchmarkInterface
      * Add interesting metadata to the benchmark
      *
      * @param array $metadata Additional metadata
+     * @return void
      */
     public function addMetadata(array $metadata);
 
