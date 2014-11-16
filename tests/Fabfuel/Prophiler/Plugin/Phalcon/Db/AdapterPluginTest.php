@@ -9,7 +9,7 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 use Fabfuel\Prophiler\Profiler;
 use Phalcon\DI;
 
-class AdapterTest extends \PHPUnit_Framework_TestCase
+class AdapterPluginTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var View
@@ -23,12 +23,8 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        DI::setDefault(new DI\FactoryDefault());
-
-        $this->adapter = new Adapter();
-
         $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        DI::getDefault()->set('profiler', $this->profiler, true);
+        $this->adapter = new AdapterPlugin($this->profiler);
     }
 
     public function testQuery()

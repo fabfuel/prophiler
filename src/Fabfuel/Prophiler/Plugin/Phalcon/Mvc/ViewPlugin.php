@@ -5,17 +5,15 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\ProfilerInterface;
-use Phalcon\DI\Injectable;
+use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\ViewInterface;
 
 /**
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
- * @property ProfilerInterface $profiler
  */
-class View extends Injectable
+class ViewPlugin extends PluginAbstract
 {
     /**
      * @var string
@@ -42,12 +40,12 @@ class View extends Injectable
      */
     public function beforeRenderView(Event $event, ViewInterface $view)
     {
+        $name = get_class($event->getSource()) . '::render';
         $metadata = [
             'view' => $view->getActiveRenderPath(),
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
-        $name = get_class($event->getSource()) . '::render: ' . $this->getRenderLevel($view->getCurrentRenderLevel());
-        $this->token = $this->profiler->start($name, $metadata, 'View');
+        $this->token = $this->getProfiler()->start($name, $metadata, 'View');
     }
 
     /**
@@ -55,7 +53,7 @@ class View extends Injectable
      */
     public function afterRenderView()
     {
-        $this->profiler->stop($this->token);
+        $this->getProfiler()->stop($this->token);
     }
 
     /**

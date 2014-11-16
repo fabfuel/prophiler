@@ -8,11 +8,12 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
 use Fabfuel\Prophiler\Profiler;
 use Phalcon\DI;
+use Phalcon\Mvc\DispatcherInterface;
 
-class DispatcherTest extends \PHPUnit_Framework_TestCase
+class DispatcherPluginTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Dispatcher
+     * @var DispatcherPlugin
      */
     protected $dispatcherPlugin;
 
@@ -21,17 +22,19 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     protected $profiler;
 
+    /**
+     * @var DispatcherInterface
+     */
+    protected $dispatcher;
+
     public function setUp()
     {
-        DI::setDefault(new DI\FactoryDefault());
-
-        $this->dispatcherPlugin = new Dispatcher();
-
         $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        DI::getDefault()->set('profiler', $this->profiler, true);
+        $this->dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
+        $this->dispatcherPlugin = new DispatcherPlugin($this->profiler, $this->dispatcher);
     }
 
-    public function testDispathLoop()
+    public function testDispatchLoop()
     {
         $token = 'token';
 
@@ -60,39 +63,27 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $token = 'token';
         $metadata = [
-            'module' => 'test-module',
+            'class' => 'stdClass',
             'controller' => 'test-controller',
             'action' => 'test-action',
             'params' => ['test-params' => 'foobar'],
-            'class' => 'stdClass',
         ];
 
-        $router = $this->getMockBuilder('Phalcon\Mvc\Router')->getMock();
-        $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
-
-        DI::getDefault()->set('router', $router, true);
-        DI::getDefault()->set('dispatcher', $dispatcher, true);
-
-        $router->expects($this->once())
-            ->method('getModuleName')
-            ->willReturn('test-module');
-
-        $router->expects($this->once())
+        $this->dispatcher->expects($this->once())
             ->method('getControllerName')
             ->willReturn('test-controller');
 
-        $router->expects($this->once())
+        $this->dispatcher->expects($this->once())
             ->method('getActionName')
             ->willReturn('test-action');
 
-        $router->expects($this->once())
+        $this->dispatcher->expects($this->once())
             ->method('getParams')
             ->willReturn(['test-params' => 'foobar']);
 
-        $dispatcher->expects($this->once())
+        $this->dispatcher->expects($this->once())
             ->method('getActiveController')
             ->willReturn(new \stdClass);
-
 
         $this->profiler->expects($this->once())
             ->method('start')

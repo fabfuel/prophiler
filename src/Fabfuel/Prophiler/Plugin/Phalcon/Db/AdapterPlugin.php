@@ -5,17 +5,15 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 
-use Fabfuel\Prophiler\ProfilerInterface;
-use Phalcon\DI\Injectable;
+use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
-use Phalcon\Db\Adapter as DbAdapter;
+use Phalcon\Db\Adapter;
 
 /**
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
- * @property ProfilerInterface $profiler
  */
-class Adapter extends Injectable
+class AdapterPlugin extends PluginAbstract
 {
     /**
      * @var string
@@ -26,15 +24,15 @@ class Adapter extends Injectable
      * Start the query benchmark
      *
      * @param Event $event
-     * @param DbAdapter $database
+     * @param Adapter $database
      */
-    public function beforeQuery(Event $event, DbAdapter $database)
+    public function beforeQuery(Event $event, Adapter $database)
     {
         $metadata = [
             'query' => $database->getSQLStatement()
         ];
 
-        $this->token = $this->profiler->start(get_class($event->getSource()) . '::query', $metadata, 'Database');
+        $this->token = $this->getProfiler()->start(get_class($event->getSource()) . '::query', $metadata, 'Database');
     }
 
     /**
@@ -42,6 +40,6 @@ class Adapter extends Injectable
      */
     public function afterQuery()
     {
-        $this->profiler->stop($this->token);
+        $this->getProfiler()->stop($this->token);
     }
 }

@@ -9,10 +9,10 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 use Fabfuel\Prophiler\Profiler;
 use Phalcon\DI;
 
-class ViewTest extends \PHPUnit_Framework_TestCase
+class ViewPluginTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var View
+     * @var ViewPlugin
      */
     protected $viewPlugin;
 
@@ -23,12 +23,8 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        DI::setDefault(new DI\FactoryDefault());
-
-        $this->viewPlugin = new View();
-
         $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        DI::getDefault()->set('profiler', $this->profiler, true);
+        $this->viewPlugin = new ViewPlugin($this->profiler);
     }
 
     public function testRenderView()
@@ -43,15 +39,15 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $event->expects($this->exactly(1))
+        $event->expects($this->once())
             ->method('getSource')
             ->willReturn($view);
 
-        $view->expects($this->exactly(2))
+        $view->expects($this->once())
             ->method('getCurrentRenderLevel')
             ->willReturn(1);
 
-        $view->expects($this->exactly(1))
+        $view->expects($this->once())
             ->method('getActiveRenderPath')
             ->willReturn('main');
 
@@ -62,7 +58,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
         $this->profiler->expects($this->once())
             ->method('start')
-            ->with(get_class($view) . '::render: action', $metadata, 'View')
+            ->with(get_class($view) . '::render', $metadata, 'View')
             ->willReturn($token);
 
         $this->profiler->expects($this->once())
