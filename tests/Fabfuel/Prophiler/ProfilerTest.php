@@ -107,9 +107,13 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($metadataStart, $benchmark->getMetadata());
 
-        $this->assertLessThan(0, $benchmark->getDuration());
-        $this->profiler->stop($token, $metadataStop);
+        $duration1 = $benchmark->getDuration();
         $this->assertGreaterThan(0, $benchmark->getDuration());
+
+        $this->profiler->stop($token, $metadataStop);
+        $duration2 = $benchmark->getDuration();
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+        $this->assertGreaterThan($duration1, $duration2);
 
         $duration = $benchmark->getDuration();
         $this->assertSame($duration, $benchmark->getDuration());

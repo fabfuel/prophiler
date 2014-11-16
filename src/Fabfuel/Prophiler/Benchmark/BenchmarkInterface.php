@@ -48,16 +48,12 @@ interface BenchmarkInterface
     public function addMetadata(array $metadata);
 
     /**
-     * Custom metadata regarding this benchmark
-     *
-     * @return array
+     * @return array Custom metadata regarding this benchmark
      */
     public function getMetadata();
 
     /**
-     * Total elapsed microseconds
-     *
-     * @return string
+     * @return double Total elapsed microseconds
      */
     public function getDuration();
 
@@ -72,9 +68,7 @@ interface BenchmarkInterface
     public function getEndTime();
 
     /**
-     * Total elapsed microseconds
-     *
-     * @return string
+     * @return double Total elapsed microseconds
      */
     public function getMemoryUsage();
 

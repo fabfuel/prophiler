@@ -81,27 +81,30 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @return string
+     * @return double Timestamp in microtime
      */
-    public function getName()
+    public function getDuration()
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->getEndTime() - $this->getStartTime();
     }
 
     /**
      * @return double Timestamp in microtime
      */
-    public function getDuration()
+    public function getStartTime()
     {
-        return $this->endTime - $this->startTime;
+        return $this->startTime;
+    }
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getEndTime()
+    {
+        if ($this->endTime < $this->startTime) {
+            $this->endTime = (double) microtime(true);
+        }
+        return $this->endTime;
     }
 
     /**
@@ -111,7 +114,7 @@ class Benchmark implements BenchmarkInterface
      */
     public function getMemoryUsage()
     {
-        return $this->endMemory - $this->startMemory;
+        return $this->getMemoryUsageEnd() - $this->getMemoryUsageStart();
     }
 
     /**
@@ -131,23 +134,26 @@ class Benchmark implements BenchmarkInterface
      */
     public function getMemoryUsageEnd()
     {
+        if ($this->endMemory < $this->startMemory) {
+            $this->endMemory = (double) memory_get_usage();
+        }
         return $this->endMemory;
     }
 
     /**
-     * @return double Timestamp in microtime
+     * @return string
      */
-    public function getEndTime()
+    public function getName()
     {
-        return $this->endTime;
+        return $this->name;
     }
 
     /**
-     * @return double Timestamp in microtime
+     * @param string $name
      */
-    public function getStartTime()
+    public function setName($name)
     {
-        return $this->startTime;
+        $this->name = $name;
     }
 
     /**
@@ -179,7 +185,7 @@ class Benchmark implements BenchmarkInterface
     /**
      * @param string $component
      */
-    public function setComponent($component)
+        public function setComponent($component)
     {
         $this->component = $component;
     }

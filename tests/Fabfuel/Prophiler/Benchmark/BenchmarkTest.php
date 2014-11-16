@@ -15,10 +15,29 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
     protected $benchmark;
 
     /**
+     * @var string $name
+     */
+    protected $name =  'Foobar';
+
+    /**
+     * @var array $metadata
+     */
+    protected $metadata = ['lorem' => 'ipsum'];
+
+    /**
+     * @var string $component
+     */
+    protected $component = 'Lorem Upsum';
+
+    public function setUp()
+    {
+        $this->benchmark = new Benchmark($this->name, $this->metadata, $this->component);
+    }
+
+    /**
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::__construct
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getName
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setName
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getName
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMetadata
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::addMetadata
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getComponent
@@ -26,72 +45,128 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $name = 'Lorem\Ipsum::foobar';
-        $metadata = ['lorem' => 'ipsum'];
-        $component = 'Database';
-
-        $benchmark = new Benchmark($name, $metadata, $component);
-
-        $this->assertSame($name, $benchmark->getName());
-        $this->assertSame($metadata, $benchmark->getMetadata());
-        $this->assertSame($component, $benchmark->getComponent());
+        $this->assertSame($this->name, $this->benchmark->getName());
+        $this->assertSame($this->metadata, $this->benchmark->getMetadata());
+        $this->assertSame($this->component, $this->benchmark->getComponent());
     }
 
     /**
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::__construct
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setName
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::addMetadata
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setComponent
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getDuration
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStartTime
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEndTime
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
-    public function testTimeCalculation()
+    public function testStart()
     {
-        $name = 'Lorem\Ipsum::foobar';
+        $this->assertSame(0.0, $this->benchmark->getStartTime());
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageStart());
 
-        $benchmark = new Benchmark($name);
+        $this->benchmark->start();
 
-        $this->assertSame(0.0, $benchmark->getEndTime());
-        $this->assertSame(0.0, $benchmark->getStartTime());
-        $this->assertSame(0.0, $benchmark->getDuration());
-
-        $benchmark->start();
-        $benchmark->stop();
-
-        $this->assertGreaterThan($benchmark->getStartTime(), microtime(true));
-        $this->assertGreaterThan($benchmark->getEndTime(), microtime(true));
-        $this->assertGreaterThan($benchmark->getStartTime(), $benchmark->getEndTime());
-
-        $this->assertGreaterThan(0, $benchmark->getDuration());
-
-        $this->assertInternalType('float', $benchmark->getEndTime());
-        $this->assertInternalType('float', $benchmark->getStartTime());
-        $this->assertInternalType('float', $benchmark->getDuration());
+        $this->assertGreaterThan(0.0, $this->benchmark->getStartTime());
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageStart());
     }
 
-    public function testMemoryCalculation()
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testStop()
     {
-        $name = 'Lorem\Ipsum::foobar';
+        $this->assertSame(0.0, $this->benchmark->getEndTime());
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
 
-        $benchmark = new Benchmark($name);
+        $this->benchmark->stop();
 
-        $benchmark->start();
-        $memoryUsageStart = (double) memory_get_usage();
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
+    }
 
-        $benchmark->stop();
-        $memoryUsageEnd = (double) memory_get_usage();
-        $memoryUsage = $memoryUsageEnd-$memoryUsageStart;
-        $this->assertSame($memoryUsage, $benchmark->getMemoryUsage());
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getDuration
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetDuration()
+    {
+        $this->assertSame(0.0, $this->benchmark->getDuration());
 
-        $this->assertGreaterThan($benchmark->getMemoryUsageStart(), $benchmark->getMemoryUsageEnd());
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
 
-        $memoryUse = ['lorem' => 'ipsum'];
-        $memoryUse[] = 'foobar';
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
+    }
 
-        $benchmark->stop();
-        $this->assertGreaterThan($memoryUsage, $benchmark->getMemoryUsage());
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStartTime
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetStartTime()
+    {
+        $this->assertSame(0.0, $this->benchmark->getStartTime());
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getStartTime());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEndTime
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetEndTime()
+    {
+        $this->assertSame(0.0, $this->benchmark->getEndTime());
+        $this->benchmark->start();
+
+        // End usage should be set, even if benchmarked not stopped
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
+
+        $firstEndTime = $this->benchmark->getEndTime();
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
+        $this->assertGreaterThan($firstEndTime, $this->benchmark->getEndTime());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsage
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsage()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsage());
+
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsageStart
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsageStart()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageStart());
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageStart());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsageEnd
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsageEnd()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
+        $this->benchmark->start();
+
+        // End usage should be set, even if benchmarked not stopped
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
+
+        $firstMemoryUsage = $this->benchmark->getMemoryUsageEnd();
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
+        $this->assertGreaterThan($firstMemoryUsage, $this->benchmark->getMemoryUsageEnd());
     }
 }
