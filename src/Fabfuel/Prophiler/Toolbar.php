@@ -33,9 +33,9 @@ class Toolbar extends Injectable
      */
     public function register()
     {
-        $this->getEventsManager()->attach('dispatch', new DispatcherPlugin($this->getProfiler(), $this->dispatcher));
-        $this->getEventsManager()->attach('view', new ViewPlugin($this->getProfiler()));
-        $this->getEventsManager()->attach('db', new AdapterPlugin($this->getProfiler()));
+        $this->eventsManager->attach('dispatch', new DispatcherPlugin($this->getProfiler(), $this->dispatcher));
+        $this->eventsManager->attach('view', new ViewPlugin($this->getProfiler()));
+        $this->eventsManager->attach('db', new AdapterPlugin($this->getProfiler()));
 
         return $this;
     }

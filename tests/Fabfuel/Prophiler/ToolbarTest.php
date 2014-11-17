@@ -45,7 +45,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->method('attach');
 
         $toolbar = new Toolbar($profiler);
-        $toolbar->setEventsManager($eventsManager);
+        $toolbar->eventsManager = $eventsManager;
 
         $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
         $toolbar->dispatcher = $dispatcher;
