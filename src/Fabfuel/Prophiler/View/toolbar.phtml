@@ -1,0 +1,59 @@
+<style>
+    body {
+        margin-top: 52px !important;
+    }
+</style>
+
+<div class="toolbar"
+     style="position: fixed; display: block; top: 0; left:0; right: 0; z-index: 10000; background-color: #fff; opacity: 0.95;">
+
+    <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand">Phalcon Dev Toolbar</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">
+                            <?php if ($this->profiler->getDuration() * 1000 < 2): ?>
+                                <span class="label label-success">
+                            <?php elseif ($this->profiler->getDuration() * 1000 < 5): ?>
+                                <span class="label label-warning">
+                            <?php else: ?>
+                                <span class="label label-danger">
+                            <?php endif; ?>
+                                <span class="glyphicon glyphicon-time"></span> <?php printf('%.3f ms ', $this->profiler->getDuration() * 1000) ?>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_usage() / 1024 / 1024) ?></span>
+                        </a>
+                    </li>
+                    <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">Benchmarks</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="panel-group panel-collapse collapse" id="benchmarks" role="tablist" style="margin-top: 5px;">
+        <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
+        <?php foreach ($this->profiler->getBenchmarks() as $benchmark): ?>
+            <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
+            <?php $this->partial('partials/benchmark'); ?>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<script>
+    $('json').each(function (index, el) {
+        el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '\t');
+    });
+</script>
