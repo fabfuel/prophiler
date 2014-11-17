@@ -27,11 +27,15 @@ Add the profiler instance to the DI container, that other plugins and adapters c
 
 #####3. Initialize and register the Toolbar
 
-To visualize the profiling results, you have to initialize the Prophiler Toolbar. This component will take care for rendering all results of the Profiler benchmarks and other data collectors.
+To visualize the profiling results, you have to initialize and render the Prophiler Toolbar. This component will take care for rendering all results of the Profiler benchmarks and other data collectors. The register() method registers the default Plugins in the EventsManager inside your DI container.
 
 	$toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
 	$toolbar->register();
-	
-The register() method registers the Toolbar rendering as shutdown function and also registers the default Plugins in the EventsManager inside your DI container.
 
+The render() method creates the real HTML, CSS and JavaScript output. Put that at the end of your front controller (probably public/index.php)
 
+	$toolbar->render();
+
+To render the toolbar as very last action, you can register it as shutdown function:
+
+    register_shutdown_function([$toolbar, 'render']);

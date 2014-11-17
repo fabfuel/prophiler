@@ -27,25 +27,27 @@ class Toolbar extends Injectable
     }
 
     /**
-     * Register shutdown function to render toolbar on shutdown
+     * Register default plugins to events manager
+     *
+     * @return $this
      */
     public function register()
     {
-        register_shutdown_function([$this, 'renderToolbar']);
+        $this->getEventsManager()->attach('dispatch', new DispatcherPlugin($this->getProfiler(), $this->dispatcher));
+        $this->getEventsManager()->attach('view', new ViewPlugin($this->getProfiler()));
+        $this->getEventsManager()->attach('db', new AdapterPlugin($this->getProfiler()));
 
-        $this->eventsManager->attach('dispatch', new DispatcherPlugin($this->getProfiler(), $this->dispatcher));
-        $this->eventsManager->attach('view', new ViewPlugin($this->getProfiler()));
-        $this->eventsManager->attach('db', new AdapterPlugin($this->getProfiler()));
+        return $this;
     }
 
     /**
      * Render the toolbar
      */
-    public function renderToolbar()
+    public function render()
     {
         $toolbar = new Simple();
         $toolbar->setViewsDir(__DIR__ . '/View/');
-        echo $toolbar->render('toolbar');
+        echo $toolbar->render('toolbar', ['profiler' => $this->getProfiler()]);
     }
 
     /**

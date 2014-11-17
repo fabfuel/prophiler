@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a8c3e3e6a98c6b8ff0157e9604cdc969",
+    "hash": "0d54155287118fa4dda8cf7eb4ea8d73",
     "packages": [],
     "packages-dev": [
         {
@@ -63,16 +63,16 @@
         },
         {
             "name": "fabfuel/mongo",
-            "version": "dev-feature/profiler-improvements",
+            "version": "0.4.0",
             "source": {
-                "type": "hg",
-                "url": "https://bitbucket.org/fabfuel/mongo",
-                "reference": "c1f104e110c4d1a2255d0e6f457011713cdc258d"
+                "type": "git",
+                "url": "https://bitbucket.org/fabfuel/mongo.git",
+                "reference": "bb0351a5ce4bba2319d599a59d08a23b3451c258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/fabfuel/mongo/get/c1f104e110c4d1a2255d0e6f457011713cdc258d.zip",
-                "reference": "c1f104e110c4d1a2255d0e6f457011713cdc258d",
+                "url": "https://bitbucket.org/fabfuel/mongo/get/bb0351a5ce4bba2319d599a59d08a23b3451c258.zip",
+                "reference": "bb0351a5ce4bba2319d599a59d08a23b3451c258",
                 "shasum": ""
             },
             "require": {
@@ -107,14 +107,14 @@
                 }
             ],
             "description": "MongoDB Document Mapper",
-            "time": "2014-11-13 20:53:02"
+            "time": "2014-11-17 14:01:35"
         },
         {
             "name": "orangecloud/php-helper-array",
             "version": "1.3.0",
             "source": {
-                "type": "hg",
-                "url": "https://bitbucket.org/orangecloud/php-helper-array",
+                "type": "git",
+                "url": "https://bitbucket.org/orangecloud/php-helper-array.git",
                 "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c"
             },
             "dist": {
@@ -1026,7 +1026,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fabfuel/mongo": 20,
         "phalcon/devtools": 20
     },
     "prefer-stable": false,
