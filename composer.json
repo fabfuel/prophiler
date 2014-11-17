@@ -2,7 +2,7 @@
     "name": "fabfuel/prophiler",
     "description": "Phalcon profiler including dev toolbar",
     "minimum-stability": "stable",
-    "license": "proprietary",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Fabian Fuelling",
