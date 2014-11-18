@@ -9,10 +9,12 @@ use Fabfuel\Prophiler\ProfilerInterface;
 use Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin;
 use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin;
 use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin;
+use Phalcon\DI\Injectable;
 use Phalcon\DiInterface;
 use Phalcon\DI\InjectionAwareInterface;
+use Phalcon\Events\Manager;
 
-class Phalcon implements InjectionAwareInterface
+class Phalcon extends Injectable
 {
     /**
      * @var ProfilerInterface
@@ -20,34 +22,18 @@ class Phalcon implements InjectionAwareInterface
     protected $profiler;
 
     /**
-     * @var
-     */
-    protected $dependencyInjection;
-
-    /**
      * @param ProfilerInterface $profiler
-     * @param DiInterface $dependencyInjection
      */
-    public function __construct(ProfilerInterface $profiler, DiInterface $dependencyInjection)
+    public function __construct(ProfilerInterface $profiler)
     {
         $this->setProfiler($profiler);
-        $this->setDI($dependencyInjection);
     }
 
     public function register()
     {
-        $this->getDI()->get('eventsManager')->attach(
-            'dispatch',
-            DispatcherPlugin::getInstance($this->getProfiler())->setDI($this->getDI())
-        );
-        $this->getDI()->get('eventsManager')->attach(
-            'view',
-            ViewPlugin::getInstance($this->getProfiler())
-        );
-        $this->getDI()->get('eventsManager')->attach(
-            'db',
-            AdapterPlugin::getInstance($this->getProfiler())
-        );
+        $this->eventsManager->attach('dispatch', DispatcherPlugin::getInstance($this->getProfiler()));
+        $this->eventsManager->attach('view', ViewPlugin::getInstance($this->getProfiler()));
+        $this->eventsManager->attach('db', AdapterPlugin::getInstance($this->getProfiler()));
     }
 
     /**
@@ -64,21 +50,5 @@ class Phalcon implements InjectionAwareInterface
     public function setProfiler(ProfilerInterface $profiler)
     {
         $this->profiler = $profiler;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDI()
-    {
-        return $this->dependencyInjection;
-    }
-
-    /**
-     * @param mixed $dependencyInjection
-     */
-    public function setDI($dependencyInjection)
-    {
-        $this->dependencyInjection = $dependencyInjection;
     }
 }

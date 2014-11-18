@@ -5,7 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract;
+use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\DispatcherInterface;
 
@@ -13,7 +13,7 @@ use Phalcon\Mvc\DispatcherInterface;
  * Class DispatcherPlugin
  * @package Rocket\Toolbar\Plugin
  */
-class DispatcherPlugin extends PhalconPluginAbstract
+class DispatcherPlugin extends PluginAbstract
 {
     /**
      * @var string
@@ -48,15 +48,16 @@ class DispatcherPlugin extends PhalconPluginAbstract
      * Start execute route benchmark
      *
      * @param Event $event
+     * @param $dispatcher $dispatcher
      */
-    public function beforeExecuteRoute(Event $event)
+    public function beforeExecuteRoute(Event $event, DispatcherInterface $dispatcher)
     {
         $name = get_class($event->getSource()) . '::executeRoute';
         $metadata = [
-            'class' => get_class($this->getDI()->get('dispatcher')->getActiveController()),
-            'controller' => $this->getDI()->get('dispatcher')->getControllerName(),
-            'action' => $this->getDI()->get('dispatcher')->getActionName(),
-            'params' => $this->getDI()->get('dispatcher')->getParams(),
+            'class' => get_class($dispatcher->getActiveController()),
+            'controller' => $dispatcher->getControllerName(),
+            'action' => $dispatcher->getActionName(),
+            'params' => $dispatcher->getParams(),
         ];
 
         $this->tokenRoute = $this->getProfiler()->start($name, $metadata, 'Dispatcher');

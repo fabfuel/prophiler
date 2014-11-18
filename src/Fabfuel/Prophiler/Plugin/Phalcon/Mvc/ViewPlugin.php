@@ -5,7 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract;
+use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\ViewInterface;
@@ -14,7 +14,7 @@ use Phalcon\Mvc\ViewInterface;
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
  */
-class ViewPlugin extends PhalconPluginAbstract
+class ViewPlugin extends PluginAbstract
 {
     /**
      * @var string
@@ -22,7 +22,7 @@ class ViewPlugin extends PhalconPluginAbstract
     private $token;
 
     /**
-     * Alll render levels as descriptive strings
+     * All render levels as descriptive strings
      * @var array
      */
     private $renderLevels = [

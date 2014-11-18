@@ -5,6 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Manager;
 
+use Phalcon\DI;
 use Phalcon\DI\FactoryDefault;
 
 class PhalconTest extends \PHPUnit_Framework_TestCase
@@ -19,28 +20,28 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::getDI
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
-     * @uses Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract
      */
     public function testRegister()
     {
+        DI::setDefault(new FactoryDefault());
+
         $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $eventsManager = $this->getMockBuilder('Phalcon\Events\Manager')
-            ->getMock();
-
-        $eventsManager->expects($this->exactly(3))
-            ->method('attach');
-
-        $di = new FactoryDefault();
-        $di->set('eventsManager', $eventsManager);
-
-        $pluginManager = new Phalcon($profiler, $di);
+        $pluginManager = new Phalcon($profiler);
 
         $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
         $pluginManager->dispatcher = $dispatcher;
 
+        $this->assertFalse($pluginManager->eventsManager->hasListeners('dispatch'));
+        $this->assertFalse($pluginManager->eventsManager->hasListeners('view'));
+        $this->assertFalse($pluginManager->eventsManager->hasListeners('db'));
+
         $pluginManager->register();
+
+        $this->assertTrue($pluginManager->eventsManager->hasListeners('dispatch'));
+        $this->assertTrue($pluginManager->eventsManager->hasListeners('view'));
+        $this->assertTrue($pluginManager->eventsManager->hasListeners('db'));
     }
 }
