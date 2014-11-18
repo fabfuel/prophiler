@@ -24,35 +24,6 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($profiler, $toolbar->getProfiler());
     }
 
-    /**
-     * @covers Fabfuel\Prophiler\Toolbar::register
-     * @covers Fabfuel\Prophiler\Toolbar::__construct
-     * @covers Fabfuel\Prophiler\Toolbar::setProfiler
-     * @covers Fabfuel\Prophiler\Toolbar::getProfiler
-     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
-     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
-     */
-    public function testRegister()
-    {
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $eventsManager = $this->getMockBuilder('Phalcon\Events\Manager')
-            ->getMock();
-
-        $eventsManager->expects($this->exactly(3))
-            ->method('attach');
-
-        $toolbar = new Toolbar($profiler);
-        $toolbar->eventsManager = $eventsManager;
-
-        $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
-        $toolbar->dispatcher = $dispatcher;
-
-        $this->assertSame($toolbar, $toolbar->register());
-    }
-
     public function testRender()
     {
         $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')

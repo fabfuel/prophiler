@@ -5,13 +5,9 @@
  */
 namespace Fabfuel\Prophiler;
 
-use Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin;
-use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin;
-use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin;
-use Phalcon\DI\Injectable;
 use Phalcon\Mvc\View\Simple;
 
-class Toolbar extends Injectable
+class Toolbar
 {
     /**
      * @var ProfilerInterface
@@ -24,20 +20,6 @@ class Toolbar extends Injectable
     public function __construct(ProfilerInterface $profiler)
     {
         $this->setProfiler($profiler);
-    }
-
-    /**
-     * Register default plugins to events manager
-     *
-     * @return $this
-     */
-    public function register()
-    {
-        $this->eventsManager->attach('dispatch', new DispatcherPlugin($this->getProfiler(), $this->dispatcher));
-        $this->eventsManager->attach('view', new ViewPlugin($this->getProfiler()));
-        $this->eventsManager->attach('db', new AdapterPlugin($this->getProfiler()));
-
-        return $this;
     }
 
     /**

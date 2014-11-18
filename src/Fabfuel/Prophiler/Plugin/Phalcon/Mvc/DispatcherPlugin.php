@@ -5,8 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Plugin\PluginAbstract;
-use Fabfuel\Prophiler\ProfilerInterface;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\DispatcherInterface;
 
@@ -14,7 +13,7 @@ use Phalcon\Mvc\DispatcherInterface;
  * Class DispatcherPlugin
  * @package Rocket\Toolbar\Plugin
  */
-class DispatcherPlugin extends PluginAbstract
+class DispatcherPlugin extends PhalconPluginAbstract
 {
     /**
      * @var string
@@ -25,22 +24,6 @@ class DispatcherPlugin extends PluginAbstract
      * @var string
      */
     protected $tokenRoute;
-
-    /**
-     * @var DispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
-     * @param ProfilerInterface $profiler
-     * @param DispatcherInterface $dispatcher
-     */
-    public function __construct(ProfilerInterface $profiler, DispatcherInterface $dispatcher)
-    {
-        $this->setProfiler($profiler);
-        $this->setDispatcher($dispatcher);
-    }
-
 
     /**
      * Start dispatch loop benchmark
@@ -70,10 +53,10 @@ class DispatcherPlugin extends PluginAbstract
     {
         $name = get_class($event->getSource()) . '::executeRoute';
         $metadata = [
-            'class' => get_class($this->getDispatcher()->getActiveController()),
-            'controller' => $this->getDispatcher()->getControllerName(),
-            'action' => $this->getDispatcher()->getActionName(),
-            'params' => $this->getDispatcher()->getParams(),
+            'class' => get_class($this->getDI()->get('dispatcher')->getActiveController()),
+            'controller' => $this->getDI()->get('dispatcher')->getControllerName(),
+            'action' => $this->getDI()->get('dispatcher')->getActionName(),
+            'params' => $this->getDI()->get('dispatcher')->getParams(),
         ];
 
         $this->tokenRoute = $this->getProfiler()->start($name, $metadata, 'Dispatcher');
@@ -85,21 +68,5 @@ class DispatcherPlugin extends PluginAbstract
     public function afterExecuteRoute()
     {
         $this->getProfiler()->stop($this->tokenRoute);
-    }
-
-    /**
-     * @return DispatcherInterface
-     */
-    public function getDispatcher()
-    {
-        return $this->dispatcher;
-    }
-
-    /**
-     * @param DispatcherInterface $dispatcher
-     */
-    public function setDispatcher($dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
     }
 }

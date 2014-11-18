@@ -12,7 +12,8 @@
     "autoload": {
         "psr-4": {
             "Fabfuel\\Prophiler\\": "src/Fabfuel/Prophiler/"
-        }
+        },
+        "classmap": ["tests/"]
     },
     "require-dev": {
         "fabfuel/mongo": "~0.4",

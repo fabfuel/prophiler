@@ -16,10 +16,13 @@ abstract class PluginAbstract
 
     /**
      * @param ProfilerInterface $profiler
+     * @return static
      */
-    public function __construct(ProfilerInterface $profiler)
+    public static function getInstance(ProfilerInterface $profiler)
     {
-        $this->setProfiler($profiler);
+        $plugin = new static;
+        $plugin->setProfiler($profiler);
+        return $plugin;
     }
 
     /**

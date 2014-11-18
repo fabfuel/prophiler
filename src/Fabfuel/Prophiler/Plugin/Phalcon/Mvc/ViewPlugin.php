@@ -5,15 +5,16 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Plugin\PluginAbstract;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract;
 use Phalcon\Events\Event;
+use Phalcon\Mvc\View;
 use Phalcon\Mvc\ViewInterface;
 
 /**
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
  */
-class ViewPlugin extends PluginAbstract
+class ViewPlugin extends PhalconPluginAbstract
 {
     /**
      * @var string
@@ -25,11 +26,11 @@ class ViewPlugin extends PluginAbstract
      * @var array
      */
     private $renderLevels = [
-        \Phalcon\Mvc\View::LEVEL_ACTION_VIEW => 'action',
-        \Phalcon\Mvc\View::LEVEL_AFTER_TEMPLATE => 'afterTemplate',
-        \Phalcon\Mvc\View::LEVEL_BEFORE_TEMPLATE => 'beforeTemplate',
-        \Phalcon\Mvc\View::LEVEL_LAYOUT => 'controller',
-        \Phalcon\Mvc\View::LEVEL_MAIN_LAYOUT => 'main'
+        View::LEVEL_ACTION_VIEW => 'action',
+        View::LEVEL_AFTER_TEMPLATE => 'afterTemplate',
+        View::LEVEL_BEFORE_TEMPLATE => 'beforeTemplate',
+        View::LEVEL_LAYOUT => 'controller',
+        View::LEVEL_MAIN_LAYOUT => 'main'
     ];
 
     /**

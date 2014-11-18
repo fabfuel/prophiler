@@ -6,25 +6,19 @@
 
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Profiler;
-use Phalcon\DI;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginTest;
 
-class ViewPluginTest extends \PHPUnit_Framework_TestCase
+class ViewPluginTest extends PhalconPluginTest
 {
     /**
      * @var ViewPlugin
      */
     protected $viewPlugin;
 
-    /**
-     * @var Profiler|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $profiler;
-
     public function setUp()
     {
-        $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        $this->viewPlugin = new ViewPlugin($this->profiler);
+        parent::setUp();
+        $this->viewPlugin = ViewPlugin::getInstance($this->getProfiler());
     }
 
     public function testRenderView()

@@ -6,25 +6,19 @@
 
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 
-use Fabfuel\Prophiler\Profiler;
-use Phalcon\DI;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginTest;
 
-class AdapterPluginTest extends \PHPUnit_Framework_TestCase
+class AdapterPluginTest extends PhalconPluginTest
 {
     /**
-     * @var View
+     * @var AdapterPlugin
      */
-    protected $adapter;
-
-    /**
-     * @var Profiler|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $profiler;
+    protected $adapterPlugin;
 
     public function setUp()
     {
-        $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        $this->adapter = new AdapterPlugin($this->profiler);
+        parent::setUp();
+        $this->adapterPlugin = AdapterPlugin::getInstance($this->profiler, $this->dependencyInjector) ;
     }
 
     public function testQuery()
@@ -60,7 +54,7 @@ class AdapterPluginTest extends \PHPUnit_Framework_TestCase
             ->method('stop')
             ->with($token);
 
-        $this->adapter->beforeQuery($event, $adapter);
-        $this->adapter->afterQuery($event, $adapter);
+        $this->adapterPlugin->beforeQuery($event, $adapter);
+        $this->adapterPlugin->afterQuery($event, $adapter);
     }
 }

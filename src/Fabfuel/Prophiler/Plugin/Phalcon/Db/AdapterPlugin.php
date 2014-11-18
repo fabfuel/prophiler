@@ -5,7 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 
-use Fabfuel\Prophiler\Plugin\PluginAbstract;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Db\Adapter;
 
@@ -13,7 +13,7 @@ use Phalcon\Db\Adapter;
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
  */
-class AdapterPlugin extends PluginAbstract
+class AdapterPlugin extends PhalconPluginAbstract
 {
     /**
      * @var string
