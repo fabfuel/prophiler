@@ -48,7 +48,7 @@ class DispatcherPlugin extends PluginAbstract
      * Start execute route benchmark
      *
      * @param Event $event
-     * @param $dispatcher $dispatcher
+     * @param DispatcherInterface $dispatcher
      */
     public function beforeExecuteRoute(Event $event, DispatcherInterface $dispatcher)
     {
