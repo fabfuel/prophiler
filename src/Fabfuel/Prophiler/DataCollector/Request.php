@@ -37,27 +37,15 @@ class Request implements DataCollectorInterface
     public function getData()
     {
         $data = [
-            'SERVER' => $_SERVER
+            'SERVER' => $_SERVER,
+            'GET' => $_GET,
+            'POST' => $_POST,
+            'COOKIE' => $_COOKIE,
+            'FILES' => $_FILES,
         ];
 
-        if ($_GET) {
-            $data['GET'] = $_GET;
-        }
-
-        if ($_POST) {
-            $data['POST'] = $_POST;
-        }
-
-        if ($_COOKIE) {
-            $data['COOKIE'] = $_COOKIE;
-        }
-
-        if ($_SESSION) {
+        if (isset($_SESSION)) {
             $data['SESSION'] = $_SESSION;
-        }
-
-        if ($_FILES) {
-            $data['FILES'] = $_FILES;
         }
 
         return $data;

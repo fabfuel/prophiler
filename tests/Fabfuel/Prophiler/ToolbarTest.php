@@ -24,6 +24,11 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($profiler, $toolbar->getProfiler());
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::__construct
+     * @covers Fabfuel\Prophiler\Toolbar::render
+     * @uses Fabfuel\Prophiler\Toolbar
+     */
     public function testRender()
     {
         $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
@@ -44,5 +49,27 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $output = ob_get_clean();
 
         $this->assertNotEmpty($output);
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::addDataCollector
+     * @covers Fabfuel\Prophiler\Toolbar::getDataCollectors
+     * @uses Fabfuel\Prophiler\Toolbar
+     */
+    public function testAddAndGetDataCollectors()
+    {
+        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $toolbar = new Toolbar($profiler);
+
+        $this->assertCount(0, $toolbar->getDataCollectors());
+
+        $dataCollector = $this->getMock('Fabfuel\Prophiler\DataCollector\Request');
+        $toolbar->addDataCollector($dataCollector);
+
+        $this->assertCount(1, $toolbar->getDataCollectors());
+        $this->assertSame($dataCollector, $toolbar->getDataCollectors()[0]);
     }
 }
