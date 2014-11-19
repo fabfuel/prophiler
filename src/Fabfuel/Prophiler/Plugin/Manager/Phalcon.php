@@ -10,9 +10,6 @@ use Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin;
 use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin;
 use Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin;
 use Phalcon\DI\Injectable;
-use Phalcon\DiInterface;
-use Phalcon\DI\InjectionAwareInterface;
-use Phalcon\Events\Manager;
 
 class Phalcon extends Injectable
 {

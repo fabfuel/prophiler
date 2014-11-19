@@ -81,7 +81,7 @@ class BenchmarkFormatter implements BenchmarkFormatterInterface
     }
 
     /**
-     * @return string
+     * @return double
      */
     public function getStartTime()
     {
@@ -89,7 +89,7 @@ class BenchmarkFormatter implements BenchmarkFormatterInterface
     }
 
     /**
-     * @return string
+     * @return double
      */
     public function getEndTime()
     {
