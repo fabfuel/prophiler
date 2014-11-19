@@ -7,6 +7,7 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
+use Phalcon\Mvc\View;
 use Phalcon\Mvc\ViewInterface;
 
 /**
@@ -21,15 +22,15 @@ class ViewPlugin extends PluginAbstract
     private $token;
 
     /**
-     * Alll render levels as descriptive strings
+     * All render levels as descriptive strings
      * @var array
      */
     private $renderLevels = [
-        \Phalcon\Mvc\View::LEVEL_ACTION_VIEW => 'action',
-        \Phalcon\Mvc\View::LEVEL_AFTER_TEMPLATE => 'afterTemplate',
-        \Phalcon\Mvc\View::LEVEL_BEFORE_TEMPLATE => 'beforeTemplate',
-        \Phalcon\Mvc\View::LEVEL_LAYOUT => 'controller',
-        \Phalcon\Mvc\View::LEVEL_MAIN_LAYOUT => 'main'
+        View::LEVEL_ACTION_VIEW => 'action',
+        View::LEVEL_AFTER_TEMPLATE => 'afterTemplate',
+        View::LEVEL_BEFORE_TEMPLATE => 'beforeTemplate',
+        View::LEVEL_LAYOUT => 'controller',
+        View::LEVEL_MAIN_LAYOUT => 'main'
     ];
 
     /**

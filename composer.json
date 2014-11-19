@@ -2,7 +2,7 @@
     "name": "fabfuel/prophiler",
     "description": "Phalcon profiler including dev toolbar",
     "minimum-stability": "stable",
-    "license": "proprietary",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Fabian Fuelling",
@@ -12,23 +12,24 @@
     "autoload": {
         "psr-4": {
             "Fabfuel\\Prophiler\\": "src/Fabfuel/Prophiler/"
-        }
+        },
+        "classmap": ["tests/"]
     },
     "require-dev": {
-        "fabfuel/mongo": "dev-feature/profiler-improvements@dev",
+        "fabfuel/mongo": "~0.4",
         "phalcon/devtools": "1.3.x-dev",
-        "phpunit/phpunit": "4.*",
-        "phpmd/phpmd": "1.*",
-        "squizlabs/php_codesniffer": "1.*"
+        "phpunit/phpunit": "~4.0",
+        "phpmd/phpmd": "~1.0",
+        "squizlabs/php_codesniffer": "~1.0"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://bitbucket.org/fabfuel/mongo"
+            "url": "https://bitbucket.org/fabfuel/mongo.git"
         },
         {
             "type": "vcs",
-            "url": "https://bitbucket.org/orangecloud/php-helper-array"
+            "url": "https://bitbucket.org/orangecloud/php-helper-array.git"
         }
     ]
 }

@@ -6,34 +6,27 @@
 
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
-use Fabfuel\Prophiler\Profiler;
-use Phalcon\DI;
-use Phalcon\Mvc\DispatcherInterface;
+use Fabfuel\Prophiler\Plugin\Phalcon\PhalconPluginTest;
+use Phalcon\Mvc\Dispatcher;
 
-class DispatcherPluginTest extends \PHPUnit_Framework_TestCase
+class DispatcherPluginTest extends PhalconPluginTest
 {
     /**
      * @var DispatcherPlugin
      */
     protected $dispatcherPlugin;
 
-    /**
-     * @var Profiler|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $profiler;
-
-    /**
-     * @var DispatcherInterface
-     */
-    protected $dispatcher;
-
     public function setUp()
     {
-        $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock();
-        $this->dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
-        $this->dispatcherPlugin = new DispatcherPlugin($this->profiler, $this->dispatcher);
+        parent::setUp();
+        $this->dispatcherPlugin = DispatcherPlugin::getInstance($this->getProfiler());
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     */
     public function testDispatchLoop()
     {
         $token = 'token';
@@ -59,29 +52,36 @@ class DispatcherPluginTest extends \PHPUnit_Framework_TestCase
         $this->dispatcherPlugin->afterDispatchLoop($event);
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     */
     public function testExecuteRoute()
     {
         $token = 'token';
         $metadata = [
-            'class' => 'stdClass',
-            'controller' => 'test-controller',
-            'action' => 'test-action',
+            'executed' => 'stdClass::testAction',
+            'controller' => 'foobar',
+            'action' => 'test',
             'params' => ['test-params' => 'foobar'],
         ];
 
-        $this->dispatcher->expects($this->once())
+        $dispatcher = $this->getMock('Phalcon\Mvc\Dispatcher');
+
+        $dispatcher->expects($this->once())
             ->method('getControllerName')
-            ->willReturn('test-controller');
+            ->willReturn('foobar');
 
-        $this->dispatcher->expects($this->once())
+        $dispatcher->expects($this->exactly(2))
             ->method('getActionName')
-            ->willReturn('test-action');
+            ->willReturn('test');
 
-        $this->dispatcher->expects($this->once())
+        $dispatcher->expects($this->once())
             ->method('getParams')
             ->willReturn(['test-params' => 'foobar']);
 
-        $this->dispatcher->expects($this->once())
+        $dispatcher->expects($this->once())
             ->method('getActiveController')
             ->willReturn(new \stdClass);
 
@@ -100,9 +100,11 @@ class DispatcherPluginTest extends \PHPUnit_Framework_TestCase
 
         $event->expects($this->exactly(1))
             ->method('getSource')
-            ->willReturn(new \Phalcon\Mvc\Dispatcher);
+            ->willReturn(new Dispatcher());
 
-        $this->dispatcherPlugin->beforeExecuteRoute($event);
+        $this->dispatcherPlugin->beforeExecuteRoute($event, $dispatcher);
         $this->dispatcherPlugin->afterExecuteRoute($event);
     }
+
+
 }
