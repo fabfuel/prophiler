@@ -54,7 +54,7 @@ class DispatcherPlugin extends PluginAbstract
     {
         $name = get_class($event->getSource()) . '::executeRoute';
         $metadata = [
-            'class' => get_class($dispatcher->getActiveController()),
+            'executed' => sprintf('%s::%sAction', get_class($dispatcher->getActiveController()), $dispatcher->getActionName()),
             'controller' => $dispatcher->getControllerName(),
             'action' => $dispatcher->getActionName(),
             'params' => $dispatcher->getParams(),

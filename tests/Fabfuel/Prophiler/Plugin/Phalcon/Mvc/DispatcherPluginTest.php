@@ -61,9 +61,9 @@ class DispatcherPluginTest extends PhalconPluginTest
     {
         $token = 'token';
         $metadata = [
-            'class' => 'stdClass',
-            'controller' => 'test-controller',
-            'action' => 'test-action',
+            'executed' => 'stdClass::testAction',
+            'controller' => 'foobar',
+            'action' => 'test',
             'params' => ['test-params' => 'foobar'],
         ];
 
@@ -71,11 +71,11 @@ class DispatcherPluginTest extends PhalconPluginTest
 
         $dispatcher->expects($this->once())
             ->method('getControllerName')
-            ->willReturn('test-controller');
+            ->willReturn('foobar');
 
-        $dispatcher->expects($this->once())
+        $dispatcher->expects($this->exactly(2))
             ->method('getActionName')
-            ->willReturn('test-action');
+            ->willReturn('test');
 
         $dispatcher->expects($this->once())
             ->method('getParams')
