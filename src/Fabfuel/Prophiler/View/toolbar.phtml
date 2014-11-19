@@ -41,6 +41,11 @@
                     <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">
                             <span class="glyphicon glyphicon-dashboard"> Benchmarks
                     </a></li>
+
+                    <?php foreach ($dataCollectors as $dataCollector): ?>
+                        <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#<?= $dataCollector->getTitle() ?>">
+                                <span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"> <?= $dataCollector->getTitle() ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -52,6 +57,12 @@
             <?php $this->partial('partials/benchmark'); ?>
         <?php endforeach; ?>
     </div>
+
+    <?php foreach ($dataCollectors as $dataCollector): ?>
+        <?php $this->partial('partials/datacollector'); ?>
+    <?php endforeach; ?>
+
+
 </div>
 
 <script>
