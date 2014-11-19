@@ -35,10 +35,12 @@
                     </li>
                     <li>
                         <a href="#">
-                            <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_usage() / 1024 / 1024) ?></span>
+                            <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
                         </a>
                     </li>
-                    <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">Benchmarks</a></li>
+                    <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">
+                            <span class="glyphicon glyphicon-dashboard"> Benchmarks
+                    </a></li>
                 </ul>
             </div>
         </div>

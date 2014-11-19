@@ -5,9 +5,13 @@
 ?><div class="panel panel-default">
     <div class="panel-heading" role="tab" id="heading-<?= $benchmarkFormatter->getId() ?>">
         <h4 class="panel-title" style="font-size: 1.1em">
-            <a class="collapsed" data-toggle="collapse" data-parent="#benchmarks" href="#collapse-<?= $benchmarkFormatter->getId() ?>" aria-expanded="false" aria-controls="collapseTwo">
+            <?php if ($benchmarkFormatter->getMetadata()): ?>
+                <a class="collapsed" data-toggle="collapse" data-parent="#benchmarks" href="#collapse-<?= $benchmarkFormatter->getId() ?>" aria-expanded="false" aria-controls="collapseTwo">
+                    Benchmark: <?= $benchmarkFormatter->getName() ?>
+                </a>
+            <?php else: ?>
                 Benchmark: <?= $benchmarkFormatter->getName() ?>
-            </a>
+            <?php endif; ?>
 
             <span class="pull-right">
                 <span class="label label-<?= $benchmarkFormatter->getLabel() ?>"><span class="glyphicon glyphicon-<?= $benchmarkFormatter->getIcon() ?>""></span> <?= $benchmarkFormatter->getComponent() ?></span>
@@ -15,19 +19,15 @@
             </span>
         </h4>
     </div>
+    <?php if ($benchmarkFormatter->getMetadata()): ?>
     <div id="collapse-<?= $benchmarkFormatter->getId() ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?= $benchmarkFormatter->getId() ?>">
         <div class="panel-body">
             <dl class="dl-horizontal">
-                <dt>Start</dt>
-                <dd><?= $benchmarkFormatter->getStartTime() ?></dd>
-                <dt>End</dt>
-                <dd><?= $benchmarkFormatter->getEndTime() ?></dd>
-                <dt>Duration</dt>
-                <dd><?= $benchmarkFormatter->getDuration() ?></dd>
                 <?php foreach ($benchmarkFormatter->getMetadata() as $metadataName => $metadata): ?>
                     <?php $this->partial('partials/metadata'); ?>
                 <?php endforeach; ?>
             </dl>
         </div>
     </div>
+    <?php endif; ?>
 </div>
