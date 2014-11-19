@@ -44,20 +44,20 @@ class Request implements DataCollectorInterface
             $data['GET'] = $_GET;
         }
 
-        if ($_COOKIE) {
-            $data['COOKIE'] = $_COOKIE;
-        }
-
         if ($_POST) {
             $data['POST'] = $_POST;
         }
 
-        if ($_FILES) {
-            $data['FILES'] = $_FILES;
+        if ($_COOKIE) {
+            $data['COOKIE'] = $_COOKIE;
         }
 
         if ($_SESSION) {
             $data['SESSION'] = $_SESSION;
+        }
+
+        if ($_FILES) {
+            $data['FILES'] = $_FILES;
         }
 
         return $data;
