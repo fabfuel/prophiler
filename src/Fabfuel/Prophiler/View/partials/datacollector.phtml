@@ -1,26 +1,21 @@
-<?php
-/**
- * @var \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterInterface $benchmarkFormatter
- */
-?>
 <div class="panel-group panel-collapse collapse" id="<?= $dataCollector->getTitle() ?>" role="tablist" style="margin-top: 5px;">
-
-    <?php foreach ($dataCollector->getData() as $dataName => $data): ?>
-
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading-<?= $dataName ?>">
-            <h4 class="panel-title" style="font-size: 1.1em">
-                <a class="collapsed" data-toggle="collapse" data-parent="#benchmarks" href="#collapse-<?= $dataName ?>" aria-expanded="false" aria-controls="collapseTwo">
-                    <?= $dataName ?>
-                </a>
-            </h4>
-        </div>
-        <div id="collapse-<?= $dataName ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?= $dataName ?>">
-            <div class="panel-body">
-                <json style="white-space: pre;"><?= json_encode($data); ?></json>
-            </div>
-        </div>
+    <div class="panel-body">
+        <h4><?= $dataCollector->getTitle() ?></h4>
+        <dl class="dl-horizontal">
+            <?php foreach ($dataCollector->getData() as $dataName => $data): ?>
+                <?php if (empty($data)): continue; endif; ?>
+                <dt><?= $dataName ?></dt>
+                <dd>
+                    <?php if (is_array($data)): ?>
+                        <details>
+                            <summary>JSON</summary>
+                            <json style="white-space: pre;"><?= json_encode($data); ?></json>
+                        </details>
+                    <?php else: ?>
+                        <?= nl2br($data) ?></td>
+                    <?php endif; ?>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
     </div>
-
-    <?php endforeach; ?>
 </div>
