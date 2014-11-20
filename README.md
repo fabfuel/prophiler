@@ -41,3 +41,11 @@ To visualize the profiling results, you have to initialize and render the Prophi
 To render the toolbar as very last action, you can also register it as shutdown function:
 
     register_shutdown_function([$toolbar, 'render']);
+
+## Tips
+
+To record session writing, you can commit or write & close the session before rendering the toolbar
+    
+    session_commit();
+    
+    session_write_close() // same behavior
