@@ -4,17 +4,7 @@
         <dl class="dl-horizontal">
             <?php foreach ($dataCollector->getData() as $dataName => $data): ?>
                 <?php if (empty($data)): continue; endif; ?>
-                <dt><?= $dataName ?></dt>
-                <dd>
-                    <?php if (is_array($data)): ?>
-                        <details>
-                            <summary>JSON</summary>
-                            <json style="white-space: pre;"><?= json_encode($data); ?></json>
-                        </details>
-                    <?php else: ?>
-                        <?= nl2br($data) ?></td>
-                    <?php endif; ?>
-                </dd>
+                <?php $this->partial('partials/data'); ?>
             <?php endforeach; ?>
         </dl>
     </div>
