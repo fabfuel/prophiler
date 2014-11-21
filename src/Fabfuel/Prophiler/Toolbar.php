@@ -15,6 +15,11 @@ class Toolbar
     protected $profiler;
 
     /**
+     * @var DataCollectorInterface[]
+     */
+    protected $dataCollectors = [];
+
+    /**
      * @param ProfilerInterface $profiler
      */
     public function __construct(ProfilerInterface $profiler)
@@ -29,7 +34,10 @@ class Toolbar
     {
         $toolbar = new Simple();
         $toolbar->setViewsDir(__DIR__ . '/View/');
-        echo $toolbar->render('toolbar', ['profiler' => $this->getProfiler()]);
+        echo $toolbar->render('toolbar', [
+            'profiler' => $this->getProfiler(),
+            'dataCollectors' => $this->getDataCollectors()
+        ]);
     }
 
     /**
@@ -46,5 +54,24 @@ class Toolbar
     public function setProfiler($profiler)
     {
         $this->profiler = $profiler;
+    }
+
+    /**
+     * Add a data collector to the profiler
+     *
+     * @param DataCollectorInterface $dataCollector
+     * @return $this
+     */
+    public function addDataCollector(DataCollectorInterface $dataCollector)
+    {
+        $this->dataCollectors[] = $dataCollector;
+    }
+
+    /**
+     * @return DataCollectorInterface[]
+     */
+    public function getDataCollectors()
+    {
+        return $this->dataCollectors;
     }
 }
