@@ -40,7 +40,7 @@ To visualize the profiling results, you have to initialize and render the Prophi
 
     :::php
     $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
-    $toolbar->render();
+    echo $toolbar->render();
 
 To render the toolbar as very last action, you can also register it as shutdown function:
 
