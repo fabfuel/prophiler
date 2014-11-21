@@ -34,7 +34,7 @@ class Toolbar
     {
         $toolbar = new Simple();
         $toolbar->setViewsDir(__DIR__ . '/View/');
-        echo $toolbar->render('toolbar', [
+        return $toolbar->render('toolbar', [
             'profiler' => $this->getProfiler(),
             'dataCollectors' => $this->getDataCollectors()
         ]);

@@ -44,9 +44,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
         $toolbar->dispatcher = $dispatcher;
 
-        ob_start();
-        $toolbar->render();
-        $output = ob_get_clean();
+        $output = $toolbar->render();
 
         $this->assertNotEmpty($output);
     }
