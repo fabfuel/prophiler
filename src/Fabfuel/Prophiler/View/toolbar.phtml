@@ -1,4 +1,8 @@
-<style>
+<?php
+/**
+ * @var \Fabfuel\Prophiler\ProfilerInterface $profiler
+ */
+?><style>
     body {
         margin-top: 52px !important;
     }
@@ -54,7 +58,19 @@
             </div>
         </div>
     </nav>
-    <div class="panel-group panel-collapse collapse" id="benchmarks" role="tablist" style="margin-top: 5px;">
+    <div class="panel-group panel-collapse " id="benchmarks" role="tablist" style="margin-top: 5px;">
+
+        <div class="timeline-viewport" style="position: relative;">
+
+            <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+            <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
+                <?php $timelineFormatter->setBenchmark($benchmark); ?>
+                <?php $this->partial('partials/timeline', ['benchmark' => $timelineFormatter]); ?>
+            <?php endforeach; ?>
+
+
+        </div>
+
         <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
         <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
             <?php $benchmarkFormatter->setBenchmark($benchmark); ?>

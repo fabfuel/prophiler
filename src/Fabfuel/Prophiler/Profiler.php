@@ -92,6 +92,16 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
+     * Get the start of the profiler in microtime
+     *
+     * @return double Timestamp in microtime
+     */
+    public function getStartTime()
+    {
+        return $this->start;
+    }
+
+    /**
      * Return all measured benchmarks
      *
      * @return BenchmarkInterface[]
