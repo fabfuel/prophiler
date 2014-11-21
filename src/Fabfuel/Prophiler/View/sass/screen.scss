@@ -1,0 +1,89 @@
+/* compass imports */
+@import "compass/css3";
+
+body {
+  margin-top: 52px !important;
+}
+
+.collapse {
+  display: none;
+}
+
+#prophiler {
+  .toolbar {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background-color: #fff;
+    opacity: 0.97;
+
+    .timeline-viewport {
+
+      position: relative;
+
+      .marker {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+
+        .line {
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          background-color: #ddd;
+          width: 1px;
+        }
+
+        .label {
+          font-size: .7em;
+          color: #aaa;
+        }
+      }
+
+      .benchmarks {
+        position: relative;
+        padding-top: 20px;
+
+        .timeline {
+
+          position: relative;
+          height: 25px;
+
+          .benchmark {
+            opacity: 0.7;
+
+            background-color: #337ab7;
+            position: absolute;
+            height: 20px;
+            @include border-radius(.25em);
+
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            color: #fff;
+            text-align: left;
+            white-space: nowrap;
+            vertical-align: middle;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &.app {
+              background-color: #337ab7;
+            }
+
+            &.mongodb {
+              background-color: #5cb85c;
+            }
+
+            &.dispatcher {
+              background-color: #f0ad4e;
+            }
+          }
+        }
+      }
+    }
+  }
+}

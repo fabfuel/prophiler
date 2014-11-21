@@ -3,83 +3,110 @@
  * @var \Fabfuel\Prophiler\ProfilerInterface $profiler
  */
 ?><style>
-    body {
-        margin-top: 52px !important;
-    }
-
-    .collapse {
-        display: none;
-    }
+    <?php echo file_get_contents(__DIR__ . '/css/screen.css'); ?>
 </style>
 
-<div class="toolbar"
-     style="position: fixed; display: block; top: 0; left:0; right: 0; z-index: 10000; background-color: #fff; opacity: 0.95;">
+<div id="prophiler">
 
-    <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
-        <div class="container-fluid">
+    <div class="toolbar">
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
-                <a class="navbar-brand">Phalcon Dev Toolbar</a>
+        <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand">Phalcon Dev Toolbar</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#">
+                                <?php if ($profiler->getDuration() * 1000 < 2): ?>
+                                    <span class="label label-success">
+                                <?php elseif ($profiler->getDuration() * 1000 < 5): ?>
+                                    <span class="label label-warning">
+                                <?php else: ?>
+                                    <span class="label label-danger">
+                                <?php endif; ?>
+                                    <span class="glyphicon glyphicon-time"></span> <?php printf('%.3f ms ', $profiler->getDuration() * 1000) ?>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                            </a>
+                        </li>
+                        <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">
+                                <span class="glyphicon glyphicon-dashboard"> Benchmarks
+                        </a></li>
+
+                        <?php foreach ($dataCollectors as $dataCollector): ?>
+                            <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#<?= $dataCollector->getTitle() ?>">
+                                    <span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"> <?= $dataCollector->getTitle() ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div class="panel-group panel-collapse collapse" id="benchmarks" role="tablist" style="margin-top: 5px;">
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">
-                            <?php if ($profiler->getDuration() * 1000 < 2): ?>
-                                <span class="label label-success">
-                            <?php elseif ($profiler->getDuration() * 1000 < 5): ?>
-                                <span class="label label-warning">
-                            <?php else: ?>
-                                <span class="label label-danger">
-                            <?php endif; ?>
-                                <span class="glyphicon glyphicon-time"></span> <?php printf('%.3f ms ', $profiler->getDuration() * 1000) ?>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
-                        </a>
-                    </li>
-                    <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">
-                            <span class="glyphicon glyphicon-dashboard"> Benchmarks
-                    </a></li>
+            <div class="timeline-viewport">
 
-                    <?php foreach ($dataCollectors as $dataCollector): ?>
-                        <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#<?= $dataCollector->getTitle() ?>">
-                                <span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"> <?= $dataCollector->getTitle() ?></a></li>
+                <?php
+
+                    $durationScale = $profiler->getDuration() *1000;
+
+                    if ($durationScale <= 15) {
+                        $scale = 1;
+                    } elseif ($durationScale < 75) {
+                        $scale = 5;
+                    } elseif ($durationScale < 150) {
+                        $scale = 10;
+                    } elseif ($durationScale < 375) {
+                        $scale = 25;
+                    } elseif ($durationScale < 750) {
+                        $scale = 50;
+                    } elseif ($durationScale < 1500) {
+                        $scale = 100;
+                    } elseif ($durationScale < 7500) {
+                        $scale = 500;
+                    } else {
+                        $scale = 1000;
+                    }
+
+                ?>
+
+                <?php for ($t = 0; $t <= $durationScale; $t += $scale): ?>
+                    <div class="marker" style="left: <?= round(($t/($profiler->getDuration() *1000))*100, 3) ?>%;">
+                        <div class="label"><?= $t ?> ms</div>
+                        <div class="line"></div>
+                    </div>
+                <?php endfor; ?>
+
+                <div class="benchmarks">
+                    <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+                    <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
+                        <?php $timelineFormatter->setBenchmark($benchmark); ?>
+                        <?php $this->partial('partials/timeline', ['benchmark' => $timelineFormatter]); ?>
                     <?php endforeach; ?>
-                </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <div class="panel-group panel-collapse " id="benchmarks" role="tablist" style="margin-top: 5px;">
 
-        <div class="timeline-viewport" style="position: relative;">
-
-            <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+            <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
             <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
-                <?php $timelineFormatter->setBenchmark($benchmark); ?>
-                <?php $this->partial('partials/timeline', ['benchmark' => $timelineFormatter]); ?>
+                <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
+                <?php $this->partial('partials/benchmark'); ?>
             <?php endforeach; ?>
-
-
         </div>
-
-        <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
-        <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
-            <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
-            <?php $this->partial('partials/benchmark'); ?>
+        <?php foreach ($dataCollectors as $dataCollector): ?>
+            <?php $this->partial('partials/datacollector'); ?>
         <?php endforeach; ?>
     </div>
-    <?php foreach ($dataCollectors as $dataCollector): ?>
-        <?php $this->partial('partials/datacollector'); ?>
-    <?php endforeach; ?>
 </div>
 
 <script>
