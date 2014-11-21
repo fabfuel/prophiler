@@ -32,4 +32,11 @@ interface ProfilerInterface
      * @return double Total number of elapsed milliseconds
      */
     public function getDuration();
+
+    /**
+     * Get the start of the profiler in microtime
+     *
+     * @return double Timestamp in microtime
+     */
+    public function getStartTime();
 }
