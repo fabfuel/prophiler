@@ -45,10 +45,11 @@
                     </ul>
             </div>
         </nav>
+
         <div class="panel-group panel-collapse " id="benchmarks" role="tablist" style="margin-top: 5px;">
             <?php $this->partial('partials/table', ['profiler' => $profiler]); ?>
-            <?php $this->partial('partials/timeline', ['profiler' => $profiler]); ?>
         </div>
+
         <?php foreach ($dataCollectors as $dataCollector): ?>
             <?php $this->partial('partials/datacollector'); ?>
         <?php endforeach; ?>
@@ -56,7 +57,12 @@
 </div>
 
 <script>
-    $('json').each(function (index, el) {
-        el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '\t');
+	if (!window.jQuery) {
+		document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
+	}
+    window.addEventListener("load", function () {
+        $('json').each(function (index, el) {
+            el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '\t');
+        });
     });
 </script>
