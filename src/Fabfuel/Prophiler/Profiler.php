@@ -1,7 +1,7 @@
 <?php
 /**
  * @author @fabfuel <fabian@fabfuel.de>
- * @created 13.11.14, 07:47 
+ * @created 13.11.14, 07:47
  */
 namespace Fabfuel\Prophiler;
 
@@ -39,7 +39,11 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function start($name, array $metadata = [], $component = null)
     {
-        $benchmark = BenchmarkFactory::getBenchmark($name, $metadata, $component);
+        $benchmark = BenchmarkFactory::getBenchmark(
+            $name,
+            $metadata,
+            $component
+        );
         $benchmark->start();
         return $this->addBenchmark($benchmark);
     }
@@ -49,6 +53,7 @@ class Profiler implements ProfilerInterface, \Countable
      *
      * @param string $token Benchmark identifier
      * @param array $metadata Additional metadata
+     * @return BenchmarkInterface $benchmark
      * @throws UnknownBenchmarkException
      */
     public function stop($token, array $metadata = [])
@@ -58,6 +63,8 @@ class Profiler implements ProfilerInterface, \Countable
         }
         $this->benchmarks[$token]->addMetadata($metadata);
         $this->benchmarks[$token]->stop();
+
+        return $this->benchmarks[$token];
     }
 
     /**
@@ -88,7 +95,11 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function getDuration()
     {
-        return (microtime(true) - $this->start);
+        $last = $this->getLastBenchmark();
+        if ($last) {
+            return ($last->getEndTime() - $this->getStartTime());
+        }
+        return (microtime(true) - $this->getStartTime());
     }
 
     /**
@@ -109,5 +120,17 @@ class Profiler implements ProfilerInterface, \Countable
     public function getBenchmarks()
     {
         return $this->benchmarks;
+    }
+
+    /**
+     * @return BenchmarkInterface|null
+     */
+    public function getLastBenchmark()
+    {
+        $last = array_slice($this->benchmarks, -1, 1);
+        if ($last) {
+            return current($last);
+        }
+        return null;
     }
 }

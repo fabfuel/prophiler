@@ -10,6 +10,25 @@ body {
 }
 
 #prophiler {
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.42857143;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  *,
+  :before, :after {
+    @include box-sizing(border-box);
+  }
+
   .toolbar {
     position: fixed;
     display: block;
@@ -20,70 +39,140 @@ body {
     background-color: #fff;
     opacity: 0.97;
 
-    .timeline-viewport {
+    .navbar {
+      position: relative;
+      min-height: 50px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      background-color: #f8f8f8;
+      border-color: #e7e7e7;
 
+      .navbar-brand {
+        color: #777;
+        float: left;
+        height: 50px;
+        padding: 15px 15px;
+        font-size: 18px;
+        line-height: 20px;
+      }
+    }
+
+    .label {
+      display: inline;
+      padding: .2em .6em .3em;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: .25em;
+    }
+
+    #benchmarks {
       position: relative;
 
-      .marker {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
+      .table {
+        float: left;
+        width: 40%;
+        color: lighten(#000, 30%);
 
-        .line {
-          position: absolute;
-          top: 0px;
-          bottom: 0px;
-          background-color: #ddd;
-          width: 1px;
-        }
+        .row {
+          margin: 0;
 
-        .label {
-          font-size: .7em;
-          color: #aaa;
+          .column {
+            height: 25px;
+            float: left;
+            padding: 0 10px;
+            border-left: 1px solid #ddd;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .column-name {
+            width: 50%;
+          }
+
+          .column-component {
+            width: 20%;
+          }
+
+          .column-duration,
+          .column-memory {
+            text-align: right;
+            width: 15%;
+          }
+
+          &.header {
+            .column {
+              font-weight: 500;
+              font-size: .8em;
+              line-height: 1;
+              color: #aaa;
+              text-align: left;
+              height: 22px;
+            }
+          }
         }
       }
 
-      .benchmarks {
+      .timeline-viewport {
+
+        float: left;
+        width: 60%;
+
         position: relative;
-        padding-top: 20px;
 
-        .timeline {
+        .marker {
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
 
-          position: relative;
-          height: 25px;
-
-          .benchmark {
-            opacity: 0.7;
-
-            background-color: #337ab7;
+          .line {
             position: absolute;
-            height: 20px;
-            @include border-radius(.25em);
+            top: 0px;
+            bottom: 0px;
+            background-color: #ddd;
+            width: 1px;
+          }
 
-            display: inline;
-            padding: .2em .6em .3em;
-            font-size: 75%;
-            color: #fff;
-            text-align: left;
-            white-space: nowrap;
-            vertical-align: middle;
-            overflow: hidden;
-            text-overflow: ellipsis;
+          .label {
+            font-weight: 500;
+            font-size: .8em;
+            color: #aaa;
+          }
+        }
 
-            &.app {
+        .benchmarks {
+          position: relative;
+          padding-top: 20px;
+
+          .timeline {
+
+            position: relative;
+            height: 25px;
+
+            .benchmark {
+              opacity: 0.7;
               background-color: #337ab7;
-            }
-
-            &.mongodb {
-              background-color: #5cb85c;
-            }
-
-            &.dispatcher {
-              background-color: #f0ad4e;
+              position: absolute;
+              min-height: 20px;
+              display: inline;
+              padding: .2em .6em .3em;
+              font-size: 0.9em;
+              color: #fff;
+              text-align: left;
+              white-space: nowrap;
+              vertical-align: middle;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              @include border-radius(.25em);
             }
           }
         }
       }
     }
+
   }
 }

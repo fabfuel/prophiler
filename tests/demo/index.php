@@ -1,8 +1,8 @@
 <html>
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>-->
+<!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
 </head>
 <body>
     <p>Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.</p>
@@ -22,49 +22,52 @@ require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
 
-$multiplicator = 10;
+$multiplicator = 5;
+$wait = function ($time) use ($multiplicator) {
+    return $time * rand($multiplicator * .8, $multiplicator*1.2);
+};
 
 $bootstrap = $profiler->start('Bootstrap', ['lorem' => 'ipsum'], 'Application');
-usleep(50*$multiplicator);
+usleep($wait(50));
 $profiler->stop($bootstrap);
-usleep(25*$multiplicator);
+usleep($wait(25));
 
 $bootstrap = $profiler->start('Session::load', ['lorem' => 'ipsum'], 'Sessions');
-usleep(45*$multiplicator);
+usleep($wait(45));
 $profiler->stop($bootstrap);
-usleep(25*$multiplicator);
+usleep($wait(25));
 
 $dispatcher = $profiler->start('Dispatcher', ['abc' => '123', 'foobar' => true], 'Dispatcher');
-usleep(25*$multiplicator);
+usleep($wait(25));
 
     $router = $profiler->start('Router', ['some' => 'value', 'foobar' => 123], 'Dispatcher');
-    usleep(150*$multiplicator);
+    usleep($wait(150));
 
     $profiler->stop($router);
-    usleep(25*$multiplicator);
+    usleep($wait(25));
+    usleep($wait(25));
 
     $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123], 'Application');
-    usleep(200*$multiplicator);
+    usleep($wait(200));
 
-        $database = $profiler->start('MongoDB', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB');
-        usleep(200*$multiplicator);
+        $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar\LoremIpsum::doSomeFancyFoobarStuff', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB Super Database');
+        usleep($wait(200));
         $profiler->stop($database);
-        usleep(25*$multiplicator);
+        usleep($wait(25));
 
-        $view = $profiler->start('View', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
-        usleep(200*$multiplicator);
+        $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
+        usleep($wait(200));
         $profiler->stop($view);
-        usleep(20*$multiplicator);
-
+        usleep($wait(20));
 
     $profiler->stop($controller);
-    usleep(5*$multiplicator);
+    usleep($wait(5));
 
 $profiler->stop($dispatcher);
-usleep(15*$multiplicator);
+usleep($wait(15));
 
 $bootstrap = $profiler->start('Session::write', ['lorem' => 'ipsum'], 'Sessions');
-usleep(45*$multiplicator);
+usleep($wait(45));
 $profiler->stop($bootstrap);
 
 

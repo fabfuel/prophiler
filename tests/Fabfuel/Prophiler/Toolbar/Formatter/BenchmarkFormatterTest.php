@@ -69,7 +69,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('getMemoryUsage')
             ->willReturn(1234567);
 
-        $this->assertSame('01.18 MB', $this->formatter->getMemoryUsage());
+        $this->assertSame('1.18 MB', $this->formatter->getMemoryUsage());
     }
 
     public function testGetDuration()
@@ -79,20 +79,6 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(0.012345);
 
         $this->assertSame('12.35 ms', $this->formatter->getDuration());
-    }
-
-    /**
-     * @param string $component
-     * @param string $label
-     * @dataProvider getLabels
-     */
-    public function testGetLabel($component, $label)
-    {
-        $this->benchmark->expects($this->once())
-            ->method('getComponent')
-            ->willReturn($component);
-
-        $this->assertSame($label, $this->formatter->getLabel());
     }
 
     /**

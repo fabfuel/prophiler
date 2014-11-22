@@ -1,3 +1,44 @@
-<div class="timeline">
-    <div class="benchmark <?= $benchmark->getComponent() ?>" style="width: <?= $benchmark->getWidth() ?>%; left: <?= $benchmark->getOffset() ?>%" title="<?= $benchmark->getName() ?>"><?= $benchmark->getName() ?></div>
+<div class="timeline-viewport">
+
+    <?php
+
+        $durationScale = $profiler->getDuration() *1000;
+
+        if ($durationScale <= 15) {
+            $scale = 1;
+        } elseif ($durationScale < 30) {
+            $scale = 2;
+        } elseif ($durationScale < 75) {
+            $scale = 5;
+        } elseif ($durationScale < 150) {
+            $scale = 10;
+        } elseif ($durationScale < 375) {
+            $scale = 25;
+        } elseif ($durationScale < 750) {
+            $scale = 50;
+        } elseif ($durationScale < 1500) {
+            $scale = 100;
+        } elseif ($durationScale < 7500) {
+            $scale = 500;
+        } else {
+            $scale = 1000;
+        }
+
+    ?>
+
+    <?php for ($t = 0; $t <= $durationScale; $t += $scale): ?>
+        <div class="marker" style="left: <?= round(($t/$durationScale)*100, 3) ?>%;">
+            <div class="label"><?= $t ?> ms</div>
+            <div class="line"></div>
+        </div>
+    <?php endfor; ?>
+
+    <div class="benchmarks">
+        <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+        <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
+            <?php $timelineFormatter->setBenchmark($benchmark); ?>
+            <?php $this->partial('partials/timeline/benchmark', ['benchmark' => $timelineFormatter]); ?>
+        <?php endforeach; ?>
+    </div>
 </div>
+

@@ -13,15 +13,8 @@
         <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
             <div class="container-fluid">
 
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                    </button>
-                    <a class="navbar-brand">Phalcon Dev Toolbar</a>
-                </div>
+                <a class="navbar-brand">Phalcon Dev Toolbar</a>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="#">
@@ -50,58 +43,11 @@
                                     <span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"> <?= $dataCollector->getTitle() ?></a></li>
                         <?php endforeach; ?>
                     </ul>
-                </div>
             </div>
         </nav>
-        <div class="panel-group panel-collapse collapse" id="benchmarks" role="tablist" style="margin-top: 5px;">
-
-            <div class="timeline-viewport">
-
-                <?php
-
-                    $durationScale = $profiler->getDuration() *1000;
-
-                    if ($durationScale <= 15) {
-                        $scale = 1;
-                    } elseif ($durationScale < 75) {
-                        $scale = 5;
-                    } elseif ($durationScale < 150) {
-                        $scale = 10;
-                    } elseif ($durationScale < 375) {
-                        $scale = 25;
-                    } elseif ($durationScale < 750) {
-                        $scale = 50;
-                    } elseif ($durationScale < 1500) {
-                        $scale = 100;
-                    } elseif ($durationScale < 7500) {
-                        $scale = 500;
-                    } else {
-                        $scale = 1000;
-                    }
-
-                ?>
-
-                <?php for ($t = 0; $t <= $durationScale; $t += $scale): ?>
-                    <div class="marker" style="left: <?= round(($t/($profiler->getDuration() *1000))*100, 3) ?>%;">
-                        <div class="label"><?= $t ?> ms</div>
-                        <div class="line"></div>
-                    </div>
-                <?php endfor; ?>
-
-                <div class="benchmarks">
-                    <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
-                    <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
-                        <?php $timelineFormatter->setBenchmark($benchmark); ?>
-                        <?php $this->partial('partials/timeline', ['benchmark' => $timelineFormatter]); ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
-            <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
-                <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
-                <?php $this->partial('partials/benchmark'); ?>
-            <?php endforeach; ?>
+        <div class="panel-group panel-collapse " id="benchmarks" role="tablist" style="margin-top: 5px;">
+            <?php $this->partial('partials/table', ['profiler' => $profiler]); ?>
+            <?php $this->partial('partials/timeline', ['profiler' => $profiler]); ?>
         </div>
         <?php foreach ($dataCollectors as $dataCollector): ?>
             <?php $this->partial('partials/datacollector'); ?>

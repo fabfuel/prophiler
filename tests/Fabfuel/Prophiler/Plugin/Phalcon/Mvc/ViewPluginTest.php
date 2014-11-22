@@ -21,6 +21,13 @@ class ViewPluginTest extends PhalconPluginTest
         $this->viewPlugin = ViewPlugin::getInstance($this->getProfiler());
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::beforeRenderView
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRenderView
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
     public function testRenderView()
     {
         $token = 'token';
@@ -66,6 +73,10 @@ class ViewPluginTest extends PhalconPluginTest
     /**
      * @param $renderLevelInt
      * @param $renderLevelString
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel
+     * @covers Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
      * @dataProvider getRenderLevels
      */
     public function testGetRenderLevel($renderLevelInt, $renderLevelString)
