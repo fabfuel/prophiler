@@ -36,7 +36,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $profiler->expects($this->exactly(2))
+        $profiler->expects($this->exactly(1))
             ->method('getBenchmarks')
             ->willReturn([]);
 

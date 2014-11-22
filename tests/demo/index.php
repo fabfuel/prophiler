@@ -3,6 +3,15 @@
 <!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">-->
 <!--    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>-->
 <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.42857143;
+            padding: 30px;
+        }
+    </style>
 </head>
 <body>
     <p>Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.</p>

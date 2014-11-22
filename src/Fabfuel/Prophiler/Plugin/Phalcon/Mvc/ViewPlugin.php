@@ -41,9 +41,9 @@ class ViewPlugin extends PluginAbstract
      */
     public function beforeRenderView(Event $event, ViewInterface $view)
     {
-        $name = get_class($event->getSource()) . '::render';
+        $name = get_class($event->getSource()) . '::render: ' . basename($view->getActiveRenderPath());
         $metadata = [
-            'view' => $view->getActiveRenderPath(),
+            'view' => realpath($view->getActiveRenderPath()) ?: $view->getActiveRenderPath(),
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
         $this->token = $this->getProfiler()->start($name, $metadata, 'View');
