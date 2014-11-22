@@ -69,7 +69,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('getMemoryUsage')
             ->willReturn(1234567);
 
-        $this->assertSame('1.18 MB', $this->formatter->getMemoryUsage());
+        $this->assertSame('1.177 MB', $this->formatter->getMemoryUsage());
     }
 
     public function testGetDuration()

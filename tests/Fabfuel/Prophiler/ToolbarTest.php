@@ -40,7 +40,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->method('getBenchmarks')
             ->willReturn([]);
 
-        $profiler->expects($this->exactly(4))
+        $profiler->expects($this->exactly(2))
             ->method('getDuration')
             ->willReturn(100);
 

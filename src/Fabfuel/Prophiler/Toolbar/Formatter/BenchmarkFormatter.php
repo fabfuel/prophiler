@@ -5,8 +5,6 @@
  */
 namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
-use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
-
 class BenchmarkFormatter extends AbstractBenchmarkFormatter implements BenchmarkFormatterInterface
 {
     /**
@@ -14,7 +12,7 @@ class BenchmarkFormatter extends AbstractBenchmarkFormatter implements Benchmark
      */
     public function getMemoryUsage()
     {
-        return sprintf('%.2f MB', ($this->getBenchmark()->getMemoryUsage() /1024 /1024 ));
+        return sprintf('%.3f MB', ($this->getBenchmark()->getMemoryUsage() /1024 /1024 ));
     }
 
     /**
