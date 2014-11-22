@@ -121,6 +121,7 @@ body {
 
         float: left;
         width: 60%;
+        padding-right: 10px;
 
         position: relative;
 
@@ -168,6 +169,11 @@ body {
               overflow: hidden;
               text-overflow: ellipsis;
               @include border-radius(.25em);
+
+              &:hover {
+                overflow: visible;
+                width: auto !important;
+              }
             }
           }
         }

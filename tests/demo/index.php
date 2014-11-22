@@ -22,7 +22,7 @@ require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
 
-$multiplicator = 5;
+$multiplicator = 100;
 $wait = function ($time) use ($multiplicator) {
     return $time * rand($multiplicator * .8, $multiplicator*1.2);
 };
@@ -30,12 +30,10 @@ $wait = function ($time) use ($multiplicator) {
 $bootstrap = $profiler->start('Bootstrap', ['lorem' => 'ipsum'], 'Application');
 usleep($wait(50));
 $profiler->stop($bootstrap);
-usleep($wait(25));
 
 $bootstrap = $profiler->start('Session::load', ['lorem' => 'ipsum'], 'Sessions');
 usleep($wait(45));
 $profiler->stop($bootstrap);
-usleep($wait(25));
 
 $dispatcher = $profiler->start('Dispatcher', ['abc' => '123', 'foobar' => true], 'Dispatcher');
 usleep($wait(25));
@@ -44,27 +42,30 @@ usleep($wait(25));
     usleep($wait(150));
 
     $profiler->stop($router);
-    usleep($wait(25));
-    usleep($wait(25));
 
     $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123], 'Application');
     usleep($wait(200));
 
+        $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
+        usleep($wait(10));
+        $profiler->stop($view);
+
+        $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
+        usleep($wait(10));
+        $profiler->stop($view);
+
         $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar\LoremIpsum::doSomeFancyFoobarStuff', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB Super Database');
         usleep($wait(200));
         $profiler->stop($database);
-        usleep($wait(25));
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
-        usleep($wait(200));
+        usleep($wait(100));
         $profiler->stop($view);
-        usleep($wait(20));
 
     $profiler->stop($controller);
-    usleep($wait(5));
+    usleep($wait(20));
 
 $profiler->stop($dispatcher);
-usleep($wait(15));
 
 $bootstrap = $profiler->start('Session::write', ['lorem' => 'ipsum'], 'Sessions');
 usleep($wait(45));
