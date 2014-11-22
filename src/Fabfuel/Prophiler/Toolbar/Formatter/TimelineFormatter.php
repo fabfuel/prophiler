@@ -10,6 +10,8 @@ use Fabfuel\Prophiler\ProfilerInterface;
 
 class TimelineFormatter extends AbstractBenchmarkFormatter
 {
+    const TIMEBUFFER_FACTOR = 1.1;
+
     /**
      * @var ProfilerInterface
      */
@@ -25,13 +27,13 @@ class TimelineFormatter extends AbstractBenchmarkFormatter
 
     public function getWidth()
     {
-        return round($this->getBenchmark()->getDuration() / $this->getProfiler()->getDuration() * 100, 2);
+        return round($this->getBenchmark()->getDuration() / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
     }
 
     public function getOffset()
     {
         $offset = $this->getBenchmark()->getStartTime() - $this->getProfiler()->getStartTime();
-        return round($offset / $this->getProfiler()->getDuration() * 100, 2);
+        return round($offset / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
     }
 
     /**

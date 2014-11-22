@@ -4,12 +4,14 @@
 
 $c-lines: #eee;
 
+$c-event-0: rgba(218,88,84,.75);
+$c-event-1: rgba(57,126,185,.75);
+$c-event-2: rgba(97,186,97,.75);
+$c-event-3: rgba(240,175,83,.75);
+$c-event-4: rgba(96,194,223,.75);
+
 body {
   margin-top: 52px !important;
-}
-
-.collapse {
-  display: none;
 }
 
 #prophiler {
@@ -30,7 +32,29 @@ body {
   *,
   :before, :after {
     @include box-sizing(border-box);
+    outline: none;
   }
+
+  .color-0 {
+    background-color: $c-event-0;
+  }
+
+  .color-1 {
+    background-color: $c-event-1;
+  }
+
+  .color-2 {
+    background-color: $c-event-2;
+  }
+
+  .color-3 {
+    background-color: $c-event-3;
+  }
+
+  .color-4 {
+    background-color: $c-event-4;
+  }
+
 
   .toolbar {
     position: fixed;
@@ -146,8 +170,6 @@ body {
             height: 23px;
 
             .benchmark {
-              opacity: 0.7;
-              background-color: #337ab7;
               position: absolute;
               display: inline;
               padding: .3em .6em .3em;
@@ -165,8 +187,9 @@ body {
         }
 
         .details {
+          position: relative;
           @include box-shadow(inset 0 0 5px rgba(0, 0, 0, .25));
-          background-color: $c-lines;
+          color: #fff;
           padding: 10px;
           display: none;
         }

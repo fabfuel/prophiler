@@ -31,7 +31,7 @@ require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
 
-$multiplicator = 100;
+$multiplicator = 20;
 $wait = function ($time) use ($multiplicator) {
     return $time * rand($multiplicator * .8, $multiplicator*1.2);
 };

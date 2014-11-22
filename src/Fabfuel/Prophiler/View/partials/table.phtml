@@ -1,13 +1,13 @@
 <div class="table">
 
+    <?php $this->partial('partials/timeline/scale', ['profiler' => $profiler]); ?>
+
     <div class="row header">
         <div class="column column-name">Name</div>
         <div class="column column-component">Component</div>
         <div class="column column-duration">Duration</div>
         <div class="column column-memory">Memory</div>
     </div>
-
-    <?php $this->partial('partials/timeline/scale', ['profiler' => $profiler]); ?>
 
     <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
     <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
@@ -25,10 +25,9 @@
             </div>
         </div>
 
-        <div class="details" id="prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>">
-            <?php $this->partial('partials/benchmark'); ?>
+        <div class="details <?= $benchmarkFormatter->getColorClass() ?>" id="prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>" >
+            <?php $this->partial('partials/timeline/details', ['benchmark' => $benchmarkFormatter]); ?>
         </div>
 
     <?php endforeach; ?>
 </div>
-
