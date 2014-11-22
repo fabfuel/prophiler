@@ -43,7 +43,7 @@ usleep($wait(25));
 
     $profiler->stop($router);
 
-    $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123], 'Application');
+    $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123, 'array' => ['foo' => 'bar', 'lorem' => true, 'ipsum' => 1.5]], 'Application');
     usleep($wait(200));
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');

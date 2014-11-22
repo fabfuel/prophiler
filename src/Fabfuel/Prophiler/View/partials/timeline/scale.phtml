@@ -1,6 +1,4 @@
-<div class="timeline-viewport">
-
-    <?php
+<div class="timeline-scale"><?php
 
         $durationScale = $profiler->getDuration() *1000;
 
@@ -32,13 +30,4 @@
             <div class="line"></div>
         </div>
     <?php endfor; ?>
-
-    <div class="benchmarks">
-        <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
-        <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
-            <?php $timelineFormatter->setBenchmark($benchmark); ?>
-            <?php $this->partial('partials/timeline/benchmark', ['benchmark' => $timelineFormatter]); ?>
-        <?php endforeach; ?>
-    </div>
 </div>
-
