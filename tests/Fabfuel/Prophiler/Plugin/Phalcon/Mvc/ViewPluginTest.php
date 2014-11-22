@@ -48,7 +48,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->method('getCurrentRenderLevel')
             ->willReturn(1);
 
-        $view->expects($this->once())
+        $view->expects($this->exactly(3))
             ->method('getActiveRenderPath')
             ->willReturn('main');
 
@@ -59,7 +59,7 @@ class ViewPluginTest extends PhalconPluginTest
 
         $this->profiler->expects($this->once())
             ->method('start')
-            ->with(get_class($view) . '::render', $metadata, 'View')
+            ->with(get_class($view) . '::render: main', $metadata, 'View')
             ->willReturn($token);
 
         $this->profiler->expects($this->once())
