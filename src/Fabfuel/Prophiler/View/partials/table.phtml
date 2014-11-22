@@ -1,0 +1,23 @@
+<div class="table">
+
+    <div class="row header">
+        <div class="column column-name">Name</div>
+        <div class="column column-component">Component</div>
+        <div class="column column-duration">Duration</div>
+        <div class="column column-memory">Memory</div>
+    </div>
+
+    <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
+    <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
+        <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
+
+        <div class="row">
+            <div class="column column-name" title="<?= $benchmarkFormatter->getName() ?>"><?= $benchmarkFormatter->getName() ?></div>
+            <div class="column column-component" title="<?= $benchmarkFormatter->getComponent() ?>"><?= $benchmarkFormatter->getComponent() ?></div>
+            <div class="column column-duration"><?= $benchmarkFormatter->getDuration() ?></div>
+            <div class="column column-memory"><?= $benchmarkFormatter->getMemoryUsage() ?></div>
+        </div>
+
+    <?php endforeach; ?>
+</div>
+

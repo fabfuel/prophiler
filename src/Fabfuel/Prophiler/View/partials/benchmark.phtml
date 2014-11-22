@@ -14,7 +14,7 @@
             <?php endif; ?>
 
             <span class="pull-right">
-                <span class="label label-<?= $benchmarkFormatter->getLabel() ?>"><span class="glyphicon glyphicon-<?= $benchmarkFormatter->getIcon() ?>"></span> <?= $benchmarkFormatter->getComponent() ?></span>
+                <span class="label" style="background-color: <?= $benchmarkFormatter->getColor() ?>"><span class="glyphicon glyphicon-<?= $benchmarkFormatter->getIcon() ?>"></span> <?= $benchmarkFormatter->getComponent() ?></span>
                 <?= $benchmarkFormatter->getMemoryUsage() ?> | <?= $benchmarkFormatter->getDuration() ?>
             </span>
         </h4>

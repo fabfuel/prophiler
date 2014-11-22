@@ -20,12 +20,52 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Fabfuel\Prophiler\Profiler::__construct
      * @covers Fabfuel\Prophiler\Profiler::getDuration
+     * @covers Fabfuel\Prophiler\Profiler::getStartTime
+     * @uses Fabfuel\Prophiler\Profiler
      */
     public function testGetDuration()
     {
         $this->assertGreaterThan(0, $this->profiler->getDuration());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Profiler::getDuration
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     */
+    public function testGetDurationFromLastBenchmark()
+    {
+        $benchmarkToken = $this->profiler->start('benchmark');
+        $benchmark = $this->profiler->stop($benchmarkToken);
+
+        $this->assertSame($benchmark->getEndTime()-$this->profiler->getStartTime(), $this->profiler->getDuration());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Profiler::getLastBenchmark
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     */
+    public function testGetLastBenchmark()
+    {
+        $benchmarkToken = $this->profiler->start('benchmark');
+        $benchmark = $this->profiler->stop($benchmarkToken);
+
+        $this->assertSame($benchmark, $this->profiler->getLastBenchmark());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Profiler::getLastBenchmark
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     */
+    public function testGetLastBenchmarkWithoutBenchmarks()
+    {
+        $this->assertSame(null, $this->profiler->getLastBenchmark());
     }
 
     /**
@@ -61,11 +101,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Fabfuel\Prophiler\Profiler::__construct
-     * @covers Fabfuel\Prophiler\Profiler::addBenchmark
-     * @covers Fabfuel\Prophiler\Profiler::getBenchmarks
-     * @covers Fabfuel\Prophiler\Profiler::count
      * @covers Fabfuel\Prophiler\Profiler::start
+     * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
      * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
@@ -87,11 +124,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Fabfuel\Prophiler\Profiler::__construct
-     * @covers Fabfuel\Prophiler\Profiler::addBenchmark
-     * @covers Fabfuel\Prophiler\Profiler::getBenchmarks
-     * @covers Fabfuel\Prophiler\Profiler::start
      * @covers Fabfuel\Prophiler\Profiler::stop
+     * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Benchmark\BenchmarkFactory
      * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
@@ -110,7 +144,9 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $duration1 = $benchmark->getDuration();
         $this->assertGreaterThan(0, $benchmark->getDuration());
 
-        $this->profiler->stop($token, $metadataStop);
+        $benchmarkInstance = $this->profiler->stop($token, $metadataStop);
+        $this->assertInstanceOf('Fabfuel\Prophiler\Benchmark\Benchmark', $benchmarkInstance);
+
         $duration2 = $benchmark->getDuration();
         $this->assertGreaterThan(0, $benchmark->getDuration());
         $this->assertGreaterThan($duration1, $duration2);
