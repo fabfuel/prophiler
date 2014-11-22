@@ -9,18 +9,7 @@ use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 
 class AbstractBenchmarkFormatter
 {
-    /**
-     * Available bootstrap label classes
-     *
-     * @var array
-     */
-    protected $colors = [
-        '#337ab7',
-        '#d9534f',
-        '#5cb85c',
-        '#f0ad4e',
-        '#5bc0de',
-    ];
+    const NUMBER_COLORS = 5;
 
     /**
      * @var BenchmarkInterface
@@ -67,10 +56,12 @@ class AbstractBenchmarkFormatter
         return spl_object_hash($this->getBenchmark());
     }
 
-    public function getColor()
+    public function getColorClass()
     {
-        $colorIndex = strlen($this->getComponent()) % count($this->colors);
-        return $this->colors[$colorIndex];
+        return sprintf(
+            'color-%s',
+            strlen($this->getComponent()) % self::NUMBER_COLORS
+        );
     }
 
     /**
