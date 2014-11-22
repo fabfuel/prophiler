@@ -9,51 +9,36 @@
 <div id="prophiler">
 
     <div class="toolbar">
+        <h1>Phalcon Dev Toolbar</h1>
 
-        <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px;">
-            <div class="container-fluid">
+        <nav>
+            <ul>
+                <li>
+                    <span class="label color-2"><?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
+                </li>
+                <li>
+                    <span class="label color-1"><?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                </li>
+                <li>
+                    <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5">Benchmarks</span></a>
+                </li>
 
-                <a class="navbar-brand">Phalcon Dev Toolbar</a>
-
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="#">
-                                <?php if ($profiler->getDuration() * 1000 < 2): ?>
-                                    <span class="label label-success">
-                                <?php elseif ($profiler->getDuration() * 1000 < 5): ?>
-                                    <span class="label label-warning">
-                                <?php else: ?>
-                                    <span class="label label-danger">
-                                <?php endif; ?>
-                                    <span class="glyphicon glyphicon-time"></span> <?php printf('%.3f ms ', $profiler->getDuration() * 1000) ?>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-primary"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
-                            </a>
-                        </li>
-                        <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#benchmarks">
-                                <span class="glyphicon glyphicon-dashboard"> Benchmarks
-                        </a></li>
-
-                        <?php foreach ($dataCollectors as $dataCollector): ?>
-                            <li><a class="collapsed" data-toggle="collapse" data-parent="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="collapseTwo" href="#<?= $dataCollector->getTitle() ?>">
-                                    <span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"> <?= $dataCollector->getTitle() ?></a></li>
-                        <?php endforeach; ?>
-                    </ul>
-            </div>
+                <?php foreach ($dataCollectors as $dataCollector): ?>
+                    <li>
+                        <a href="#" onclick="return $('#prophiler-datacollector-<?= md5($dataCollector->getTitle()) ?>').slideToggle('fast');"><span class="label color-5"><?= $dataCollector->getTitle() ?></span></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </nav>
-
-        <div id="benchmarks">
-            <?php $this->partial('partials/table', ['profiler' => $profiler]); ?>
-        </div>
-
-        <?php foreach ($dataCollectors as $dataCollector): ?>
-            <?php $this->partial('partials/datacollector'); ?>
-        <?php endforeach; ?>
     </div>
+
+    <div id="prophiler-benchmarks" class="benchmarks">
+        <?php $this->partial('partials/table', ['profiler' => $profiler]); ?>
+    </div>
+
+    <?php foreach ($dataCollectors as $dataCollector): ?>
+        <?php $this->partial('partials/datacollector'); ?>
+    <?php endforeach; ?>
 </div>
 
 <script>
