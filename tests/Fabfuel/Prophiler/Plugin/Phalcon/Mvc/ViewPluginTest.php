@@ -25,6 +25,8 @@ class ViewPluginTest extends PhalconPluginTest
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::beforeRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Profiler
      */
@@ -48,7 +50,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->method('getCurrentRenderLevel')
             ->willReturn(1);
 
-        $view->expects($this->exactly(3))
+        $view->expects($this->exactly(5))
             ->method('getActiveRenderPath')
             ->willReturn('main');
 
