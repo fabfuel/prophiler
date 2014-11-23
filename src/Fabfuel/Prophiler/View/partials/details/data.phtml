@@ -4,9 +4,9 @@
         <?php if (is_array($data)): ?>
             <details>
                 <?php if (isset($json)): ?>
-                    <?php $this->partial('partials/timeline/data/json'); ?>
+                    <?php $this->partial('partials/details/data/json'); ?>
                 <?php else: ?>
-                    <?php $this->partial('partials/timeline/data/array'); ?>
+                    <?php $this->partial('partials/details/data/array'); ?>
                 <?php endif; ?>
             </details>
         <?php else: ?>

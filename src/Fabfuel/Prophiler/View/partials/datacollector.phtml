@@ -3,7 +3,7 @@
     <dl class="dl-horizontal">
         <?php foreach ($dataCollector->getData() as $dataName => $data): ?>
             <?php if (empty($data)): continue; endif; ?>
-            <?php $this->partial('partials/timeline/data'); ?>
+            <?php $this->partial('partials/details/data'); ?>
         <?php endforeach; ?>
     </dl>
 </div>

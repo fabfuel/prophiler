@@ -95,9 +95,9 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
         $benchmarks = $this->profiler->getBenchmarks();
 
-        $this->assertTrue(isset($benchmarks[$token1]));
-        $this->assertTrue(isset($benchmarks[$token2]));
-        $this->assertTrue(isset($benchmarks[$token3]));
+        $this->assertTrue(isset($benchmarks[0]));
+        $this->assertTrue(isset($benchmarks[1]));
+        $this->assertTrue(isset($benchmarks[2]));
     }
 
     /**
@@ -116,10 +116,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $token);
         $this->assertSame(1, count($this->profiler));
 
-        $benchmarks = $this->profiler->getBenchmarks();
-        $this->assertTrue(isset($benchmarks[$token]));
-
-        $benchmark = $benchmarks[$token];
+        $benchmark = $this->profiler->getBenchmark($token);
         $this->assertInstanceOf('\Fabfuel\Prophiler\Benchmark\Benchmark', $benchmark);
     }
 
@@ -136,8 +133,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $metadataStop = ['additional' => 'stop'];
 
         $token = $this->profiler->start($name, $metadataStart);
-        $benchmarks = $this->profiler->getBenchmarks();
-        $benchmark = $benchmarks[$token];
+        $benchmark = $this->profiler->getBenchmark($token);
 
         $this->assertSame($metadataStart, $benchmark->getMetadata());
 

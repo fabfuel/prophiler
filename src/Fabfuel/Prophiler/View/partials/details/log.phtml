@@ -4,15 +4,9 @@
  */
 ?>
 <dl>
-    <dt>Duration</dt>
-    <dd><?= $benchmark->getDuration() ?></dd>
-
-    <dt>Memory usage</dt>
-    <dd><?= $benchmark->getMemoryUsage() ?></dd>
-
     <?php if ($benchmark->getMetadata()): ?>
         <?php foreach ($benchmark->getMetadata() as $metadataName => $metadata): ?>
-            <?php $this->partial('partials/timeline/data', ['data' => $metadata, 'dataName' => $metadataName, 'json' => true]); ?>
+            <?php $this->partial('partials/details/data', ['data' => $metadata, 'dataName' => $metadataName, 'json' => true]); ?>
         <?php endforeach; ?>
     <?php endif; ?>
 </dl>

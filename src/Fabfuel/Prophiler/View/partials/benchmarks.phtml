@@ -11,7 +11,7 @@
 
     <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
     <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
-    <?php foreach ($profiler->getBenchmarks() as $benchmark): ?>
+    <?php foreach (new \Fabfuel\Prophiler\Iterator\BenchmarkIterator($profiler) as $benchmark): ?>
         <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
         <?php $timelineFormatter->setBenchmark($benchmark); ?>
 
@@ -26,7 +26,7 @@
         </div>
 
         <div class="details <?= $benchmarkFormatter->getColorClass() ?>" id="prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>" >
-            <?php $this->partial('partials/timeline/details', ['benchmark' => $benchmarkFormatter]); ?>
+            <?php $this->partial('partials/details/benchmark', ['benchmark' => $benchmarkFormatter]); ?>
         </div>
 
     <?php endforeach; ?>
