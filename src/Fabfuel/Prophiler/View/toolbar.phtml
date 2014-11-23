@@ -54,7 +54,7 @@
 	}
     window.addEventListener("load", function () {
         $('json').each(function (index, el) {
-            el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '\t');
+            el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
         });
     });
 </script>

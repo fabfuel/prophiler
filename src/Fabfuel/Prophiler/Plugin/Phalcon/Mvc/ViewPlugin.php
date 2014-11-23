@@ -19,7 +19,7 @@ class ViewPlugin extends PluginAbstract
     /**
      * @var string
      */
-    private $token;
+    private $tokens = [];
 
     /**
      * All render levels as descriptive strings
@@ -46,15 +46,29 @@ class ViewPlugin extends PluginAbstract
             'view' => realpath($view->getActiveRenderPath()) ?: $view->getActiveRenderPath(),
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
-        $this->token = $this->getProfiler()->start($name, $metadata, 'View');
+
+        $this->setToken($view, $this->getProfiler()->start($name, $metadata, 'View'));
     }
 
     /**
      * Stop view benchmark
      */
-    public function afterRenderView()
+    public function afterRenderView(Event $event, ViewInterface $view)
     {
-        $this->getProfiler()->stop($this->token);
+        $token = $this->getToken($view);
+        $this->getProfiler()->stop($token);
+    }
+
+    /**
+     * Stop view benchmark
+     */
+    public function afterRender(Event $event, ViewInterface $view)
+    {
+        foreach ($this->tokens as $views) {
+            foreach ($views as $token) {
+                $this->getProfiler()->stop($token);
+            }
+        }
     }
 
     /**
@@ -64,5 +78,32 @@ class ViewPlugin extends PluginAbstract
     public function getRenderLevel($renderLevelInt)
     {
         return isset($this->renderLevels[$renderLevelInt]) ? $this->renderLevels[$renderLevelInt] : '';
+    }
+
+    /**
+     * @param View $view
+     * @param string $token
+     */
+    public function setToken(View $view, $token)
+    {
+        $this->tokens[md5($view->getActiveRenderPath())][] = $token;
+    }
+
+    /**
+     * @param View $view
+     * @return string
+     */
+    public function getToken(View $view)
+    {
+        return array_shift($this->tokens[md5($view->getActiveRenderPath())]);
+    }
+
+    /**
+     * @param View $view
+     * @return string
+     */
+    public function getIdentifier(View $view)
+    {
+        return md5($view->getActiveRenderPath());
     }
 }
