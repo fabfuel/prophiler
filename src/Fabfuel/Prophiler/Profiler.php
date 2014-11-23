@@ -17,6 +17,16 @@ class Profiler implements ProfilerInterface, \Countable
     protected $benchmarks = [];
 
     /**
+     * @var int
+     */
+    protected $index = 0;
+
+    /**
+     * @var array
+     */
+    protected $tokenMap = [];
+
+    /**
      * @var double Starting time
      */
     protected $start;
@@ -50,21 +60,19 @@ class Profiler implements ProfilerInterface, \Countable
 
     /**
      * Stop a running benchmark
+     * If no token provided, the last started benchmark is stopped
      *
      * @param string $token Benchmark identifier
      * @param array $metadata Additional metadata
      * @return BenchmarkInterface $benchmark
      * @throws UnknownBenchmarkException
      */
-    public function stop($token, array $metadata = [])
+    public function stop($token = null, array $metadata = [])
     {
-        if (!isset($this->benchmarks[$token])) {
-            throw new UnknownBenchmarkException('Undefined benchmark: ' . $token);
-        }
-        $this->benchmarks[$token]->addMetadata($metadata);
-        $this->benchmarks[$token]->stop();
-
-        return $this->benchmarks[$token];
+        $benchmark = $this->getBenchmark($token);
+        $benchmark->addMetadata($metadata);
+        $benchmark->stop();
+        return $benchmark;
     }
 
     /**
@@ -74,18 +82,9 @@ class Profiler implements ProfilerInterface, \Countable
     public function addBenchmark(BenchmarkInterface $benchmark)
     {
         $token = spl_object_hash($benchmark);
-        $this->benchmarks[$token] = $benchmark;
+        $this->benchmarks[] = $benchmark;
+        $this->tokenMap[$token] = $benchmark;
         return $token;
-    }
-
-    /**
-     * Get the total number of benchmarks
-     *
-     * @return int Total number of benchmarks
-     */
-    public function count()
-    {
-        return count($this->benchmarks);
     }
 
     /**
@@ -123,6 +122,25 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
+     * Get a specific of the last started benchmark
+     *
+     * @param string $token
+     * @return BenchmarkInterface|null
+     */
+    public function getBenchmark($token = null)
+    {
+        if ($token) {
+            if (!isset($this->tokenMap[$token])) {
+                throw new UnknownBenchmarkException('Unkown benchmark: ' . $token);
+            }
+            $benchmark = $this->tokenMap[$token];
+        } else {
+            $benchmark = $this->getLastBenchmark();
+        }
+        return $benchmark;
+    }
+
+    /**
      * @return BenchmarkInterface|null
      */
     public function getLastBenchmark()
@@ -132,5 +150,71 @@ class Profiler implements ProfilerInterface, \Countable
             return current($last);
         }
         return null;
+    }
+
+    /**
+     * Get the total number of benchmarks
+     *
+     * @return int Total number of benchmarks
+     */
+    public function count()
+    {
+        return count($this->benchmarks);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the current element
+     * @link http://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     */
+    public function current()
+    {
+        return $this->benchmarks[$this->index];
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Move forward to next element
+     * @link http://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     */
+    public function next()
+    {
+        $this->index += 1;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the key of the current element
+     * @link http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     */
+    public function key()
+    {
+        return $this->index;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Checks if current position is valid
+     * @link http://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     */
+    public function valid()
+    {
+        return isset($this->benchmarks[$this->index]);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Rewind the Iterator to the first element
+     * @link http://php.net/manual/en/iterator.rewind.php
+     * @return void Any returned value is ignored.
+     */
+    public function rewind()
+    {
+        $this->index = 0;
     }
 }

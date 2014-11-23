@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0d54155287118fa4dda8cf7eb4ea8d73",
+    "hash": "3bb3f5c4d09b717906da104c1ad2d211",
     "packages": [],
     "packages-dev": [
         {
@@ -114,14 +114,14 @@
             "version": "1.3.0",
             "source": {
                 "type": "git",
-                "url": "https://bitbucket.org/orangecloud/php-helper-array.git",
-                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c"
+                "url": "git@bitbucket.org:orangecloud/php-helper-array",
+                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://bitbucket.org/orangecloud/php-helper-array/get/0dd1432de6ef2d6335f710f28d50a2420777859c.zip",
-                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c",
-                "shasum": ""
+                "type": "tar",
+                "url": "http://composer.orangecloud.de/dist/orangecloud-php-helper-array-1.3.0-8b90cd.tar",
+                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16",
+                "shasum": "858c940ae4dcbef42aa54a64c6bbe12bdb90e6ff"
             },
             "require": {
                 "php": ">=5.3"
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "A collection of array helper functions",
-            "time": "2014-06-19 11:07:47"
+            "time": "2014-06-19 09:07:47"
         },
         {
             "name": "pdepend/pdepend",
@@ -635,6 +635,44 @@
             "time": "2014-10-03 05:12:11"
         },
         {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
+        },
+        {
             "name": "sebastian/comparator",
             "version": "1.0.1",
             "source": {
@@ -977,17 +1015,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.6",
+            "version": "v2.5.7",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "2d9f527449cabfa8543dd7fa3a466d6ae83d6726"
+                "reference": "900d38bc8f74a50343ce65dd1c1e9819658ee56b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2d9f527449cabfa8543dd7fa3a466d6ae83d6726",
-                "reference": "2d9f527449cabfa8543dd7fa3a466d6ae83d6726",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/900d38bc8f74a50343ce65dd1c1e9819658ee56b",
+                "reference": "900d38bc8f74a50343ce65dd1c1e9819658ee56b",
                 "shasum": ""
             },
             "require": {
@@ -1020,7 +1058,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-01 05:50:18"
+            "time": "2014-11-20 13:22:25"
         }
     ],
     "aliases": [],

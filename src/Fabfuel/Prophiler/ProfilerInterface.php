@@ -5,7 +5,9 @@
  */
 namespace Fabfuel\Prophiler;
 
-interface ProfilerInterface
+use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
+
+interface ProfilerInterface extends \Iterator
 {
     /**
      * Start a new benchmark
@@ -19,12 +21,13 @@ interface ProfilerInterface
 
     /**
      * Stop a running benchmark
+     * If no token provided, the last started benchmark is stopped
      *
      * @param string $token benchmark identifier
      * @param array $metadata Addtional metadata or data
-     * @return void
+     * @return BenchmarkInterface
      */
-    public function stop($token, array $metadata = []);
+    public function stop($token = null, array $metadata = []);
 
     /**
      * Get the total number of elapsed time in milliseconds
