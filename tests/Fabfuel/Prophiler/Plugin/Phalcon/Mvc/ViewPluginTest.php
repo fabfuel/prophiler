@@ -25,8 +25,8 @@ class ViewPluginTest extends PhalconPluginTest
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::beforeRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel
-     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
-     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Profiler
      */
@@ -84,6 +84,50 @@ class ViewPluginTest extends PhalconPluginTest
     public function testGetRenderLevel($renderLevelInt, $renderLevelString)
     {
         $this->assertSame($renderLevelString, $this->viewPlugin->getRenderLevel($renderLevelInt));
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getIdentifier
+     * @covers Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testGetIdentifier()
+    {
+        $view = $this->getMockBuilder('Phalcon\Mvc\View')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $view->expects($this->once())
+            ->method('getActiveRenderPath')
+            ->willReturn('test');
+
+        $this->assertSame(md5('test'), $this->viewPlugin->getIdentifier($view));
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
+     * @covers Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testGetAndSetToken()
+    {
+        $view = $this->getMockBuilder('Phalcon\Mvc\View')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $view->expects($this->exactly(5))
+            ->method('getActiveRenderPath')
+            ->willReturn('test');
+
+        $this->viewPlugin->setToken($view, 'token1');
+        $this->viewPlugin->setToken($view, 'token2');
+
+        $this->assertSame('token1', $this->viewPlugin->getToken($view));
+        $this->assertSame('token2', $this->viewPlugin->getToken($view));
+        $this->assertNull($this->viewPlugin->getToken($view));
     }
 
     /**

@@ -10,7 +10,7 @@ $c-event-1: rgba(57, 126, 185, .75);
 $c-event-2: rgba(97, 186, 97, .75);
 $c-event-3: rgba(240, 175, 83, .75);
 $c-event-4: rgba(96, 194, 223, .75);
-$c-event-5: rgba(141, 141, 141, 0.75);
+$c-event-5: rgba(142, 142, 142, 0.75);
 
 body {
   margin-top: 52px !important;
@@ -63,6 +63,7 @@ body {
   }
   .color-5 {
     background-color: $c-event-5;
+    border: 1px solid darken($c-event-5, 5%);
   }
 
   .label {
@@ -201,7 +202,7 @@ body {
           display: inline;
           padding: 3px;
           margin-top: 10px;
-          @include border-radius(3px);
+          @include border-radius(2px);
         }
       }
     }
@@ -251,7 +252,7 @@ body {
     display: none;
   }
 
-  .logs{
+  .logs {
     position: relative;
     max-height: 500px;
     overflow-x: hidden;
@@ -289,10 +290,13 @@ body {
       margin-left: 180px;
     }
   }
-  details {
-    summary {
-      cursor: pointer;
-    }
+
+  pre {
+    font-size: 1em;
+    margin-top: 0;
+    padding: 0;
+    border: none;
+    background: none;
   }
 
   .severity-info,

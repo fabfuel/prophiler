@@ -17,7 +17,7 @@ use Phalcon\Mvc\ViewInterface;
 class ViewPlugin extends PluginAbstract
 {
     /**
-     * @var string
+     * @var array
      */
     private $tokens = [];
 
@@ -52,6 +52,8 @@ class ViewPlugin extends PluginAbstract
 
     /**
      * Stop view benchmark
+     *
+     * @param Event $event
      */
     public function afterRenderView(Event $event, ViewInterface $view)
     {
@@ -62,7 +64,7 @@ class ViewPlugin extends PluginAbstract
     /**
      * Stop view benchmark
      */
-    public function afterRender(Event $event, ViewInterface $view)
+    public function afterRender()
     {
         foreach ($this->tokens as $views) {
             foreach ($views as $token) {
@@ -81,28 +83,28 @@ class ViewPlugin extends PluginAbstract
     }
 
     /**
-     * @param View $view
+     * @param ViewInterface $view
      * @param string $token
      */
-    public function setToken(View $view, $token)
+    public function setToken(ViewInterface $view, $token)
     {
         $this->tokens[md5($view->getActiveRenderPath())][] = $token;
     }
 
     /**
-     * @param View $view
+     * @param ViewInterface $view
      * @return string
      */
-    public function getToken(View $view)
+    public function getToken(ViewInterface $view)
     {
         return array_shift($this->tokens[md5($view->getActiveRenderPath())]);
     }
 
     /**
-     * @param View $view
+     * @param ViewInterface $view
      * @return string
      */
-    public function getIdentifier(View $view)
+    public function getIdentifier(ViewInterface $view)
     {
         return md5($view->getActiveRenderPath());
     }
