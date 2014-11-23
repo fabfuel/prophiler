@@ -11,7 +11,7 @@
 
     <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
     <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
-    <?php foreach (new \Fabfuel\Prophiler\Iterator\BenchmarkIterator($profiler) as $benchmark): ?>
+    <?php foreach ($profiler as $benchmark): ?>
         <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
         <?php $timelineFormatter->setBenchmark($benchmark); ?>
 
