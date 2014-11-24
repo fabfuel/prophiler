@@ -10,7 +10,7 @@ $c-event-1: rgba(57, 126, 185, .75);
 $c-event-2: rgba(97, 186, 97, .75);
 $c-event-3: rgba(240, 175, 83, .75);
 $c-event-4: rgba(96, 194, 223, .75);
-$c-event-5: rgba(142, 142, 142, 0.75);
+$c-event-5: rgba(216, 216, 216, 0.75);
 
 body {
   margin-top: 52px !important;
@@ -63,7 +63,7 @@ body {
   }
   .color-5 {
     background-color: $c-event-5;
-    border: 1px solid darken($c-event-5, 5%);
+    color: darken($c-event-5, 65%) !important;
   }
 
   .label {
@@ -129,7 +129,7 @@ body {
     .row {
       margin: 0;
       position: relative;
-      height: 23px;
+      height: 22px;
       @include clearfix();
       cursor: pointer;
 
@@ -153,6 +153,7 @@ body {
       .column-severity {
         text-align: right;
         width: 10%;
+        padding-top: 7px;
       }
 
       .column-component {
@@ -183,6 +184,11 @@ body {
 
       &.header {
         height: 19px;
+
+        &:hover {
+          background: none;
+        }
+
         .column {
           height: 19px;
           font-weight: 500;
@@ -190,6 +196,7 @@ body {
           line-height: 1;
           color: #aaa;
           text-align: left;
+          padding-top: 0;
         }
       }
       .timeline {
@@ -297,25 +304,26 @@ body {
     padding: 0;
     border: none;
     background: none;
+    color: inherit;
   }
 
   .severity-info,
   .severity-notice {
-    background-color: $c-event-1;
+    @extend .color-1;
   }
 
   .severity-debug {
-    background-color: $c-event-5;
+    @extend .color-5;
   }
 
   .severity-warning {
-    background-color: $c-event-3;
+    @extend .color-3;
   }
 
   .severity-error,
   .severity-critical,
   .severity-alert,
   .severity-emergency {
-    background-color: $c-event-0;
+    @extend .color-0;
   }
 }
