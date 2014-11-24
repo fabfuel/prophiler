@@ -10,7 +10,7 @@ use Fabfuel\Prophiler\ProfilerInterface;
 
 class TimelineFormatter extends AbstractBenchmarkFormatter
 {
-    const TIMEBUFFER_FACTOR = 1.1;
+    const TIMEBUFFER_FACTOR = 1.05;
 
     /**
      * @var ProfilerInterface

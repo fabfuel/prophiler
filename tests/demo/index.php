@@ -1,6 +1,6 @@
 <html>
 <head>
-<!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!--    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>-->
 <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
 
@@ -79,7 +79,7 @@ usleep($wait(25));
 
         $logger->critical('Lorem Ipsum', ['some' => 'context']);
 
-        $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar\LoremIpsum::doSomeFancyFoobarStuff', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB Super Database');
+        $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar\LoremIpsum::doSomeFancyFoobarStuff', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB');
         usleep($wait(200));
         $profiler->stop($database);
 
@@ -103,7 +103,7 @@ $logger->emergency('Done, gimme work!');
 
 
 $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
-$toolbar->addDataCollector(new \DataCollector);
 $toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
+$toolbar->addDataCollector(new \DataCollector);
 echo $toolbar->render();
 

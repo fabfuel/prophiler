@@ -9,7 +9,7 @@ class DataCollector implements \Fabfuel\Prophiler\DataCollectorInterface
      */
     public function getTitle()
     {
-        return 'Lorem Ipsum';
+        return 'User';
     }
 
     /**
@@ -19,7 +19,7 @@ class DataCollector implements \Fabfuel\Prophiler\DataCollectorInterface
      */
     public function getIcon()
     {
-        return 'cog';
+        return 'user';
     }
 
     /**
@@ -29,14 +29,19 @@ class DataCollector implements \Fabfuel\Prophiler\DataCollectorInterface
      */
     public function getData()
     {
+        $_SESSION = [
+            'test1' => 'AB',
+            'test2' => 55,
+            'test3' => 12.4,
+            'test4' => true,
+        ];
+
         return [
-            'lorem' => 'ipsum',
-            'foobar' => [
-                'test1' => 'AB',
-                'test2' => 55,
-                'test3' => 12.4,
-                'test4' => true,
-            ],
+            'email' => 'john@doe.com',
+            'name' => 'John Doe',
+            'role' => 'Admin',
+            'logged in' => (new DateTime())->format('c'),
+            'session' => $_SESSION,
         ];
     }
 }
