@@ -127,7 +127,7 @@ class Logger extends AdapterAbstract implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed $level
+     * @param string $level
      * @param string $message
      * @param array $context
      * @return null

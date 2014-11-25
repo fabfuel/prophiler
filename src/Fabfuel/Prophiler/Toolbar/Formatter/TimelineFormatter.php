@@ -5,7 +5,6 @@
  */
 namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
-use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\ProfilerInterface;
 
 class TimelineFormatter extends BenchmarkFormatterAbstract
