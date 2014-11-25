@@ -1,0 +1,33 @@
+<div class="timeline-scale"><?php
+
+        $durationScale = $profiler->getDuration() *1000 * \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::TIMEBUFFER_FACTOR;
+
+        if ($durationScale <= 15) {
+            $scale = 1;
+        } elseif ($durationScale < 30) {
+            $scale = 2;
+        } elseif ($durationScale < 75) {
+            $scale = 5;
+        } elseif ($durationScale < 150) {
+            $scale = 10;
+        } elseif ($durationScale < 375) {
+            $scale = 25;
+        } elseif ($durationScale < 750) {
+            $scale = 50;
+        } elseif ($durationScale < 1500) {
+            $scale = 100;
+        } elseif ($durationScale < 7500) {
+            $scale = 500;
+        } else {
+            $scale = 1000;
+        }
+
+    ?>
+
+    <?php for ($t = 0; $t <= $durationScale; $t += $scale): ?>
+        <div class="marker" style="left: <?= round(($t/$durationScale)*100, 3) ?>%;">
+            <div class="label"><?= $t ?> ms</div>
+            <div class="line"></div>
+        </div>
+    <?php endfor; ?>
+</div>

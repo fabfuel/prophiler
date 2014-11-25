@@ -1,0 +1,33 @@
+<div class="table">
+
+    <?php $this->partial('partials/timeline/scale', ['profiler' => $profiler]); ?>
+
+    <div class="row header">
+        <div class="column column-name">Name</div>
+        <div class="column column-component">Component</div>
+        <div class="column column-duration">Duration</div>
+        <div class="column column-memory">Memory</div>
+    </div>
+
+    <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
+    <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+    <?php foreach ($profiler as $benchmark): ?>
+        <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
+        <?php $timelineFormatter->setBenchmark($benchmark); ?>
+
+        <div class="row" onclick="$('#prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>').slideToggle('fast');">
+            <div class="column column-name" title="<?= $benchmarkFormatter->getName() ?>"><?= $benchmarkFormatter->getName() ?></div>
+            <div class="column column-component" title="<?= $benchmarkFormatter->getComponent() ?>"><?= $benchmarkFormatter->getComponent() ?></div>
+            <div class="column column-duration"><?= $benchmarkFormatter->getDuration() ?></div>
+            <div class="column column-memory"><?= $benchmarkFormatter->getMemoryUsage() ?></div>
+            <div class="column column-timeline timeline">
+                <?php $this->partial('partials/timeline/benchmark', ['benchmark' => $timelineFormatter]); ?>
+            </div>
+        </div>
+
+        <div class="details <?= $benchmarkFormatter->getColorClass() ?>" id="prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>" >
+            <?php $this->partial('partials/details/benchmark', ['benchmark' => $benchmarkFormatter]); ?>
+        </div>
+
+    <?php endforeach; ?>
+</div>

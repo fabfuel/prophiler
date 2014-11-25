@@ -21,6 +21,12 @@ class AdapterPluginTest extends PhalconPluginTest
         $this->adapterPlugin = AdapterPlugin::getInstance($this->profiler, $this->dependencyInjector) ;
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin::beforeQuery
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin::afterQuery
+     * @covers Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
     public function testQuery()
     {
         $token = 'token';
