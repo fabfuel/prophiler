@@ -7,8 +7,8 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-dist -o
+  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
