@@ -7,7 +7,7 @@ namespace Fabfuel\Prophiler\Iterator;
 
 use Fabfuel\Prophiler\ProfilerInterface;
 
-class ComponentIterator extends \FilterIterator
+class ComponentFilteredIterator extends \FilterIterator
 {
     /**
      * @var string

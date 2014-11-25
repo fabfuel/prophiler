@@ -8,7 +8,7 @@ namespace Fabfuel\Prophiler\Toolbar\Formatter;
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\ProfilerInterface;
 
-class TimelineFormatter extends AbstractBenchmarkFormatter
+class TimelineFormatter extends BenchmarkFormatterAbstract
 {
     const TIMEBUFFER_FACTOR = 1.05;
 
@@ -25,50 +25,22 @@ class TimelineFormatter extends AbstractBenchmarkFormatter
         $this->setProfiler($profiler);
     }
 
+    /**
+     * @return double
+     */
     public function getWidth()
     {
         return round($this->getBenchmark()->getDuration() / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
     }
 
+    /**
+     * @return double
+     */
     public function getOffset()
     {
         $offset = $this->getBenchmark()->getStartTime() - $this->getProfiler()->getStartTime();
         return round($offset / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
     }
-
-    /**
-     * @return string
-     */
-    public function getMemoryUsage()
-    {
-        return sprintf('%05.2f MB', ($this->getBenchmark()->getMemoryUsage() /1024 /1024 ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getDuration()
-    {
-        return sprintf('%05.2f ms', ($this->getBenchmark()->getDuration() * 1000));
-    }
-
-
-    /**
-     * @return double
-     */
-    public function getStartTime()
-    {
-        return $this->getBenchmark()->getStartTime();
-    }
-
-    /**
-     * @return double
-     */
-    public function getEndTime()
-    {
-        return $this->getBenchmark()->getEndTime();
-    }
-
 
     /**
      * @return ProfilerInterface
