@@ -51,6 +51,22 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($output);
     }
 
+    public function testPartial()
+    {
+        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $toolbar = new Toolbar($profiler);
+
+        ob_start();
+        $toolbar->partial('../../../../tests/Fabfuel/Prophiler/View/test', ['foobar' => 'ipsum']);
+        $output = ob_get_clean();
+
+        $this->assertSame('<lorem>ipsum</lorem>
+', $output);
+    }
+
     /**
      * @covers Fabfuel\Prophiler\Toolbar::addDataCollector
      * @covers Fabfuel\Prophiler\Toolbar::getDataCollectors

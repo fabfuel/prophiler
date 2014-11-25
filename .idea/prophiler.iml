@@ -34,19 +34,20 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/pdepend/pdepend/src/site/rst/static_reflection/releases/staticReflection-0.1.1.phar" />
-          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/tools/scrutinizer/ocular.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
+          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/vendor/pdepend/pdepend/src/site/rst/static_reflection/releases/staticReflection-0.1.1.phar" />
-          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
           <root url="phar://$MODULE_DIR$/tools/scrutinizer/ocular.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/fabfuel/mongo/tools/composer/composer.phar" />
+          <root url="phar://$MODULE_DIR$/tools/composer/composer.phar" />
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="sass-stdlib" level="application" />
     <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
@@ -59,19 +60,19 @@
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
-          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
-          <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
-          <root url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/environment" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
-          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/vendor/fabfuel/mongo" />
@@ -83,23 +84,22 @@
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
-          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/vendor/phalcon/devtools" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
-          <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
-          <root url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/vendor/orangecloud/php-helper-array" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/environment" />
           <root url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
           <root url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
-          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="sass-stdlib" level="application" />
   </component>
 </module>
 
