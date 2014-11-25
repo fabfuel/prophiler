@@ -1,0 +1,22 @@
+<div class="table">
+
+    <div class="row header">
+        <div class="column column-severity">Severity</div>
+        <div class="column column-message">Message</div>
+    </div>
+
+    <?php $logFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\LogFormatter(); ?>
+    <?php foreach (new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger') as $benchmark): ?>
+        <?php $logFormatter->setBenchmark($benchmark); ?>
+
+        <div class="row" onclick="$('#prophiler-log-details-<?= $logFormatter->getId() ?>').slideToggle('fast');">
+            <div class="column column-severity"><?= $logFormatter->getLabel() ?></div>
+            <div class="column column-message" title="<?= $logFormatter->getName() ?>"><?= $logFormatter->getName() ?></div>
+        </div>
+
+        <div class="details <?= $logFormatter->getColorClass() ?>" id="prophiler-log-details-<?= $logFormatter->getId() ?>" >
+            <?php $this->partial('partials/details/log', ['benchmark' => $logFormatter]); ?>
+        </div>
+
+    <?php endforeach; ?>
+</div>

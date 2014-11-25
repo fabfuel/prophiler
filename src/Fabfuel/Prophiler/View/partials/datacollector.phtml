@@ -1,0 +1,9 @@
+<div id="prophiler-datacollector-<?= md5($dataCollector->getTitle()) ?>" class="datacollector">
+    <h2><?= $dataCollector->getTitle() ?></h2>
+    <dl class="dl-horizontal">
+        <?php foreach ($dataCollector->getData() as $dataName => $data): ?>
+            <?php if (empty($data)): continue; endif; ?>
+            <?php $this->partial('partials/details/data', ['dataName' => $dataName, 'data' => $data]); ?>
+        <?php endforeach; ?>
+    </dl>
+</div>

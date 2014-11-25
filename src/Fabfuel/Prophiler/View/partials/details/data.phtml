@@ -1,0 +1,14 @@
+<?php if ($data): ?>
+    <dt><?= $dataName ?></dt>
+    <dd>
+        <?php if (is_array($data)): ?>
+                <?php if (isset($json)): ?>
+                    <?php $this->partial('partials/details/data/json', ['data' => $data]); ?>
+                <?php else: ?>
+                    <?php $this->partial('partials/details/data/array', ['data' => $data]); ?>
+                <?php endif; ?>
+        <?php else: ?>
+            <?= nl2br($data) ?></td>
+        <?php endif; ?>
+    </dd>
+<?php endif; ?>

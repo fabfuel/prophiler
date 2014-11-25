@@ -19,12 +19,22 @@ class Benchmark implements BenchmarkInterface
     /**
      * @var double Starting time
      */
-    protected $start = 0.0;
+    protected $startTime = 0.0;
+
+    /**
+     * @var double Starting memory usage
+     */
+    protected $startMemory = 0.0;
 
     /**
      * @var double Ending time
      */
-    protected $end = 0.0;
+    protected $endTime = 0.0;
+
+    /**
+     * @var double Ending memory usage
+     */
+    protected $endMemory = 0.0;
 
     /**
      * @var array Custom metadata regarding this benchmark
@@ -32,13 +42,20 @@ class Benchmark implements BenchmarkInterface
     protected $metadata = [];
 
     /**
-     * @param string $name
-     * @param array $metadata
+     * @var string
      */
-    public function __construct($name, array $metadata = [])
+    protected $component;
+
+    /**
+     * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
+     * @param array $metadata Additional metadata
+     * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
+     */
+    public function __construct($name, array $metadata = [], $component = null)
     {
         $this->setName($name);
-        $this->setMetadata($metadata);
+        $this->addMetadata($metadata);
+        $this->setComponent($component);
     }
 
     /**
@@ -48,7 +65,8 @@ class Benchmark implements BenchmarkInterface
      */
     public function start()
     {
-        $this->start = (double)microtime(true);
+        $this->startTime = (double) microtime(true);
+        $this->startMemory = (double) memory_get_usage();
     }
 
     /**
@@ -58,7 +76,68 @@ class Benchmark implements BenchmarkInterface
      */
     public function stop()
     {
-        $this->end = (double)microtime(true);
+        $this->endTime = (double) microtime(true);
+        $this->endMemory = (double) memory_get_usage();
+    }
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getDuration()
+    {
+        return $this->getEndTime() - $this->getStartTime();
+    }
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getEndTime()
+    {
+        if ($this->endTime < $this->startTime) {
+            $this->endTime = (double) microtime(true);
+        }
+        return $this->endTime;
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsage()
+    {
+        return $this->getMemoryUsageEnd() - $this->getMemoryUsageStart();
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsageStart()
+    {
+        return $this->startMemory;
+    }
+
+    /**
+     * Memory usage (difference between start and end memory usage)
+     *
+     * @return double
+     */
+    public function getMemoryUsageEnd()
+    {
+        if ($this->endMemory < $this->startMemory) {
+            $this->endMemory = (double) memory_get_usage();
+        }
+        return $this->endMemory;
     }
 
     /**
@@ -78,30 +157,6 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @return double Timestamp in microtime
-     */
-    public function getDuration()
-    {
-        return $this->getEnd() - $this->getStart();
-    }
-
-    /**
-     * @return double Timestamp in microtime
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * @return double Timestamp in microtime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
      * @return array
      */
     public function getMetadata()
@@ -110,10 +165,28 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @param array $metadata
+     * Add interesting metadata to the benchmark
+     *
+     * @param array $metadata Additional metadata
      */
-    public function setMetadata($metadata)
+    public function addMetadata(array $metadata)
     {
-        $this->metadata = $metadata;
+        $this->metadata = array_merge($this->metadata, $metadata);
+    }
+
+    /**
+     * @return string
+     */
+    public function getComponent()
+    {
+        return $this->component;
+    }
+
+    /**
+     * @param string $component
+     */
+        public function setComponent($component)
+    {
+        $this->component = $component;
     }
 }
