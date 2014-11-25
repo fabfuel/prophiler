@@ -14,6 +14,9 @@
         <nav>
             <ul>
                 <li>
+                    <span class="label color-3"><span class="glyphicon glyphicon-info-sign"></span> PHP version: <?php echo phpversion() ?></span>
+                </li>
+                <li>
                     <span class="label color-2"><span class="glyphicon glyphicon-time"></span> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
                 </li>
                 <li>
