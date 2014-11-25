@@ -28,6 +28,8 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Toolbar::__construct
      * @covers Fabfuel\Prophiler\Toolbar::render
      * @uses Fabfuel\Prophiler\Toolbar
+     * @uses Fabfuel\Prophiler\Iterator\ComponentFilteredIterator
+     * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      */
     public function testRender()
     {
@@ -35,9 +37,9 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $profiler->expects($this->once())
-            ->method('getBenchmarks')
-            ->willReturn([]);
+        $profiler->expects($this->exactly(2))
+            ->method('getDuration')
+            ->willReturn(100);
 
         $toolbar = new Toolbar($profiler);
 

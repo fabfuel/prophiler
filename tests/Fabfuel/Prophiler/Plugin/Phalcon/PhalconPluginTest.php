@@ -6,6 +6,7 @@
 namespace Fabfuel\Prophiler\Plugin\Phalcon;
 
 use Fabfuel\Prophiler\Profiler;
+use Fabfuel\Prophiler\ProfilerInterface;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\DI\InjectionAwareInterface;
 use Phalcon\DiInterface;
@@ -16,8 +17,9 @@ abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase implements 
      * @var DiInterface
      */
     protected $dependencyInjector;
+
     /**
-     * @var Profiler
+     * @var ProfilerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $profiler;
 
@@ -28,7 +30,7 @@ abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase implements 
     }
 
     /**
-     * @return Profiler
+     * @return ProfilerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     public function getProfiler()
     {
@@ -36,7 +38,7 @@ abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase implements 
     }
 
     /**
-     * @param Profiler $profiler
+     * @param ProfilerInterface $profiler
      */
     public function setProfiler($profiler)
     {

@@ -14,12 +14,12 @@ use Phalcon\Mvc\ViewInterface;
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
  */
-class ViewPlugin extends PluginAbstract
+class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 {
     /**
-     * @var string
+     * @var array
      */
-    private $token;
+    private $tokens = [];
 
     /**
      * All render levels as descriptive strings
@@ -41,20 +41,36 @@ class ViewPlugin extends PluginAbstract
      */
     public function beforeRenderView(Event $event, ViewInterface $view)
     {
-        $name = get_class($event->getSource()) . '::render';
+        $name = get_class($event->getSource()) . '::render: ' . basename($view->getActiveRenderPath());
         $metadata = [
-            'view' => $view->getActiveRenderPath(),
+            'view' => realpath($view->getActiveRenderPath()) ?: $view->getActiveRenderPath(),
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
-        $this->token = $this->getProfiler()->start($name, $metadata, 'View');
+
+        $this->setToken($view, $this->getProfiler()->start($name, $metadata, 'View'));
+    }
+
+    /**
+     * Stop view benchmark
+     *
+     * @param Event $event
+     */
+    public function afterRenderView(Event $event, ViewInterface $view)
+    {
+        $token = $this->getToken($view);
+        $this->getProfiler()->stop($token);
     }
 
     /**
      * Stop view benchmark
      */
-    public function afterRenderView()
+    public function afterRender(Event $event, ViewInterface $view)
     {
-        $this->getProfiler()->stop($this->token);
+        foreach ($this->tokens as $views) {
+            foreach ($views as $token) {
+                $this->getProfiler()->stop($token);
+            }
+        }
     }
 
     /**
@@ -64,5 +80,32 @@ class ViewPlugin extends PluginAbstract
     public function getRenderLevel($renderLevelInt)
     {
         return isset($this->renderLevels[$renderLevelInt]) ? $this->renderLevels[$renderLevelInt] : '';
+    }
+
+    /**
+     * @param ViewInterface $view
+     * @param string $token
+     */
+    public function setToken(ViewInterface $view, $token)
+    {
+        $this->tokens[md5($view->getActiveRenderPath())][] = $token;
+    }
+
+    /**
+     * @param ViewInterface $view
+     * @return string
+     */
+    public function getToken(ViewInterface $view)
+    {
+        return array_shift($this->tokens[md5($view->getActiveRenderPath())]);
+    }
+
+    /**
+     * @param ViewInterface $view
+     * @return string
+     */
+    public function getIdentifier(ViewInterface $view)
+    {
+        return md5($view->getActiveRenderPath());
     }
 }

@@ -37,7 +37,7 @@ interface BenchmarkFormatterInterface
     /**
      * @return string
      */
-    public function getLabel();
+    public function getColorClass();
 
     /**
      * @return string
