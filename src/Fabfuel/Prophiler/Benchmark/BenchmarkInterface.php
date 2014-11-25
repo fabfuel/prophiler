@@ -19,6 +19,13 @@ interface BenchmarkInterface
     public function getName();
 
     /**
+     * Name of the component which triggered the benchmark, e.g. "App", "Database"
+     *
+     * @return string
+     */
+    public function getComponent();
+
+    /**
      * Start the benchmark
      *
      * @return void
@@ -33,16 +40,45 @@ interface BenchmarkInterface
     public function stop();
 
     /**
-     * Total elapsed microseconds
+     * Add interesting metadata to the benchmark
      *
-     * @return string
+     * @param array $metadata Additional metadata
+     * @return void
+     */
+    public function addMetadata(array $metadata);
+
+    /**
+     * @return array Custom metadata regarding this benchmark
+     */
+    public function getMetadata();
+
+    /**
+     * @return double Total elapsed microseconds
      */
     public function getDuration();
 
     /**
-     * Custom metadata regarding this benchmark
-     *
-     * @return array
+     * @return double Timestamp in microtime
      */
-    public function getMetadata();
+    public function getStartTime();
+
+    /**
+     * @return double Timestamp in microtime
+     */
+    public function getEndTime();
+
+    /**
+     * @return double Total elapsed microseconds
+     */
+    public function getMemoryUsage();
+
+    /**
+     * @return double Memory usage at benchmark start
+     */
+    public function getMemoryUsageStart();
+
+    /**
+     * @return double Memory usage at benchmark end
+     */
+    public function getMemoryUsageEnd();
 }

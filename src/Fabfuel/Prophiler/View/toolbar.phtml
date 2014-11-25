@@ -1,0 +1,60 @@
+<?php
+/**
+ * @var \Fabfuel\Prophiler\ProfilerInterface $profiler
+ */
+?><style>
+    <?php echo file_get_contents(__DIR__ . '/css/screen.css'); ?>
+</style>
+
+<div id="prophiler">
+
+    <div class="toolbar">
+        <h1>Prophiler Toolbar</h1>
+
+        <nav>
+            <ul>
+                <li>
+                    <span class="label color-2"><span class="glyphicon glyphicon-time"></span> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
+                </li>
+                <li>
+                    <span class="label color-1"><span class="glyphicon glyphicon-tasks"></span> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                </li>
+                <li>
+                    <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><span class="glyphicon glyphicon-dashboard"></span> Timeline</span></a>
+                </li>
+                <li>
+                    <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');"><span class="label color-5"><span class="glyphicon glyphicon-align-left"></span> Logs</span></a>
+                </li>
+
+                <?php foreach ($dataCollectors as $dataCollector): ?>
+                    <li>
+                        <a href="#" onclick="return $('#prophiler-datacollector-<?= md5($dataCollector->getTitle()) ?>').slideToggle('fast');"><span class="label color-5"><span class="glyphicon glyphicon-<?= $dataCollector->getIcon() ?>"></span> <?= $dataCollector->getTitle() ?></span></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="prophiler-benchmarks" class="benchmarks">
+        <?php $this->partial('partials/benchmarks', ['profiler' => $profiler]); ?>
+    </div>
+
+    <div id="prophiler-logs" class="logs">
+        <?php $this->partial('partials/logs', ['profiler' => $profiler]); ?>
+    </div>
+
+    <?php foreach ($dataCollectors as $dataCollector): ?>
+        <?php $this->partial('partials/datacollector', ['dataCollector' => $dataCollector]); ?>
+    <?php endforeach; ?>
+</div>
+
+<script>
+	if (!window.jQuery) {
+		document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
+	}
+    window.addEventListener("load", function () {
+        $('json').each(function (index, el) {
+            el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
+        });
+    });
+</script>

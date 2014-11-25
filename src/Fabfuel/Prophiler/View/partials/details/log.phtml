@@ -1,0 +1,12 @@
+<?php
+/**
+ * @var \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterInterface $benchmark
+ */
+?>
+<dl>
+    <?php if ($benchmark->getMetadata()): ?>
+        <?php foreach ($benchmark->getMetadata() as $metadataName => $metadata): ?>
+            <?php $this->partial('partials/details/data', ['data' => $metadata, 'dataName' => $metadataName]); ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</dl>

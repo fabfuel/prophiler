@@ -15,52 +15,165 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
     protected $benchmark;
 
     /**
+     * @var string $name
+     */
+    protected $name =  'Foobar';
+
+    /**
+     * @var array $metadata
+     */
+    protected $metadata = ['lorem' => 'ipsum'];
+
+    /**
+     * @var string $component
+     */
+    protected $component = 'Lorem Upsum';
+
+    public function setUp()
+    {
+        $this->benchmark = new Benchmark($this->name, $this->metadata, $this->component);
+    }
+
+    /**
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::__construct
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setName
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getName
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setMetadata
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMetadata
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::addMetadata
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getComponent
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::setComponent
      */
     public function testConstruct()
     {
-        $name = 'Lorem\Ipsum::foobar';
-        $metadata = ['lorem' => 'ipsum'];
+        $this->assertSame($this->name, $this->benchmark->getName());
+        $this->assertSame($this->metadata, $this->benchmark->getMetadata());
+        $this->assertSame($this->component, $this->benchmark->getComponent());
+    }
 
-        $benchmark = new Benchmark($name, $metadata);
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testStart()
+    {
+        $this->assertSame(0.0, $this->benchmark->getStartTime());
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageStart());
 
-        $this->assertSame($name, $benchmark->getName());
-        $this->assertSame($metadata, $benchmark->getMetadata());
+        $this->benchmark->start();
+
+        $this->assertGreaterThan(0.0, $this->benchmark->getStartTime());
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageStart());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testStop()
+    {
+        $this->assertSame(0.0, $this->benchmark->getEndTime());
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
+
+        $this->benchmark->stop();
+
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getDuration
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::start
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::stop
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStart
-     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEnd
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
      */
-    public function testCalculation()
+    public function testGetDuration()
     {
-        $name = 'Lorem\Ipsum::foobar';
+        $this->assertSame(0.0, $this->benchmark->getDuration());
 
-        $benchmark = new Benchmark($name);
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
 
-        $this->assertSame(0.0, $benchmark->getEnd());
-        $this->assertSame(0.0, $benchmark->getStart());
-        $this->assertSame(0.0, $benchmark->getDuration());
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
+    }
 
-        $benchmark->start();
-        $benchmark->stop();
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getStartTime
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetStartTime()
+    {
+        $this->assertSame(0.0, $this->benchmark->getStartTime());
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getStartTime());
+    }
 
-        $this->assertGreaterThan($benchmark->getStart(), microtime(true));
-        $this->assertGreaterThan($benchmark->getEnd(), microtime(true));
-        $this->assertGreaterThan($benchmark->getStart(), $benchmark->getEnd());
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getEndTime
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetEndTime()
+    {
+        $this->assertSame(0.0, $this->benchmark->getEndTime());
+        $this->benchmark->start();
 
-        $this->assertGreaterThan(0, $benchmark->getDuration());
+        // End usage should be set, even if benchmarked not stopped
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
 
-        $this->assertInternalType('float', $benchmark->getEnd());
-        $this->assertInternalType('float', $benchmark->getStart());
-        $this->assertInternalType('float', $benchmark->getDuration());
+        $firstEndTime = $this->benchmark->getEndTime();
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
+        $this->assertGreaterThan($firstEndTime, $this->benchmark->getEndTime());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsage
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsage()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsage());
+
+        $this->benchmark->start();
+
+        $memoryUsage = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsageStart
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsageStart()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageStart());
+        $this->benchmark->start();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageStart());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMemoryUsageEnd
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMemoryUsageEnd()
+    {
+        $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
+        $this->benchmark->start();
+
+        $memoryUsage1 = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+
+        // End usage should be set, even if benchmarked not stopped
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
+
+        $firstMemoryUsage = $this->benchmark->getMemoryUsageEnd();
+
+        $memoryUsage2 = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+
+        $this->benchmark->stop();
+        $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
+        $this->assertGreaterThan($firstMemoryUsage, $this->benchmark->getMemoryUsageEnd());
     }
 }

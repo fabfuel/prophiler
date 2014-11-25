@@ -8,12 +8,13 @@ namespace Fabfuel\Prophiler\Benchmark;
 class BenchmarkFactory
 {
     /**
-     * @param string $name
-     * @param array $metadata
+     * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
+     * @param array $metadata Additional metadata
+     * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
      * @return BenchmarkInterface
      */
-    public static function getBenchmark($name, $metadata = [])
+    public static function getBenchmark($name, $metadata = [], $component = null)
     {
-        return new Benchmark($name, $metadata);
+        return new Benchmark($name, $metadata, $component);
     }
 }
