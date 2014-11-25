@@ -114,14 +114,14 @@
             "version": "1.3.0",
             "source": {
                 "type": "git",
-                "url": "git@bitbucket.org:orangecloud/php-helper-array",
-                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16"
+                "url": "https://bitbucket.org/orangecloud/php-helper-array.git",
+                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://composer.orangecloud.de/dist/orangecloud-php-helper-array-1.3.0-8b90cd.tar",
-                "reference": "8df17d40441d3dc38ec65db76756ceadc28f5c16",
-                "shasum": "858c940ae4dcbef42aa54a64c6bbe12bdb90e6ff"
+                "type": "zip",
+                "url": "https://bitbucket.org/orangecloud/php-helper-array/get/0dd1432de6ef2d6335f710f28d50a2420777859c.zip",
+                "reference": "0dd1432de6ef2d6335f710f28d50a2420777859c",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3"
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "A collection of array helper functions",
-            "time": "2014-06-19 09:07:47"
+            "time": "2014-06-19 11:07:47"
         },
         {
             "name": "pdepend/pdepend",
