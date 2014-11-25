@@ -5,7 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
-class BenchmarkFormatter extends AbstractBenchmarkFormatter implements BenchmarkFormatterInterface
+class BenchmarkFormatter extends BenchmarkFormatterAbstract implements BenchmarkFormatterInterface
 {
     /**
      * @return string
@@ -21,29 +21,5 @@ class BenchmarkFormatter extends AbstractBenchmarkFormatter implements Benchmark
     public function getDuration()
     {
         return sprintf('%.2f ms', ($this->getBenchmark()->getDuration() * 1000));
-    }
-
-    /**
-     * @return double
-     */
-    public function getStartTime()
-    {
-        return $this->getBenchmark()->getStartTime();
-    }
-
-    /**
-     * @return double
-     */
-    public function getEndTime()
-    {
-        return $this->getBenchmark()->getEndTime();
-    }
-
-    /**
-     * @return array
-     */
-    public function getMetadata()
-    {
-        return $this->getBenchmark()->getMetadata();
     }
 }

@@ -7,7 +7,7 @@ namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 
-class AbstractBenchmarkFormatter
+class BenchmarkFormatterAbstract
 {
     const NUMBER_COLORS = 5;
 
@@ -56,6 +56,9 @@ class AbstractBenchmarkFormatter
         return spl_object_hash($this->getBenchmark());
     }
 
+    /**
+     * @return string
+     */
     public function getColorClass()
     {
         return sprintf(
@@ -83,5 +86,21 @@ class AbstractBenchmarkFormatter
     public function getMetadata()
     {
         return $this->getBenchmark()->getMetadata();
+    }
+
+    /**
+     * @return double
+     */
+    public function getStartTime()
+    {
+        return $this->getBenchmark()->getStartTime();
+    }
+
+    /**
+     * @return double
+     */
+    public function getEndTime()
+    {
+        return $this->getBenchmark()->getEndTime();
     }
 }

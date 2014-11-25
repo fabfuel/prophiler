@@ -95,6 +95,20 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($icon, $this->formatter->getIcon());
     }
 
+    /**
+     * @param string $component
+     * @param string $colorClass
+     * @dataProvider getColorClasses
+     */
+    public function testGetColorClass($component, $colorClass)
+    {
+        $this->benchmark->expects($this->once())
+            ->method('getComponent')
+            ->willReturn($component);
+
+        $this->assertSame($colorClass, $this->formatter->getColorClass());
+    }
+
     public function testGetStartTime()
     {
         $time = microtime(true);
@@ -129,12 +143,14 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getLabels()
+    public function getColorClasses()
     {
         return [
-            ['MongoDB', 'success'],
-            ['Foobar', 'primary'],
-            ['Lorem Ipsum', 'primary'],
+            ['A', 'color-1'],
+            ['AB', 'color-2'],
+            ['ABC', 'color-3'],
+            ['ABCD', 'color-4'],
+            ['ABCDE', 'color-0'],
         ];
     }
 

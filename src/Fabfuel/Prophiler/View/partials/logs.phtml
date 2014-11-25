@@ -6,7 +6,7 @@
     </div>
 
     <?php $logFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\LogFormatter(); ?>
-    <?php foreach (new \Fabfuel\Prophiler\Iterator\ComponentIterator($profiler, 'Logger') as $benchmark): ?>
+    <?php foreach (new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger') as $benchmark): ?>
         <?php $logFormatter->setBenchmark($benchmark); ?>
 
         <div class="row" onclick="$('#prophiler-log-details-<?= $logFormatter->getId() ?>').slideToggle('fast');">

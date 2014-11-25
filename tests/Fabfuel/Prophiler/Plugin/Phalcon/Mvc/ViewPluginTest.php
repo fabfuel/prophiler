@@ -73,6 +73,42 @@ class ViewPluginTest extends PhalconPluginTest
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRender
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAfterRenderWithoutOpenTokens()
+    {
+        $this->getProfiler()
+            ->expects($this->never())
+            ->method('stop');
+
+        $this->viewPlugin->afterRender();
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRender
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAfterRender()
+    {
+        $view = $this->getMockBuilder('Phalcon\Mvc\View')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->viewPlugin->setToken($view, 'token');
+
+        $this->getProfiler()
+            ->expects($this->once())
+            ->method('stop')
+            ->with('token');
+
+        $this->viewPlugin->afterRender();
+    }
+
+    /**
      * @param $renderLevelInt
      * @param $renderLevelString
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel

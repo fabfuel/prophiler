@@ -28,7 +28,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Toolbar::__construct
      * @covers Fabfuel\Prophiler\Toolbar::render
      * @uses Fabfuel\Prophiler\Toolbar
-     * @uses Fabfuel\Prophiler\Iterator\ComponentIterator
+     * @uses Fabfuel\Prophiler\Iterator\ComponentFilteredIterator
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      */
     public function testRender()
