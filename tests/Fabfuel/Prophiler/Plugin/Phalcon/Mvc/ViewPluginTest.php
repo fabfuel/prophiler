@@ -42,7 +42,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $event->expects($this->once())
+        $event->expects($this->exactly(1))
             ->method('getSource')
             ->willReturn($view);
 
@@ -79,11 +79,19 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testAfterRenderWithoutOpenTokens()
     {
+        $view = $this->getMockBuilder('Phalcon\Mvc\View')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->getProfiler()
             ->expects($this->never())
             ->method('stop');
 
-        $this->viewPlugin->afterRender();
+        $this->viewPlugin->afterRender($event, $view);
     }
 
     /**
@@ -98,6 +106,14 @@ class ViewPluginTest extends PhalconPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $view = $this->getMockBuilder('Phalcon\Mvc\View')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->viewPlugin->setToken($view, 'token');
 
         $this->getProfiler()
@@ -105,7 +121,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->method('stop')
             ->with('token');
 
-        $this->viewPlugin->afterRender();
+        $this->viewPlugin->afterRender($event, $view);
     }
 
     /**

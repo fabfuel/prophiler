@@ -14,7 +14,7 @@ use Phalcon\Mvc\ViewInterface;
  * Class Dispatcher
  * @package Rocket\Toolbar\Plugin
  */
-class ViewPlugin extends PluginAbstract
+class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 {
     /**
      * @var array
@@ -64,7 +64,7 @@ class ViewPlugin extends PluginAbstract
     /**
      * Stop view benchmark
      */
-    public function afterRender()
+    public function afterRender(Event $event, ViewInterface $view)
     {
         foreach ($this->tokens as $views) {
             foreach ($views as $token) {
