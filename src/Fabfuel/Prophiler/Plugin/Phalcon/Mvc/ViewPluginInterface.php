@@ -13,21 +13,21 @@ interface ViewPluginInterface
     /**
      * @param Event $event
      * @param ViewInterface $view
-     * @return void()
+     * @return void
      */
     public function beforeRenderView(Event $event, ViewInterface $view);
 
     /**
      * @param Event $event
      * @param ViewInterface $view
-     * @return void()
+     * @return void
      */
     public function afterRenderView(Event $event, ViewInterface $view);
 
     /**
      * @param Event $event
      * @param ViewInterface $view
-     * @return void()
+     * @return void
      */
     public function afterRender(Event $event, ViewInterface $view);
 }
