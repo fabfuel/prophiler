@@ -5,8 +5,6 @@
  */
 namespace Fabfuel\Prophiler;
 
-use Phalcon\Mvc\View\Simple;
-
 class Toolbar
 {
     /**
@@ -32,12 +30,21 @@ class Toolbar
      */
     public function render()
     {
-        $toolbar = new Simple();
-        $toolbar->setViewsDir(__DIR__ . '/View/');
-        return $toolbar->render('toolbar', [
-            'profiler' => $this->getProfiler(),
-            'dataCollectors' => $this->getDataCollectors()
-        ]);
+        ob_start();
+        $this->partial('toolbar', ['profiler' => $this->getProfiler(), 'dataCollectors' => $this->getDataCollectors()]);
+        return ob_get_clean();
+    }
+
+    /**
+     * @param string $viewPath
+     * @param array $params
+     */
+    public function partial($viewPath, array $params = [])
+    {
+        foreach ($params as $paramName => $param) {
+            $$paramName = $param;
+        }
+        require __DIR__ . '/View/' . $viewPath . '.phtml';
     }
 
     /**

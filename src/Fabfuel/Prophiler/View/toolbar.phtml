@@ -44,7 +44,7 @@
     </div>
 
     <?php foreach ($dataCollectors as $dataCollector): ?>
-        <?php $this->partial('partials/datacollector'); ?>
+        <?php $this->partial('partials/datacollector', ['dataCollector' => $dataCollector]); ?>
     <?php endforeach; ?>
 </div>
 
