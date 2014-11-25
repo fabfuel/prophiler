@@ -134,6 +134,9 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0.0, $this->benchmark->getMemoryUsage());
 
         $this->benchmark->start();
+
+        $memoryUsage = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+
         $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
 
         $this->benchmark->stop();
@@ -159,6 +162,8 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
         $this->benchmark->start();
+
+        $memoryUsage = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
 
         // End usage should be set, even if benchmarked not stopped
         $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
