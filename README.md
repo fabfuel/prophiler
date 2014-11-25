@@ -1,8 +1,8 @@
 #Prophiler - A Phalcon Profiler & Dev Toolbar
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/b/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/b/fabfuel/prophiler/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/b/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/b/fabfuel/prophiler/?branch=develop)
-[![Build Status](https://scrutinizer-ci.com/b/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/b/fabfuel/prophiler/build-status/develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
+[![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
 
 
 ## Installation
