@@ -5,6 +5,13 @@
 [![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
 
 
+## Demo
+Here you can see the toolbar in action:
+http://prophiler.fabfuel.de/
+
+[![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
+
+
 ## Installation
 You can use composer to install the Prophiler. Just add it as dependency:
 
