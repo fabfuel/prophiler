@@ -131,7 +131,7 @@ class Profiler implements ProfilerInterface, \Countable
     {
         if ($token) {
             if (!isset($this->tokenMap[$token])) {
-                throw new UnknownBenchmarkException('Unkown benchmark: ' . $token);
+                throw new UnknownBenchmarkException('Unknown benchmark: ' . $token);
             }
             $benchmark = $this->tokenMap[$token];
         } else {
