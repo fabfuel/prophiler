@@ -32,20 +32,21 @@
 
 <div style="text-align: center;">
     <a href="https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop"><img
-            src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop"
-            alt="Scrutinizer Code Quality"
-            data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop"
-            style="max-width:100%;"></a>
+        src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop"
+        alt="Scrutinizer Code Quality"
+        data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop"
+        style="max-width:100%;"></a>
     <a href="https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop"><img
-            src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop"
-            alt="Code Coverage"
-            data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop"
-            style="max-width:100%;"></a>
+        src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop"
+        alt="Code Coverage"
+        data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop"
+        style="max-width:100%;"></a>
     <a href="https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop"><img
-            src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop"
-            alt="Build Status"
-            data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop"
-            style="max-width:100%;"></a>
+        src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop"
+        alt="Build Status"
+        data-canonical-src="https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop"
+        style="max-width:100%;"></a>
+</div>
 
 </body>
 </html>
