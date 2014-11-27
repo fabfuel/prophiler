@@ -21,10 +21,7 @@ class ComponentFilteredIteratorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->setMethods(['addBechmark'])
-            ->getMock();
+        $this->profiler = $this->getMock('Fabfuel\Prophiler\Profiler', ['addBechmark']);
     }
 
     /**
@@ -34,11 +31,9 @@ class ComponentFilteredIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccept()
     {
-        $benchmark = $this->getMockBuilder('Fabfuel\Prophiler\Benchmark\Benchmark')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $benchmark->expects($this->exactly(2))
+        $benchmark->expects($this->any())
             ->method('getComponent')
             ->willReturn('Foobar');
 
