@@ -1,6 +1,8 @@
 <?php
 
-class DataCollector implements \Fabfuel\Prophiler\DataCollectorInterface
+namespace Fabfuel\Prophiler\Demo\DataCollector;
+
+class User implements \Fabfuel\Prophiler\DataCollectorInterface
 {
     /**
      * Get the title of this data collector
@@ -40,7 +42,7 @@ class DataCollector implements \Fabfuel\Prophiler\DataCollectorInterface
             'email' => 'john@doe.com',
             'name' => 'John Doe',
             'role' => 'Admin',
-            'logged in' => (new DateTime())->format('c'),
+            'logged in' => (new \DateTime())->format('c'),
             'session' => $_SESSION,
         ];
     }
