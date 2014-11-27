@@ -100,9 +100,9 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
         $benchmarks = $this->profiler->getBenchmarks();
 
-        $this->assertTrue(isset($benchmarks[0]));
-        $this->assertTrue(isset($benchmarks[1]));
-        $this->assertTrue(isset($benchmarks[2]));
+        $this->assertTrue(isset($benchmarks[$token1]));
+        $this->assertTrue(isset($benchmarks[$token2]));
+        $this->assertTrue(isset($benchmarks[$token3]));
     }
 
     /**
@@ -205,7 +205,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBenchmarkWithoutToken()
     {
-        $this->assertNull($this->profiler->getBenchmark());
+        $this->assertEmpty($this->profiler->getBenchmarks());
 
         $this->profiler->start('Foobar');
         $this->assertInstanceOf(
@@ -226,27 +226,25 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIteration()
     {
-        $this->profiler->stop($this->profiler->start('Foobar'));
-        $benchmark1 = $this->profiler->getLastBenchmark();
+        $token1 = $this->profiler->start('Foobar');
+        $benchmark1 = $this->profiler->stop($token1);
 
-        $this->profiler->stop($this->profiler->start('Loremk Ipsum'));
-        $benchmark2 = $this->profiler->getLastBenchmark();
+        $token2 = $this->profiler->start('Loremk Ipsum');
+        $benchmark2 = $this->profiler->stop($token2);
 
-        $this->assertSame(0, $this->profiler->key());
+        $this->profiler->rewind();
+
+        $this->assertSame($token1, $this->profiler->key());
         $this->assertTrue($this->profiler->valid());
         $this->assertSame($benchmark1, $this->profiler->current());
 
         $this->profiler->next();
-        $this->assertSame(1, $this->profiler->key());
+
+        $this->assertSame($token2, $this->profiler->key());
         $this->assertTrue($this->profiler->valid());
         $this->assertSame($benchmark2, $this->profiler->current());
 
         $this->profiler->next();
-        $this->assertSame(2, $this->profiler->key());
         $this->assertFalse($this->profiler->valid());
-
-        $this->profiler->rewind();
-        $this->assertSame(0, $this->profiler->key());
-        $this->assertTrue($this->profiler->valid());
     }
 }
