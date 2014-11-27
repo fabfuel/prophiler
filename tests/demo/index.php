@@ -56,6 +56,7 @@
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 require __DIR__ . '/DataCollector/User.php';
 require __DIR__ . '/DataCollector/Request.php';
+require __DIR__ . '/DataCollector/Php.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
@@ -125,6 +126,7 @@ $profiler->stop($bootstrap);
 $logger->emergency('Done, gimme work!');
 
 $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
+$toolbar->addDataCollector(new \Fabfuel\Prophiler\Demo\DataCollector\Php);
 $toolbar->addDataCollector(new \Fabfuel\Prophiler\Demo\DataCollector\Request);
 $toolbar->addDataCollector(new \Fabfuel\Prophiler\Demo\DataCollector\User);
 echo $toolbar->render();

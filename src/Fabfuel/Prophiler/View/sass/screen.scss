@@ -1,5 +1,6 @@
 /* compass imports */
 @import "compass/css3";
+@import "compass/css3/transition";
 @import "compass/utilities/general/clearfix";
 
 $c-lines: #eee;
@@ -11,6 +12,11 @@ $c-event-2: rgba(97, 186, 97, .75);
 $c-event-3: rgba(240, 175, 83, .75);
 $c-event-4: rgba(96, 194, 223, .75);
 $c-event-5: rgba(216, 216, 216, 0.75);
+
+$default-transition-property : all;
+$default-transition-duration : 0.4s;
+$default-transition-function : false;
+$default-transition-delay    : 0;
 
 body {
   margin-top: 52px !important;
@@ -251,12 +257,16 @@ body {
     }
   }
 
+  .closed {
+    max-height: 0 !important;
+  }
+
   .benchmarks {
     position: relative;
     max-height: 500px;
     overflow-x: hidden;
     overflow-y: auto;
-    display: none;
+    @include single-transition(max-height);
   }
 
   .logs {
@@ -264,19 +274,18 @@ body {
     max-height: 500px;
     overflow-x: hidden;
     overflow-y: auto;
-    display: none;
+    @include single-transition(max-height);
   }
 
   .datacollector {
-    display: none;
-    padding: 20px;
     max-height: 500px;
     overflow-x: hidden;
     overflow-y: auto;
+    @include single-transition(max-height);
 
     h2 {
       font-size: 1.4em;
-      margin: 0;
+      margin: 20px;
       color: $c-headline;
     }
   }

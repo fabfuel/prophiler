@@ -7,17 +7,21 @@
 var Prophiler = Prophiler || {};
 (function(Prophiler) {
 
-    Prophiler.slideToggleData = function(name) {
-        var element = document.getElementById(name);
-        if (element.style.display != 'inherit') {
-            element.style.display = 'inherit';
-            element.className = element.className + ' slideOpen';
-        } else {
-            element.className = element.className + ' slideClose';
-            setTimeout(function() {
-                element.style.display = 'none';
-            }, 1000);
-        }
+    Prophiler.slideToggleData = function(containerId) {
+        var container = document.getElementById(containerId),
+            classes = container.className.split(' '),
+            newClasses = [];
+        console.log(classes)
+        classes.forEach(function (className) {
+            if (className == 'closed') {
+                newClasses.push('opened');
+            } else if (className == 'opened') {
+                newClasses.push('closed');
+            } else {
+                newClasses.push(className);
+            }
+        });
+        container.className = newClasses.join(' ');
     };
 
     document.getElementById('hideToolbar').addEventListener("click", function () {
