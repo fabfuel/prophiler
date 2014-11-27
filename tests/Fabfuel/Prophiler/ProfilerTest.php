@@ -65,6 +65,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      * @uses   Fabfuel\Prophiler\Profiler
      * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
      * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
+     * @expectedExceptionMessage No benchmarks to return
      */
     public function testGetLastBenchmarkWithoutBenchmarks()
     {
@@ -168,6 +170,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
+     * @expectedExceptionMessage Unknown benchmark
      */
     public function testStopUnknownBenchmark()
     {
