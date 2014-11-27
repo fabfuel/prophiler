@@ -18,6 +18,11 @@ class ViewPluginTest extends PhalconPluginTest
     public function setUp()
     {
         parent::setUp();
+        if(!extension_loaded('phalcon')) {
+            $this->markTestSkipped('Phalcon extension isn\'t installed');
+            return;
+        }
+
         $this->viewPlugin = ViewPlugin::getInstance($this->getProfiler());
     }
 
@@ -34,13 +39,9 @@ class ViewPluginTest extends PhalconPluginTest
     {
         $token = 'token';
 
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
-        $event = $this->getMockBuilder('Phalcon\Events\Event')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $event = $this->getMock('Phalcon\Events\Event');
 
         $event->expects($this->exactly(1))
             ->method('getSource')
@@ -79,13 +80,9 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testAfterRenderWithoutOpenTokens()
     {
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
-        $event = $this->getMockBuilder('Phalcon\Events\Event')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $event = $this->getMock('Phalcon\Events\Event');
 
         $this->getProfiler()
             ->expects($this->never())
@@ -102,17 +99,11 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testAfterRender()
     {
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
-        $event = $this->getMockBuilder('Phalcon\Events\Event')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $event = $this->getMock('Phalcon\Events\Event');
 
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
         $this->viewPlugin->setToken($view, 'token');
 
@@ -146,11 +137,9 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testGetIdentifier()
     {
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
-        $view->expects($this->once())
+        $view->expects($this->any())
             ->method('getActiveRenderPath')
             ->willReturn('test');
 
@@ -170,7 +159,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $view->expects($this->exactly(5))
+        $view->expects($this->any())
             ->method('getActiveRenderPath')
             ->willReturn('test');
 
@@ -187,6 +176,14 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function getRenderLevels()
     {
+        if(!extension_loaded('phalcon')) {
+            return [
+                ['foobar', ''],
+                ['lorem', ''],
+                ['', ''],
+            ];
+        }
+
         return [
             [\Phalcon\Mvc\View::LEVEL_ACTION_VIEW, 'action'],
             [\Phalcon\Mvc\View::LEVEL_AFTER_TEMPLATE, 'afterTemplate'],
