@@ -83,10 +83,13 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function getDuration()
     {
-        $last = $this->getLastBenchmark();
-        if ($last) {
-            return ($last->getEndTime() - $this->getStartTime());
+        if(!empty($this->getBenchmarks())) {
+            $last = $this->getLastBenchmark();
+            if ($last) {
+                return ($last->getEndTime() - $this->getStartTime());
+            }
         }
+        
         return (microtime(true) - $this->getStartTime());
     }
 
