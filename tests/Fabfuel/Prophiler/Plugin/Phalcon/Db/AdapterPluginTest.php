@@ -31,17 +31,13 @@ class AdapterPluginTest extends PhalconPluginTest
     {
         $token = 'token';
 
-        $adapter = $this->getMockBuilder('Phalcon\Db\Adapter')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $adapter = $this->getMock('Phalcon\Db\Adapter');
 
         $adapter->expects($this->once())
             ->method('getSQLStatement')
             ->willReturn('SELECT * FROM foobar;');
 
-        $event = $this->getMockBuilder('Phalcon\Events\Event')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $event = $this->getMock('Phalcon\Events\Event');
 
         $event->expects($this->exactly(1))
             ->method('getSource')
