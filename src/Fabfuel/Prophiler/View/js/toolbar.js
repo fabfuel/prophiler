@@ -11,12 +11,25 @@ var Prophiler = Prophiler || {};
         var element = document.getElementById(name);
         if (element.style.display != 'inherit') {
             element.style.display = 'inherit';
-            element.style.opacity = '1.0';
+            element.className = element.className + ' slideOpen';
         } else {
-            element.style.opacity = '0';
-            element.style.display = 'none';
+            element.className = element.className + ' slideClose';
+            setTimeout(function() {
+                element.style.display = 'none';
+            }, 1000);
         }
     };
+
+    document.getElementById('hideToolbar').addEventListener("click", function () {
+        document.getElementById('toolbarMinimised').style.display = "inherit";
+        document.getElementById('toolbarMaximised').style.display = "none";
+        document.getElementById('prophiler').style.width = "200px";
+    });
+    document.getElementById('showToolbar').addEventListener("click", function () {
+        document.getElementById('toolbarMaximised').style.display = "inherit";
+        document.getElementById('toolbarMinimised').style.display = "none";
+        document.getElementById('prophiler').style.width = "auto";
+    });
 
     window.addEventListener("load", function () {
 
