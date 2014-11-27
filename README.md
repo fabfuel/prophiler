@@ -5,11 +5,18 @@
 [![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
 
 
+## Demo
+Here you can see the toolbar in action:
+http://prophiler.fabfuel.de/
+
+[![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
+
+
 ## Installation
 You can use composer to install the Prophiler. Just add it as dependency:
 
     "require": {
-       	"fabfuel/prophiler": "~0.1",
+       	"fabfuel/prophiler": "~1.0",
     }
 
 ## Setup
@@ -41,18 +48,29 @@ $pluginManager->register();
 
 To visualize the profiling results, you have to initialize and render the Prophiler Toolbar. This component will take care for rendering all results of the Profiler benchmarks and other data collectors. Put that at the end of the frontcontroller.
 
+You can also add other data collectors to the Toolbar, to show e.g. request data like in this example.
+
 ```php
 $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
+$toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
 echo $toolbar->render();
 ```
+
+You can also easily create you own data collectors, by implementing the DataCollectorInterface and adding an instance to the Toolbar at this point.
+
+```php
+...
+$toolbar->addDataCollector(new \My\Custom\DataCollector());
+...
+```
+
+## Tips
 
 To render the toolbar as very last action, you can also register it as shutdown function:
 
 ```php
 register_shutdown_function([$toolbar, 'render']);
 ```
-
-## Tips
 
 To record session writing, you can commit or write & close the session before rendering the toolbar
     
