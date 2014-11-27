@@ -108,6 +108,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Profiler::start
      * @uses   Fabfuel\Prophiler\Profiler
      * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
      * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkInterface
      */
     public function testStart()
