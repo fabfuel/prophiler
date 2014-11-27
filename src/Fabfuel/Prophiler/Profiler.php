@@ -115,6 +115,7 @@ class Profiler implements ProfilerInterface, \Countable
      *
      * @param string $token
      * @return BenchmarkInterface|null
+     * @throws UnknownBenchmarkException
      */
     public function getBenchmark($token = null)
     {
@@ -131,6 +132,7 @@ class Profiler implements ProfilerInterface, \Countable
 
     /**
      * @return BenchmarkInterface|null
+     * @throws UnknownBenchmarkException
      */
     public function getLastBenchmark()
     {
@@ -139,7 +141,7 @@ class Profiler implements ProfilerInterface, \Countable
             return current($last);
         }
 
-        return new UnknownBenchmarkException('No benchmarks to return last one');
+        throw new UnknownBenchmarkException('No benchmarks to return last one');
     }
 
     /**
