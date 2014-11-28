@@ -1,54 +1,51 @@
 <?php
 /**
- * @author Fabian Fuelling <fabian@fabfuel.de>
- * @created: 19.11.14 14:46
+ * @author Marco Troisi <hello@marcotroisi.com>
+ * @created: 28.11.14
  */
 
 namespace Fabfuel\Prophiler\DataCollector;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class PhpTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Request
      */
-    protected $request;
+    protected $php;
 
     public function setUp()
     {
-        $this->request = new Request();
+        $this->php = new Php();
     }
 
     /**
-     * @covers Fabfuel\Prophiler\DataCollector\Request::getTitle
+     * @covers Fabfuel\Prophiler\DataCollector\Php::getTitle
      */
     public function testGetTitle()
     {
-        $this->assertSame('Request', $this->request->getTitle());
+        $this->assertSame('PHP', $this->php->getTitle());
     }
 
     /**
-     * @covers Fabfuel\Prophiler\DataCollector\Request::getIcon
+     * @covers Fabfuel\Prophiler\DataCollector\Php::getIcon
      */
     public function testGetIcon()
     {
-        $this->assertSame('log-in', $this->request->getIcon());
+        $this->assertSame('info-sign', $this->php->getIcon());
     }
 
     /**
-     * @covers Fabfuel\Prophiler\DataCollector\Request::getData
+     * @covers Fabfuel\Prophiler\DataCollector\Php::getData
      */
     public function testGetData()
     {
-        $_SESSION = ['lorem' => 'ipsum'];
-
         $data = [
-            'SERVER' => $_SERVER,
-            'GET' => $_GET,
-            'POST' => $_POST,
-            'COOKIE' => $_COOKIE,
-            'FILES' => $_FILES,
-            'SESSION' => $_SESSION,
+            'PHP version' => phpversion(),
+            'Phalcon' => extension_loaded('phalcon'),
+            'APC' => extension_loaded('apc'),
+            'Extensions Loaded' => get_loaded_extensions(),
         ];
-        $this->assertSame($data, $this->request->getData());
+
+        $this->assertSame($data, $this->php->getData());
     }
 }
