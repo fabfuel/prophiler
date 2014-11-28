@@ -8,21 +8,19 @@
 
 <div id="prophiler">
 
-    <div class="toolbar" id="toolbarMinimised">
+    <div class="toolbar">
         <h1>
-            <a href="javascript:void(0);" id="showToolbar" title="Show Toolbar"><span class="glyphicon glyphicon-chevron-down"></span></a>
             Prophiler Toolbar
         </h1>
     </div>
 
-    <div class="toolbar" id="toolbarMaximised">
+    <div class="toolbar">
         <h1>
-            <a href="javascript:void(0);" id="hideToolbar" title="Hide Toolbar"><span class="glyphicon glyphicon-chevron-up"></span></a>
             Prophiler Toolbar
         </h1>
 
         <nav>
-            <ul>
+            <ul>app
                 <li>
                     <span class="label color-2"><span class="glyphicon glyphicon-time"></span> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
                 </li>

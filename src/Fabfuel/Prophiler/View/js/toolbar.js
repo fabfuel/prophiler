@@ -24,17 +24,6 @@ var Prophiler = Prophiler || {};
         container.className = newClasses.join(' ');
     };
 
-    document.getElementById('hideToolbar').addEventListener("click", function () {
-        document.getElementById('toolbarMinimised').style.display = "inherit";
-        document.getElementById('toolbarMaximised').style.display = "none";
-        document.getElementById('prophiler').style.width = "200px";
-    });
-    document.getElementById('showToolbar').addEventListener("click", function () {
-        document.getElementById('toolbarMaximised').style.display = "inherit";
-        document.getElementById('toolbarMinimised').style.display = "none";
-        document.getElementById('prophiler').style.width = "auto";
-    });
-
     window.addEventListener("load", function () {
 
         var jsonTags = document.getElementsByTagName('json');
