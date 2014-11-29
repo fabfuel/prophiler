@@ -29,7 +29,7 @@ class AdapterPluginTest extends PhalconPluginTest
      */
     public function testQuery()
     {
-        $token = 'token';
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
         $adapter = $this->getMockBuilder('Phalcon\Db\Adapter')
             ->disableOriginalConstructor()
@@ -54,11 +54,11 @@ class AdapterPluginTest extends PhalconPluginTest
         $this->profiler->expects($this->once())
             ->method('start')
             ->with(get_class($adapter) . '::query', $metadata, 'Database')
-            ->willReturn($token);
+            ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($token);
+            ->with($benchmark);
 
         $this->adapterPlugin->beforeQuery($event, $adapter);
         $this->adapterPlugin->afterQuery($event, $adapter);
