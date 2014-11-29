@@ -8,6 +8,15 @@ namespace Fabfuel\Prophiler\Adapter\Fabfuel;
 
 class MongoTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+        if(!class_exists('\Mongo\Profiler\ProfilerInterface')) {
+            $this->markTestSkipped('fabfuel/mongo package isn\'t installed');
+            return;
+        }
+    }
+
     /**
      * @covers Fabfuel\Prophiler\Adapter\Fabfuel\Mongo::__construct
      * @covers Fabfuel\Prophiler\Adapter\Fabfuel\Mongo::start
@@ -20,9 +29,7 @@ class MongoTest extends \PHPUnit_Framework_TestCase
         $metadata = ['lorem' => 'ipsum'];
         $token = 'abcdefgh';
 
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $profiler = $this->getMock('Fabfuel\Prophiler\Profiler');
 
         $profiler->expects($this->once())
             ->method('start')
