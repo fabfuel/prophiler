@@ -5,6 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
+use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\DispatcherInterface;
@@ -16,14 +17,14 @@ use Phalcon\Mvc\DispatcherInterface;
 class DispatcherPlugin extends PluginAbstract
 {
     /**
-     * @var string
+     * @var BenchmarkInterface
      */
-    protected $tokenDispatch;
+    protected $benchmarkDispatch;
 
     /**
-     * @var string
+     * @var BenchmarkInterface
      */
-    protected $tokenRoute;
+    protected $benchmarkRoute;
 
     /**
      * Start dispatch loop benchmark
@@ -33,7 +34,7 @@ class DispatcherPlugin extends PluginAbstract
     public function beforeDispatchLoop(Event $event)
     {
         $name = get_class($event->getSource()) . '::dispatchLoop';
-        $this->tokenDispatch = $this->getProfiler()->start($name, [], 'Dispatcher');
+        $this->benchmarkDispatch = $this->getProfiler()->start($name, [], 'Dispatcher');
     }
 
     /**
@@ -41,7 +42,7 @@ class DispatcherPlugin extends PluginAbstract
      */
     public function afterDispatchLoop()
     {
-        $this->getProfiler()->stop($this->tokenDispatch);
+        $this->getProfiler()->stop($this->benchmarkDispatch);
     }
 
     /**
@@ -60,7 +61,7 @@ class DispatcherPlugin extends PluginAbstract
             'params' => $dispatcher->getParams(),
         ];
 
-        $this->tokenRoute = $this->getProfiler()->start($name, $metadata, 'Dispatcher');
+        $this->benchmarkRoute = $this->getProfiler()->start($name, $metadata, 'Dispatcher');
     }
 
     /**
@@ -68,6 +69,6 @@ class DispatcherPlugin extends PluginAbstract
      */
     public function afterExecuteRoute()
     {
-        $this->getProfiler()->stop($this->tokenRoute);
+        $this->getProfiler()->stop($this->benchmarkRoute);
     }
 }
