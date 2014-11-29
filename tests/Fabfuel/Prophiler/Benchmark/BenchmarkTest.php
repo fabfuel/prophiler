@@ -89,9 +89,15 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0.0, $this->benchmark->getDuration());
 
         $this->benchmark->start();
+
+        usleep(1);
+
         $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
 
         $this->benchmark->stop();
+
+        usleep(1);
+
         $this->assertGreaterThan(0.0, $this->benchmark->getDuration());
     }
 
@@ -115,10 +121,14 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0.0, $this->benchmark->getEndTime());
         $this->benchmark->start();
 
+        usleep(1);
+
         // End usage should be set, even if benchmarked not stopped
         $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
 
         $firstEndTime = $this->benchmark->getEndTime();
+
+        usleep(1);
 
         $this->benchmark->stop();
         $this->assertGreaterThan(0.0, $this->benchmark->getEndTime());
@@ -135,7 +145,7 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
 
         $this->benchmark->start();
 
-        $memoryUsage = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+        $memoryWaste = $this->wasteMemory();
 
         $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsage());
 
@@ -163,17 +173,28 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0.0, $this->benchmark->getMemoryUsageEnd());
         $this->benchmark->start();
 
-        $memoryUsage1 = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+        $memoryWasteA = $this->wasteMemory();
 
         // End usage should be set, even if benchmarked not stopped
         $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
 
         $firstMemoryUsage = $this->benchmark->getMemoryUsageEnd();
 
-        $memoryUsage2 = (object)explode(' ', 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset. Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea. Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an. Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo. Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.');
+        $memoryWasteB = $this->wasteMemory();
 
         $this->benchmark->stop();
         $this->assertGreaterThan(0.0, $this->benchmark->getMemoryUsageEnd());
         $this->assertGreaterThan($firstMemoryUsage, $this->benchmark->getMemoryUsageEnd());
+    }
+
+    protected function wasteMemory()
+    {
+        $str = 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset.
+        Recusabo iracundia molestiae ea pro, suas dicta nemore an cum, erat dolorum nonummy mel ea.
+        Iisque labores liberavisse in mei, dico laoreet elaboraret nam et, iudico verterem platonem est an.
+        Te usu paulo vidisse epicuri, facilis mentitum liberavisse vel ut, movet iriure invidunt ut quo.
+        Ad melius mnesarchum scribentur eum, mel at mundi impetus utroque.';
+
+        return (object)explode(' ', $str);
     }
 }
