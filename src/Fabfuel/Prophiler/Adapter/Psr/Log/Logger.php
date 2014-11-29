@@ -135,7 +135,7 @@ class Logger extends AdapterAbstract implements LoggerInterface
     public function log($level, $message, array $context = array())
     {
         $context['severity'] = $level;
-        $token = $this->getProfiler()->start($message, $context, 'Logger');
-        $this->getProfiler()->stop($token);
+        $benchmark = $this->getProfiler()->start($message, $context, 'Logger');
+        $this->getProfiler()->stop($benchmark);
     }
 }

@@ -5,6 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
+use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\View;
@@ -17,9 +18,9 @@ use Phalcon\Mvc\ViewInterface;
 class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 {
     /**
-     * @var array
+     * @var BenchmarkInterface[]
      */
-    private $tokens = [];
+    private $benchmarks = [];
 
     /**
      * All render levels as descriptive strings
@@ -47,7 +48,7 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
             'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
 
-        $this->setToken($view, $this->getProfiler()->start($name, $metadata, 'View'));
+        $this->setBenchmark($view, $this->getProfiler()->start($name, $metadata, 'View'));
     }
 
     /**
@@ -57,8 +58,8 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function afterRenderView(Event $event, ViewInterface $view)
     {
-        $token = $this->getToken($view);
-        $this->getProfiler()->stop($token);
+        $benchmark = $this->getBenchmark($view);
+        $this->getProfiler()->stop($benchmark);
     }
 
     /**
@@ -66,9 +67,9 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      */
     public function afterRender(Event $event, ViewInterface $view)
     {
-        foreach ($this->tokens as $views) {
-            foreach ($views as $token) {
-                $this->getProfiler()->stop($token);
+        foreach ($this->benchmarks as $views) {
+            foreach ($views as $benchmark) {
+                $this->getProfiler()->stop($benchmark);
             }
         }
     }
@@ -84,20 +85,20 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 
     /**
      * @param ViewInterface $view
-     * @param string $token
+     * @param BenchmarkInterface $benchmark
      */
-    public function setToken(ViewInterface $view, $token)
+    public function setBenchmark(ViewInterface $view, BenchmarkInterface $benchmark)
     {
-        $this->tokens[md5($view->getActiveRenderPath())][] = $token;
+        $this->benchmarks[md5($view->getActiveRenderPath())][] = $benchmark;
     }
 
     /**
      * @param ViewInterface $view
-     * @return string
+     * @return BenchmarkInterface
      */
-    public function getToken(ViewInterface $view)
+    public function getBenchmark(ViewInterface $view)
     {
-        return array_shift($this->tokens[md5($view->getActiveRenderPath())]);
+        return array_shift($this->benchmarks[md5($view->getActiveRenderPath())]);
     }
 
     /**

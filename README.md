@@ -75,7 +75,7 @@ $profiler->stop($benchmark);
 ```
 
 #####Or stop without passing the benchmark
-In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark token to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
+In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
 
 ```php
 $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'], 'My Component');
