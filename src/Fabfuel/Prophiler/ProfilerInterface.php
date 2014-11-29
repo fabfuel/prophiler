@@ -15,19 +15,19 @@ interface ProfilerInterface extends \Iterator
      * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
      * @param array $metadata Addtional metadata or data
      * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
-     * @return string identifier token
+     * @return BenchmarkInterface The started benchmark
      */
     public function start($name, array $metadata = [], $component = null);
 
     /**
      * Stop a running benchmark
-     * If no token provided, the last started benchmark is stopped
+     * If no benchmark provided, the last started benchmark is stopped
      *
-     * @param string $token benchmark identifier
+     * @param BenchmarkInterface $benchmark A previously benchmark
      * @param array $metadata Addtional metadata or data
      * @return BenchmarkInterface
      */
-    public function stop($token = null, array $metadata = []);
+    public function stop(BenchmarkInterface $benchmark = null, array $metadata = []);
 
     /**
      * Get the total number of elapsed time in milliseconds
