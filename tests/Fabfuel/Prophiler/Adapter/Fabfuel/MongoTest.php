@@ -27,24 +27,25 @@ class MongoTest extends \PHPUnit_Framework_TestCase
     {
         $name = 'foobar';
         $metadata = ['lorem' => 'ipsum'];
-        $token = 'abcdefgh';
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $identifier = spl_object_hash($benchmark);
 
         $profiler = $this->getMock('Fabfuel\Prophiler\Profiler');
 
         $profiler->expects($this->once())
             ->method('start')
             ->with($name, $metadata, 'MongoDB')
-            ->will($this->returnValue($token));
+            ->will($this->returnValue($benchmark));
 
         $profiler->expects($this->once())
             ->method('stop')
-            ->with($token);
+            ->with($benchmark);
 
         $adapter = new Mongo($profiler);
 
-        $benchmarkToken = $adapter->start($name, $metadata);
-        $this->assertSame($benchmarkToken, $token);
+        $benchmarkIdentifier = $adapter->start($name, $metadata);
+        $this->assertSame($benchmarkIdentifier, $identifier);
 
-        $adapter->stop($token);
+        $adapter->stop($identifier);
     }
 }

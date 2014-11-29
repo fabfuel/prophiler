@@ -5,6 +5,7 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 
+use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Db\Adapter;
@@ -16,9 +17,9 @@ use Phalcon\Db\Adapter;
 class AdapterPlugin extends PluginAbstract
 {
     /**
-     * @var string
+     * @var BenchmarkInterface
      */
-    private $token;
+    private $benchmark;
 
     /**
      * Start the query benchmark
@@ -32,7 +33,7 @@ class AdapterPlugin extends PluginAbstract
             'query' => $database->getSQLStatement()
         ];
 
-        $this->token = $this->getProfiler()->start(get_class($event->getSource()) . '::query', $metadata, 'Database');
+        $this->benchmark = $this->getProfiler()->start(get_class($event->getSource()) . '::query', $metadata, 'Database');
     }
 
     /**
@@ -40,6 +41,6 @@ class AdapterPlugin extends PluginAbstract
      */
     public function afterQuery()
     {
-        $this->getProfiler()->stop($this->token);
+        $this->getProfiler()->stop($this->benchmark);
     }
 }

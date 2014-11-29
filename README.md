@@ -5,6 +5,13 @@
 [![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
 
 
+## Demo
+Here you can see the toolbar in action:
+http://prophiler.fabfuel.de/
+
+[![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
+
+
 ## Installation
 You can use composer to install the Prophiler. Just add it as dependency:
 
@@ -56,6 +63,27 @@ You can also easily create you own data collectors, by implementing the DataColl
 $toolbar->addDataCollector(new \My\Custom\DataCollector());
 ...
 ```
+
+## Custom Benchmarks
+
+You can easily add custom benchmarks to your code:
+
+```php
+$benchmark = $profiler->start('\My\Class::doSomething', ['additional' => 'information'], 'My Component');
+...
+$profiler->stop($benchmark);
+```
+
+#####Or stop without passing the benchmark
+In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
+
+```php
+$profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'], 'My Component');
+...
+$profiler->stop();
+```
+
+
 
 ## Tips
 

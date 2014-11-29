@@ -26,7 +26,6 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDuration()
     {
-        usleep(100);
         $this->assertGreaterThan(0, $this->profiler->getDuration());
     }
 
@@ -38,8 +37,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDurationFromLastBenchmark()
     {
-        $benchmarkToken = $this->profiler->start('benchmark');
-        $benchmark = $this->profiler->stop($benchmarkToken);
+        $benchmark = $this->profiler->start('benchmark');
+        $this->profiler->stop($benchmark);
 
         $this->assertSame(
             $benchmark->getEndTime() - $this->profiler->getStartTime(),
@@ -55,9 +54,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastBenchmark()
     {
-        $benchmarkToken = $this->profiler->start('benchmark');
-        $benchmark = $this->profiler->stop($benchmarkToken);
-
+        $benchmark = $this->profiler->start('benchmark');
         $this->assertSame($benchmark, $this->profiler->getLastBenchmark());
     }
 
@@ -66,6 +63,8 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      * @uses   Fabfuel\Prophiler\Profiler
      * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
      * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
+     * @expectedExceptionMessage No benchmarks to return
      */
     public function testGetLastBenchmarkWithoutBenchmarks()
     {
@@ -86,22 +85,19 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $benchmark2 = BenchmarkFactory::getBenchmark('lorem');
         $benchmark3 = BenchmarkFactory::getBenchmark('ipsum');
 
-        $token1 = $this->profiler->addBenchmark($benchmark1);
-        $token2 = $this->profiler->addBenchmark($benchmark2);
-        $token3 = $this->profiler->addBenchmark($benchmark3);
+        $profiler = $this->profiler
+            ->addBenchmark($benchmark1)
+            ->addBenchmark($benchmark2)
+            ->addBenchmark($benchmark3);
 
-        $this->assertNotSame($token1, $token2);
-        $this->assertNotSame($token2, $token3);
-        $this->assertNotSame($token1, $token3);
-
-        $this->assertInternalType('string', $token1);
-        $this->assertSame(3, count($this->profiler));
+        $this->assertSame($profiler, $this->profiler);
+        $this->assertSame(3, $this->profiler->count());
 
         $benchmarks = $this->profiler->getBenchmarks();
 
-        $this->assertTrue(isset($benchmarks[0]));
-        $this->assertTrue(isset($benchmarks[1]));
-        $this->assertTrue(isset($benchmarks[2]));
+        $this->assertTrue(isset($benchmarks[spl_object_hash($benchmark1)]));
+        $this->assertTrue(isset($benchmarks[spl_object_hash($benchmark2)]));
+        $this->assertTrue(isset($benchmarks[spl_object_hash($benchmark3)]));
     }
 
     /**
@@ -109,19 +105,15 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      * @uses   Fabfuel\Prophiler\Profiler
      * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
      * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
-     * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkInterface
      */
     public function testStart()
     {
         $name = 'foobar';
         $metadata = ['lorem' => 'ipsum'];
 
-        $token = $this->profiler->start($name, $metadata);
+        $benchmark = $this->profiler->start($name, $metadata);
 
-        $this->assertInternalType('string', $token);
         $this->assertSame(1, count($this->profiler));
-
-        $benchmark = $this->profiler->getBenchmark($token);
         $this->assertInstanceOf(
             '\Fabfuel\Prophiler\Benchmark\BenchmarkInterface',
             $benchmark
@@ -136,60 +128,87 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testStop()
     {
-        $metadata = ['foo'];
+        $name = 'foobar';
+        $metadataStart = ['lorem' => 'ipsum'];
+        $metadataStop = ['additional' => 'stop'];
 
-        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
-        $benchmark->expects($this->once())->method('addMetadata')->with($metadata);
-        $benchmark->expects($this->once())->method('stop');
+        $benchmark = $this->profiler->start($name, $metadataStart);
 
-        $token = $this->profiler->addBenchmark($benchmark);
-        $this->profiler->stop($token, $metadata);
+        $this->assertSame($metadataStart, $benchmark->getMetadata());
+
+        $duration1 = $benchmark->getDuration();
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+
+        $benchmarkInstance = $this->profiler->stop($benchmark, $metadataStop);
+        $this->assertInstanceOf(
+            'Fabfuel\Prophiler\Benchmark\Benchmark',
+            $benchmarkInstance
+        );
+
+        $duration2 = $benchmark->getDuration();
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+        $this->assertGreaterThan($duration1, $duration2);
+
+        $duration = $benchmark->getDuration();
+        $this->assertSame($duration, $benchmark->getDuration());
+
+        $this->assertArrayHasKey('additional', $benchmark->getMetadata());
+        $this->assertSame(
+            array_merge($metadataStart, $metadataStop),
+            $benchmark->getMetadata()
+        );
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Profiler::stop
+     * @uses   Fabfuel\Prophiler\Profiler
+     * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
+     * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testAnonymousStop()
+    {
+        $name = 'foobar';
+        $metadata = ['lorem' => 'ipsum'];
+
+        $benchmark = $this->profiler->start($name, $metadata);
+
+        $this->assertSame($metadata, $benchmark->getMetadata());
+
+        $duration1 = $benchmark->getDuration();
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+
+        $benchmarkInstance = $this->profiler->stop();
+        $this->assertInstanceOf(
+            'Fabfuel\Prophiler\Benchmark\Benchmark',
+            $benchmarkInstance
+        );
+
+        $duration2 = $benchmark->getDuration();
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+        $this->assertGreaterThan($duration1, $duration2);
+
+        $duration = $benchmark->getDuration();
+        $this->assertSame($duration, $benchmark->getDuration());
+    }
+
+
+    /**
+     * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
+     * @expectedExceptionMessage No benchmarks to return last one
+     */
+    public function testAnonymousStopWithoutBenchmark()
+    {
+        $this->profiler->stop();
     }
 
     /**
      * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
-     * @expectedExceptionMessage Unknown benchmark
+     * @expectedExceptionMessage Benchmark not present in profiler
      */
-    public function testGetBenchmarkWithInvalidToken()
+    public function testStopUnknownBenchmark()
     {
-        $this->profiler->getBenchmark('foobar');
-    }
-
-    /**
-     * @covers Fabfuel\Prophiler\Profiler::getBenchmark
-     * @uses   Fabfuel\Prophiler\Profiler
-     * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
-     * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
-     */
-    public function testGetBenchmarkFromToken()
-    {
-        $token = $this->profiler->start('Foobar');
-        $benchmark = $this->profiler->getBenchmark($token);
-        $this->assertInstanceOf(
-            'Fabfuel\Prophiler\Benchmark\BenchmarkInterface',
-            $benchmark
-        );
-        $this->assertSame(
-            $this->profiler->getBenchmark($token),
-            $this->profiler->getBenchmark()
-        );
-    }
-
-    /**
-     * @covers Fabfuel\Prophiler\Profiler::getBenchmark
-     * @uses   Fabfuel\Prophiler\Profiler
-     * @uses   Fabfuel\Prophiler\Benchmark\Benchmark
-     * @uses   Fabfuel\Prophiler\Benchmark\BenchmarkFactory
-     */
-    public function testGetBenchmarkWithoutToken()
-    {
-        $this->assertNull($this->profiler->getBenchmark());
-
-        $this->profiler->start('Foobar');
-        $this->assertInstanceOf(
-            'Fabfuel\Prophiler\Benchmark\BenchmarkInterface',
-            $this->profiler->getBenchmark()
-        );
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $this->profiler->stop($benchmark);
     }
 
     /**
@@ -204,27 +223,25 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIteration()
     {
-        $this->profiler->stop($this->profiler->start('Foobar'));
-        $benchmark1 = $this->profiler->getLastBenchmark();
+        $benchmark1 = $this->profiler->start('Foobar');
+        $this->profiler->stop($benchmark1);
 
-        $this->profiler->stop($this->profiler->start('Loremk Ipsum'));
-        $benchmark2 = $this->profiler->getLastBenchmark();
+        $benchmark2 = $this->profiler->start('Loremk Ipsum');
+        $this->profiler->stop($benchmark2);
 
-        $this->assertSame(0, $this->profiler->key());
+        $this->profiler->rewind();
+
+        $this->assertSame(spl_object_hash($benchmark1), $this->profiler->key());
         $this->assertTrue($this->profiler->valid());
         $this->assertSame($benchmark1, $this->profiler->current());
 
         $this->profiler->next();
-        $this->assertSame(1, $this->profiler->key());
+
+        $this->assertSame(spl_object_hash($benchmark2), $this->profiler->key());
         $this->assertTrue($this->profiler->valid());
         $this->assertSame($benchmark2, $this->profiler->current());
 
         $this->profiler->next();
-        $this->assertSame(2, $this->profiler->key());
         $this->assertFalse($this->profiler->valid());
-
-        $this->profiler->rewind();
-        $this->assertSame(0, $this->profiler->key());
-        $this->assertTrue($this->profiler->valid());
     }
 }
