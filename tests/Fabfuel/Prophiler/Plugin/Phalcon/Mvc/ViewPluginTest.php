@@ -25,14 +25,14 @@ class ViewPluginTest extends PhalconPluginTest
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::beforeRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::afterRenderView
      * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getRenderLevel
-     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
-     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setBenchmark
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getBenchmark
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Profiler
      */
     public function testRenderView()
     {
-        $token = 'token';
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
         $view = $this->getMockBuilder('Phalcon\Mvc\View')
             ->disableOriginalConstructor()
@@ -62,11 +62,11 @@ class ViewPluginTest extends PhalconPluginTest
         $this->profiler->expects($this->once())
             ->method('start')
             ->with(get_class($view) . '::render: main', $metadata, 'View')
-            ->willReturn($token);
+            ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($token);
+            ->with($benchmark);
 
         $this->viewPlugin->beforeRenderView($event, $view);
         $this->viewPlugin->afterRenderView($event, $view);
@@ -77,7 +77,7 @@ class ViewPluginTest extends PhalconPluginTest
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Profiler
      */
-    public function testAfterRenderWithoutOpenTokens()
+    public function testAfterRenderWithouPendingBenchmarks()
     {
         $view = $this->getMockBuilder('Phalcon\Mvc\View')
             ->disableOriginalConstructor()
@@ -102,6 +102,8 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testAfterRender()
     {
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
         $view = $this->getMockBuilder('Phalcon\Mvc\View')
             ->disableOriginalConstructor()
             ->getMock();
@@ -114,12 +116,12 @@ class ViewPluginTest extends PhalconPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->viewPlugin->setToken($view, 'token');
+        $this->viewPlugin->setBenchmark($view, $benchmark);
 
         $this->getProfiler()
             ->expects($this->once())
             ->method('stop')
-            ->with('token');
+            ->with($benchmark);
 
         $this->viewPlugin->afterRender($event, $view);
     }
@@ -158,13 +160,13 @@ class ViewPluginTest extends PhalconPluginTest
     }
 
     /**
-     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getToken
-     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setToken
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::getBenchmark
+     * @covers Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin::setBenchmark
      * @covers Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Profiler
      */
-    public function testGetAndSetToken()
+    public function testGetAndSetBenchmark()
     {
         $view = $this->getMockBuilder('Phalcon\Mvc\View')
             ->disableOriginalConstructor()
@@ -174,12 +176,15 @@ class ViewPluginTest extends PhalconPluginTest
             ->method('getActiveRenderPath')
             ->willReturn('test');
 
-        $this->viewPlugin->setToken($view, 'token1');
-        $this->viewPlugin->setToken($view, 'token2');
+        $benchmark1 = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $benchmark2 = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $this->assertSame('token1', $this->viewPlugin->getToken($view));
-        $this->assertSame('token2', $this->viewPlugin->getToken($view));
-        $this->assertNull($this->viewPlugin->getToken($view));
+        $this->viewPlugin->setBenchmark($view, $benchmark1);
+        $this->viewPlugin->setBenchmark($view, $benchmark2);
+
+        $this->assertSame($benchmark1, $this->viewPlugin->getBenchmark($view));
+        $this->assertSame($benchmark2, $this->viewPlugin->getBenchmark($view));
+        $this->assertNull($this->viewPlugin->getBenchmark($view));
     }
 
     /**

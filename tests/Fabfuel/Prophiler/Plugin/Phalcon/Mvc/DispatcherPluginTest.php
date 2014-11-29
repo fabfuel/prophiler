@@ -29,16 +29,16 @@ class DispatcherPluginTest extends PhalconPluginTest
      */
     public function testDispatchLoop()
     {
-        $token = 'token';
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
         $this->profiler->expects($this->once())
             ->method('start')
             ->with('Phalcon\Mvc\Dispatcher::dispatchLoop', [], 'Dispatcher')
-            ->willReturn($token);
+            ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($token);
+            ->with($benchmark);
 
         $event = $this->getMockBuilder('Phalcon\Events\Event')
             ->disableOriginalConstructor()
@@ -59,7 +59,8 @@ class DispatcherPluginTest extends PhalconPluginTest
      */
     public function testExecuteRoute()
     {
-        $token = 'token';
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
         $metadata = [
             'executed' => 'stdClass::testAction',
             'controller' => 'foobar',
@@ -88,11 +89,11 @@ class DispatcherPluginTest extends PhalconPluginTest
         $this->profiler->expects($this->once())
             ->method('start')
             ->with('Phalcon\Mvc\Dispatcher::executeRoute', $metadata, 'Dispatcher')
-            ->willReturn($token);
+            ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($token);
+            ->with($benchmark);
 
         $event = $this->getMockBuilder('Phalcon\Events\Event')
             ->disableOriginalConstructor()
@@ -105,6 +106,4 @@ class DispatcherPluginTest extends PhalconPluginTest
         $this->dispatcherPlugin->beforeExecuteRoute($event, $dispatcher);
         $this->dispatcherPlugin->afterExecuteRoute($event);
     }
-
-
 }
