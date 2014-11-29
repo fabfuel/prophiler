@@ -18,7 +18,7 @@ use Phalcon\Mvc\ViewInterface;
 class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 {
     /**
-     * @var BenchmarkInterface[]
+     * @var BenchmarkInterface[][]
      */
     private $benchmarks = [];
 
@@ -55,6 +55,7 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
      * Stop view benchmark
      *
      * @param Event $event
+     * @param ViewInterface $view
      */
     public function afterRenderView(Event $event, ViewInterface $view)
     {
@@ -64,6 +65,9 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 
     /**
      * Stop view benchmark
+     *
+     * @param Event $event
+     * @param ViewInterface $view
      */
     public function afterRender(Event $event, ViewInterface $view)
     {
