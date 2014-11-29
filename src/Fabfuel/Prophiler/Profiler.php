@@ -35,7 +35,7 @@ class Profiler implements ProfilerInterface, \Countable
      * @param string $name Unique identifier like e.g. Class::Method (\Foobar\MyClass::doSomething)
      * @param array $metadata Additional metadata
      * @param string $component Name of the component which triggered the benchmark, e.g. "App", "Database"
-     * @return string Benchmark identifier token
+     * @return BenchmarkInterface The started benchmark
      */
     public function start($name, array $metadata = [], $component = null)
     {
@@ -45,35 +45,41 @@ class Profiler implements ProfilerInterface, \Countable
             $component
         );
         $benchmark->start();
-        return $this->addBenchmark($benchmark);
+        $this->addBenchmark($benchmark);
+        return $benchmark;
     }
 
     /**
      * Stop a running benchmark
-     * If no token provided, the last started benchmark is stopped
+     * If no benchmark provided, the last started benchmark is stopped
      *
-     * @param string $token Benchmark identifier
+     * @param BenchmarkInterface $benchmark Benchmark identifier
      * @param array $metadata Additional metadata
-     * @return BenchmarkInterface $benchmark
      * @throws UnknownBenchmarkException
+     * @return BenchmarkInterface $benchmark
      */
-    public function stop($token = null, array $metadata = [])
+    public function stop(BenchmarkInterface $benchmark = null, array $metadata = [])
     {
-        $benchmark = $this->getBenchmark($token);
-        $benchmark->addMetadata($metadata);
+        if (is_null($benchmark)) {
+            $benchmark = $this->getLastBenchmark();
+        }
+        if (!isset($this->benchmarks[spl_object_hash($benchmark)])) {
+            throw new UnknownBenchmarkException('Benchmark not present in profiler');
+        }
         $benchmark->stop();
+        $benchmark->addMetadata($metadata);
         return $benchmark;
     }
 
     /**
      * @param BenchmarkInterface $benchmark
-     * @return string
+     * @return $this
      */
     public function addBenchmark(BenchmarkInterface $benchmark)
     {
-        $token = spl_object_hash($benchmark);
-        $this->benchmarks[$token] = $benchmark;
-        return $token;
+        $identifier = spl_object_hash($benchmark);
+        $this->benchmarks[$identifier] = $benchmark;
+        return $this;
     }
 
     /**
@@ -110,26 +116,6 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * Get a specific of the last started benchmark
-     *
-     * @param string $token
-     * @return BenchmarkInterface
-     * @throws UnknownBenchmarkException
-     */
-    public function getBenchmark($token = null)
-    {
-        if (!$token) {
-            return $this->getLastBenchmark();
-        }
-
-        if (!isset($this->benchmarks[$token])) {
-            throw new UnknownBenchmarkException('Unknown benchmark: ' . $token);
-        }
-
-        return $this->benchmarks[$token];
-    }
-
-    /**
      * @return BenchmarkInterface
      * @throws UnknownBenchmarkException
      */
@@ -139,7 +125,6 @@ class Profiler implements ProfilerInterface, \Countable
         if ($last) {
             return current($last);
         }
-
         throw new UnknownBenchmarkException('No benchmarks to return last one');
     }
 
