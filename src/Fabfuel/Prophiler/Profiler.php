@@ -83,15 +83,10 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function getDuration()
     {
-        $benchmarks = $this->getBenchmarks();
-        if(!empty($benchmarks)) {
-            $last = $this->getLastBenchmark();
-            if ($last) {
-                return ($last->getEndTime() - $this->getStartTime());
-            }
+        if ($this->count()) {
+            return $this->getLastBenchmark()->getEndTime() - $this->getStartTime();
         }
-        
-        return (microtime(true) - $this->getStartTime());
+        return microtime(true) - $this->getStartTime();
     }
 
     /**
@@ -118,12 +113,12 @@ class Profiler implements ProfilerInterface, \Countable
      * Get a specific of the last started benchmark
      *
      * @param string $token
-     * @return BenchmarkInterface|null
+     * @return BenchmarkInterface
      * @throws UnknownBenchmarkException
      */
     public function getBenchmark($token = null)
     {
-        if(!$token) {
+        if (!$token) {
             return $this->getLastBenchmark();
         }
 
@@ -135,7 +130,7 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * @return BenchmarkInterface|null
+     * @return BenchmarkInterface
      * @throws UnknownBenchmarkException
      */
     public function getLastBenchmark()
