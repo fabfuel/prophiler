@@ -31,7 +31,9 @@ class AdapterPluginTest extends PhalconPluginTest
     {
         $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $adapter = $this->getMock('Phalcon\Db\Adapter');
+        $adapter = $this->getMockBuilder('Phalcon\Db\Adapter')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $adapter->expects($this->once())
             ->method('getSQLStatement')
