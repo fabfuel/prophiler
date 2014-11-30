@@ -41,7 +41,9 @@ class ViewPluginTest extends PhalconPluginTest
 
         $view = $this->getMock('Phalcon\Mvc\View');
 
-        $event = $this->getMock('Phalcon\Events\Event');
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $event->expects($this->exactly(1))
             ->method('getSource')
@@ -82,7 +84,9 @@ class ViewPluginTest extends PhalconPluginTest
     {
         $view = $this->getMock('Phalcon\Mvc\View');
 
-        $event = $this->getMock('Phalcon\Events\Event');
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->getProfiler()
             ->expects($this->never())
@@ -101,9 +105,9 @@ class ViewPluginTest extends PhalconPluginTest
     {
         $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $view = $this->getMock('Phalcon\Mvc\View');
-
-        $event = $this->getMock('Phalcon\Events\Event');
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $view = $this->getMock('Phalcon\Mvc\View');
 

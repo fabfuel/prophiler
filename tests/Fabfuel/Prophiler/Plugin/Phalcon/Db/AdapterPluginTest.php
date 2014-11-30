@@ -39,7 +39,9 @@ class AdapterPluginTest extends PhalconPluginTest
             ->method('getSQLStatement')
             ->willReturn('SELECT * FROM foobar;');
 
-        $event = $this->getMock('Phalcon\Events\Event');
+        $event = $this->getMockBuilder('Phalcon\Events\Event')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $event->expects($this->exactly(1))
             ->method('getSource')
