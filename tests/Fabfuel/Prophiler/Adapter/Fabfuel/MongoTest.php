@@ -21,6 +21,7 @@ class MongoTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Adapter\Fabfuel\Mongo::__construct
      * @covers Fabfuel\Prophiler\Adapter\Fabfuel\Mongo::start
      * @covers Fabfuel\Prophiler\Adapter\Fabfuel\Mongo::stop
+     * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Adapter\AdapterAbstract
      */
     public function testConstruct()
