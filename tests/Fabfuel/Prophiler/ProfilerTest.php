@@ -140,9 +140,9 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($metadataStart, $benchmark->getMetadata());
 
         usleep(1);
-        $duration = $benchmark->getDuration();
-        $this->assertGreaterThan(0, $duration);
+        $this->assertGreaterThan(0, $benchmark->getDuration());
         $result = $this->profiler->stop($benchmark, $metadataStop);
+        $duration = $benchmark->getDuration();
 
         usleep(1);
         $this->assertSame($benchmark, $result);
@@ -173,9 +173,9 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($metadataStart, $benchmark->getMetadata());
 
         usleep(1);
+        $this->assertGreaterThan(0, $benchmark->getDuration());
+        $result = $this->profiler->stop($benchmark, $metadataStop);
         $duration = $benchmark->getDuration();
-        $this->assertGreaterThan(0, $duration);
-        $result = $this->profiler->stop(null, $metadataStop);
 
         usleep(1);
         $this->assertSame($benchmark, $result);
