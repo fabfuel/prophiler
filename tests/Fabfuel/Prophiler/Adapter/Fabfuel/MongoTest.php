@@ -11,7 +11,7 @@ class MongoTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        if(!class_exists('\Mongo\Profiler\ProfilerInterface')) {
+        if(!interface_exists('\Mongo\Profiler\ProfilerInterface')) {
             $this->markTestSkipped('fabfuel/mongo package isn\'t installed');
             return;
         }
