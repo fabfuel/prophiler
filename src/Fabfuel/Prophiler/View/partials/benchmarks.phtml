@@ -15,7 +15,7 @@
         <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
         <?php $timelineFormatter->setBenchmark($benchmark); ?>
 
-        <div class="row" onclick="Prophiler.slideToggleData('prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>');">
+        <div class="row" onclick="Prophiler.toggleContainer('prophiler-benchmark-details-<?= $benchmarkFormatter->getId() ?>');">
             <div class="column column-name" title="<?= $benchmarkFormatter->getName() ?>"><?= $benchmarkFormatter->getName() ?></div>
             <div class="column column-component" title="<?= $benchmarkFormatter->getComponent() ?>"><?= $benchmarkFormatter->getComponent() ?></div>
             <div class="column column-duration"><?= $benchmarkFormatter->getDuration() ?></div>

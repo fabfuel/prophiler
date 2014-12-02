@@ -94,7 +94,7 @@ body {
     display: block;
     position: relative;
     @include clearfix();
-
+    padding-top: 10px;
     min-height: 50px;
     border: 1px solid transparent;
     background-color: #f8f8f8;
@@ -104,7 +104,7 @@ body {
       color: $c-headline;
       float: left;
       height: 50px;
-      padding: 15px 15px;
+      padding: 7px 15px;
       font-size: 18px;
       line-height: 20px;
       margin: 0;
@@ -259,6 +259,7 @@ body {
 
   .closed {
     max-height: 0 !important;
+    padding: 0 !important;
   }
 
   .benchmarks {

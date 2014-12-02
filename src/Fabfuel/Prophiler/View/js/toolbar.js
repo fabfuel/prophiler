@@ -11,7 +11,7 @@ var Prophiler = Prophiler || {};
         var container = document.getElementById(containerId),
             classes = container.className.split(' '),
             newClasses = [];
-        console.log(classes)
+        console.log(container)
         classes.forEach(function (className) {
             if (className == 'closed') {
                 newClasses.push('opened');
@@ -22,6 +22,15 @@ var Prophiler = Prophiler || {};
             }
         });
         container.className = newClasses.join(' ');
+    };
+
+    Prophiler.toggleContainer = function(containerId) {
+        var container = document.getElementById(containerId);
+        if (container.style.display == 'none' || container.style.display !== 'inherit') {
+            container.style.display = 'inherit';
+        } else {
+            container.style.display = 'none';
+        }
     };
 
     window.addEventListener("load", function () {
