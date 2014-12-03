@@ -21,13 +21,13 @@
     "require-dev": {
         "psr/log": "~1.0",
         "phpunit/phpunit": "~4.0",
-	    "phpmd/phpmd": "~1.0",
-	    "squizlabs/php_codesniffer": "~1.0"
+        "phpmd/phpmd": "~1.0",
+        "squizlabs/php_codesniffer": "~1.0"
     },
-	"suggest": {
-		"phalcon/devtools": "This tools provide you useful scripts, helping to develop applications that use with Phalcon.",
-		"fabfuel/mongo": "ORM for Mongo, supports lazy loading, object references, subdocument classes and their collections."
-	},
+    "suggest": {
+        "phalcon/devtools": "This tools provide you useful scripts, helping to develop applications that use with Phalcon.",
+        "fabfuel/mongo": "ORM for Mongo, supports lazy loading, object references, subdocument classes and their collections."
+    },
     "repositories": [
         {
             "type": "vcs",
