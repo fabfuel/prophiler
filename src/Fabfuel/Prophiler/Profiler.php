@@ -121,11 +121,12 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function getLastBenchmark()
     {
-        if ($this->count() === 0) {
-            throw new UnknownBenchmarkException('No benchmarks to return last one');
+        $lastBenchmarkSlice = array_slice($this->benchmarks, -1, 1, true);
+        $lastBenchmark = current($lastBenchmarkSlice);
+        if ($lastBenchmark) {
+            return $lastBenchmark;
         }
-        $lastBenchmark = array_slice($this->benchmarks, -1, 1, true);
-        return array_pop($lastBenchmark);
+        throw new UnknownBenchmarkException('No benchmarks to return last one');
     }
 
     /**
