@@ -121,11 +121,11 @@ class Profiler implements ProfilerInterface, \Countable
      */
     public function getLastBenchmark()
     {
-        $last = array_slice($this->benchmarks, -1, 1);
-        if ($last) {
-            return current($last);
+        if ($this->count() === 0) {
+            throw new UnknownBenchmarkException('No benchmarks to return last one');
         }
-        throw new UnknownBenchmarkException('No benchmarks to return last one');
+        $lastBenchmark = array_slice($this->benchmarks, -1, 1, true);
+        return array_pop($lastBenchmark);
     }
 
     /**
@@ -139,11 +139,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the current element
+     * Return the current benchmark
      *
-     * @link http://php.net/manual/en/iterator.current.php
-     * @return BenchmarkInterface Can return any type.
+     * @return BenchmarkInterface|bool
      */
     public function current()
     {
@@ -151,11 +149,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Move forward to next element
+     * Move forward to next benchmark
      *
-     * @link http://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
+     * @return void
      */
     public function next()
     {
@@ -163,11 +159,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Return the key of the current element
+     * Return the key of the current Benchmark
      *
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return integer scalar on success, or null on failure.
+     * @return string
      */
     public function key()
     {
@@ -175,12 +169,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
      * Checks if current position is valid
      *
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     *       Returns true on success or false on failure.
+     * @return bool
      */
     public function valid()
     {
@@ -194,11 +185,9 @@ class Profiler implements ProfilerInterface, \Countable
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Rewind the Iterator to the first element
+     * Rewind the Iterator to the first benchmark
      *
-     * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
+     * @return void
      */
     public function rewind()
     {
