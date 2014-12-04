@@ -54,7 +54,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $toolbar->partial('../../../../tests/Fabfuel/Prophiler/View/test', ['foobar' => 'ipsum']);
         $output = ob_get_clean();
 
-        $this->assertSame("<lorem>ipsum</lorem>", $output);
+        $this->assertSame("<lorem>ipsum</lorem>\n", $output);
     }
 
     /**
