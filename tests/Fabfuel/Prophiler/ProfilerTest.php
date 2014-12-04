@@ -174,7 +174,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
         usleep(1);
         $this->assertGreaterThan(0, $benchmark->getDuration());
-        $result = $this->profiler->stop($benchmark, $metadataStop);
+        $result = $this->profiler->stop();
         $duration = $benchmark->getDuration();
 
         usleep(1);
@@ -188,14 +188,13 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * @expectedException \Fabfuel\Prophiler\Exception\UnknownBenchmarkException
      * @expectedExceptionMessage No benchmarks to return last one
      */
     public function testAnonymousStopWithoutBenchmark()
     {
-        $this->profiler->getLastBenchmark();
+        $this->profiler->stop();
     }
 
     /**
