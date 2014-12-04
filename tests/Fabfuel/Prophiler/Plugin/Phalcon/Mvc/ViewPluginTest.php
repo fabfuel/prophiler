@@ -18,11 +18,6 @@ class ViewPluginTest extends PhalconPluginTest
     public function setUp()
     {
         parent::setUp();
-        if(!extension_loaded('phalcon')) {
-            $this->markTestSkipped('Phalcon extension isn\'t installed');
-            return;
-        }
-
         $this->viewPlugin = ViewPlugin::getInstance($this->getProfiler());
     }
 
