@@ -174,7 +174,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
         usleep(1);
         $this->assertGreaterThan(0, $benchmark->getDuration());
-        $result = $this->profiler->stop();
+        $result = $this->profiler->stop(null, $metadataStop);
         $duration = $benchmark->getDuration();
 
         usleep(1);
