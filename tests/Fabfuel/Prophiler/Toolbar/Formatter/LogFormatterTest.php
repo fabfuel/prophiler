@@ -10,12 +10,12 @@ use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 class LogFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BenchmarkFormatter
+     * @var BenchmarkFormatter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $formatter;
 
     /**
-     * @var BenchmarkInterface
+     * @var BenchmarkInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $benchmark;
 
