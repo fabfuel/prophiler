@@ -973,3 +973,24 @@ h5 {
     font-weight: bold;
     margin-top:20px;
 }
+
+
+#demo-arrow {
+    position: absolute;
+    top: 15px;
+    left: 75px;
+    color: #fff;
+    font-size: 48px;
+    opacity: 0.8;
+
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+
+    -webkit-transform-origin: center center;
+        -ms-transform-origin: center center;
+            transform-origin: center center;
+
+    -webkit-animation-delay: 3s;
+    animation-delay: 3s;
+}
