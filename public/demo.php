@@ -68,9 +68,9 @@ $profiler->stop($bootstrap);
 
 $logger->info('Bootstrap has finished', ['some' => 'context']);
 
-$bootstrap = $profiler->start('Session::load', ['lorem' => 'ipsum'], 'Sessions');
+$sessionLoad = $profiler->start('Session::load', ['lorem' => 'ipsum'], 'Sessions');
 usleep($wait(45));
-$profiler->stop($bootstrap);
+$profiler->stop($sessionLoad);
 
 $dispatcher = $profiler->start('Dispatcher', ['abc' => '123', 'foobar' => true], 'Dispatcher');
 usleep($wait(25));
@@ -120,9 +120,9 @@ usleep($wait(25));
 
 $profiler->stop($dispatcher);
 
-$bootstrap = $profiler->start('Session::write', ['lorem' => 'ipsum'], 'Sessions');
+$sessionWrite = $profiler->start('Session::write', ['lorem' => 'ipsum'], 'Sessions');
 usleep($wait(45));
-$profiler->stop($bootstrap);
+$profiler->stop($sessionWrite);
 $logger->emergency('Done, gimme work!');
 
 $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
