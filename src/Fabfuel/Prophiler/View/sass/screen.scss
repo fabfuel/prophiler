@@ -17,6 +17,10 @@ body {
   position: relative;
 }
 
+#skel-layers-wrapper {
+  -webkit-perspective: none !important;
+}
+
 #prophiler {
 
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -107,7 +111,7 @@ body {
     }
 
     nav {
-      position: absolute;
+      float: left;
       left: 150px;
 
       color: #fff;
@@ -340,5 +344,17 @@ body {
   .severity-alert,
   .severity-emergency {
     @extend .color-0;
+  }
+}
+
+@media (max-width: 736px) {
+  .toolbar {
+    .logo {
+      display: none;
+    }
+
+    .fa {
+      display: none;
+    }
   }
 }
