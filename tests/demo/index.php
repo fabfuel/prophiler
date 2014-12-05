@@ -85,7 +85,7 @@ usleep($wait(25));
 
     $profiler->stop($router);
 
-    $logger->alert('Route could not be found');
+    $logger->alert('Route not found', ['lorem' => 'ipsum', 'foobar' => true]);
 
     $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123, 'array' => ['foo' => 'bar', 'lorem' => true, 'ipsum' => 1.5]], 'Application');
     usleep($wait(200));
@@ -94,19 +94,23 @@ usleep($wait(25));
         usleep($wait(10));
         $profiler->stop($view);
 
+        $view = $profiler->start('Database::query', ['query' => 'SELECT `companies`.`id`, `companies`.`name`, `companies`.`telephone`, `companies`.`address`, `companies`.`city` FROM `companies`'], 'Database');
+        usleep($wait(50));
+        $profiler->stop($view);
+
         $logger->notice('Undefined variable: $foobar', ['some' => 'context']);
+
+        $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar::find', ['query' => ['user' => '54815c5081de416a770041a7', 'active' => true], 'foobar' => 123], 'MongoDB');
+        usleep($wait(25));
+        $profiler->stop($database);
+
+        $logger->debug('Analyze query', ['query' => ['user' => 12312], 'foobar' => 123]);
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
         usleep($wait(10));
         $profiler->stop($view);
 
         $logger->critical('Lorem Ipsum', ['some' => 'context']);
-
-        $database = $profiler->start('\Fabfuel\Mongo\Collection\Foobar\LoremIpsum::doSomeFancyFoobarStuff', ['query' => ['user' => 12312], 'foobar' => 123], 'MongoDB');
-        usleep($wait(200));
-        $profiler->stop($database);
-
-        $logger->debug('Analyze query', ['query' => ['user' => 12312], 'foobar' => 123]);
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');
         usleep($wait(100));

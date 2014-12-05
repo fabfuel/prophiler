@@ -169,7 +169,6 @@
 			header > p
 			{
 				display: block;
-				color: #f35858;
 				padding: 0.75em 0 1em 0;
 				font-size: 1.5em;
 				line-height: 1.5em;
@@ -571,7 +570,7 @@
 			top: 0;
 			z-index: 1;
 			box-shadow: inset 0px 0px 0px 1px #e8e8e8;
-			background: #f6f8fb url('images/image-wrapper.svg');
+			background: #f6f8fb url('img/image-wrapper.svg');
 		}
 
 	#header-wrapper
@@ -601,7 +600,7 @@
 	#promo-wrapper
 	{
 		position: relative;
-		background-image:		url('images/overlay.png'),	url('../images/promo.jpg');
+		background-image:		url('images/overlay.png'),	url('../img/promo.jpg');
 		background-size:		192px 192px,				cover;
 		background-position:	top left,					center center;
 		color: #fff;
@@ -801,7 +800,13 @@
 			color: #fff;
 			font-size: 3em;
 		}
-		
+
+		#hero h3
+		{
+			color: #fff;
+			font-size: 2.5em;
+		}
+
 		#hero strong
 		{
 			color: inherit;
@@ -949,15 +954,16 @@
 /*********************************************************************************/
 
 pre code {
-    font-family: "Courier";
+    font-family: Monaco, "Lucida Console", monospace;
     font-size:12px;
     font-weight:bold;
     text-height: 17px;
 }
 
 pre {
-    background-color: #ede9ff;
+    background-color: rgba(248,122,143,.1);
     padding-left:10px;
+
 }
 
 h2 {

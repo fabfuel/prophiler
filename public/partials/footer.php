@@ -19,7 +19,7 @@
     </div>
     <div id="copyright" class="container">
         <ul class="menu">
-            <li>&copy; Fabian Fuelling. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            <li>&copy; Fabian Fülling. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
         </ul>
     </div>
 </div>
