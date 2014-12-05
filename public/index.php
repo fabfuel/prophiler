@@ -42,9 +42,11 @@
                 <article id="content">
                     <header>
                         <h2>Visual candy to sweeten frustrating debugging work</h2>
-                        <h4>Just the most beautiful PHP profiler out there</h4>
                     </header>
-                    <p>Prophiler was built, to provide a powerful tool for visualizing what's going on in your PHP application. The timeline is inspired by modern browser's networking tabs and gives you a beautiful and unique overview of processes happening in the background during the run of your application.</p>
+                    <p>Prophiler was built to provide a powerful tool for visualizing what's going on in your PHP
+                        application. The timeline is inspired by modern browser's networking tabs and gives you a
+                        beautiful and unique overview of processes happening in the background during the run of your
+                        application. It's just the most beautiful PHP profiler out there.</p>
                 </article>
 
             <div class="row features">
@@ -106,7 +108,7 @@
                 <header>
                     <h2>Built for Phalcon</h2>
                 </header>
-                <p>Prophiler was initially built for the <a href="http://phalconphp.com">Phalcon PHP Framework</a>. It comes bundled with adapters for several components which give you a powerful starting point. This let's you set up the profiling of your Phalcon application with <a href="/how-it-works.php">some simple steps</a>. Bundled Adapters and data-collectors are:</p>
+                <p>Prophiler was initially built for the <a href="http://phalconphp.com">Phalcon PHP Framework</a>. It comes bundled with adapters for several components which give you a powerful starting point. This let's you set up the profiling of your Phalcon application with <a href="/how-it-works.php">some simple steps</a>. Bundled adapters and data-collectors are:</p>
             </article>
 
             <div class="row features">
@@ -140,7 +142,7 @@
                 <header>
                     <h2>Other adapters and data collectors</h2>
                 </header>
-                <p>Prophiler comes with some other adapters and data-collectors, for integrating easily in you application. This list is going to be continued!</p>
+                <p>Prophiler comes with some other adapters and data-collectors, for integrating easily in your application. This list is going to be continued!</p>
             </article>
 
             <div class="row features">
@@ -148,7 +150,7 @@
                     <header>
                         <h3>Fabfuel\Mongo</h3>
                     </header>
-                    <p>If you use my MongoDB documengt mapper, you can now easily see all database interactions (finds, inserts, updates, removes, even aggregations) in the Prophiler timeline.</p>
+                    <p>If you use my MongoDB document mapper, you can now easily see all database interactions (finds, inserts, updates, removes, even aggregations) in the Prophiler timeline.</p>
                 </section>
                 <section class="6u 12u(2) feature">
                     <header>
