@@ -107,12 +107,19 @@ body {
     nav {
       color: #fff;
 
+      a {
+        text-decoration: none;
+        border: none;
+      }
+
       a:hover {
         text-decoration: none;
       }
 
       ul {
+        margin: 0;
         li {
+          margin-top: 10px;
           padding: 7px;
           float: left;
           list-style: none;
