@@ -64,6 +64,27 @@ $toolbar->addDataCollector(new \My\Custom\DataCollector());
 ...
 ```
 
+## Custom Benchmarks
+
+You can easily add custom benchmarks to your code:
+
+```php
+$benchmark = $profiler->start('\My\Class::doSomething', ['additional' => 'information'], 'My Component');
+...
+$profiler->stop($benchmark);
+```
+
+#####Or stop without passing the benchmark
+In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
+
+```php
+$profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'], 'My Component');
+...
+$profiler->stop();
+```
+
+
+
 ## Tips
 
 To render the toolbar as very last action, you can also register it as shutdown function:
