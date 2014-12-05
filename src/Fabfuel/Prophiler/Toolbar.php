@@ -41,9 +41,7 @@ class Toolbar
      */
     public function partial($viewPath, array $params = [])
     {
-        foreach ($params as $paramName => $param) {
-            $$paramName = $param;
-        }
+        extract($params, EXTR_OVERWRITE);
         require __DIR__ . '/View/' . $viewPath . '.phtml';
     }
 
