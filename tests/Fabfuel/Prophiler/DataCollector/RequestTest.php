@@ -31,7 +31,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetIcon()
     {
-        $this->assertSame('log-in', $this->request->getIcon());
+        $this->assertSame('<i class="fa fa-arrow-circle-o-down"></i>', $this->request->getIcon());
     }
 
     /**
