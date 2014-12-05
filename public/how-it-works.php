@@ -1,6 +1,6 @@
 <?php
-// includes library to parse markdown
-include "libs/parsedown.php";
+
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 // Gets README from GitHub
 $readme_content = file_get_contents('https://raw.githubusercontent.com/fabfuel/prophiler/develop/README.md');
