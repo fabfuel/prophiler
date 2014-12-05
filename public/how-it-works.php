@@ -14,7 +14,12 @@ $parsedown = new Parsedown();
 
 	<body class="no-sidebar">
 
-    <?php include "partials/header.php"; ?>
+        <!-- Header -->
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <?php require 'partials/navigation.php'; ?>
+            </div>
+        </div>
 
 		<!-- Main -->
 			<div class="wrapper">
