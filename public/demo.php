@@ -51,8 +51,8 @@
 
 
 require dirname(__DIR__) . '/vendor/autoload.php';
-require __DIR__ . '/../tests/demo/DataCollector/User.php';
-require __DIR__ . '/../tests/demo/DataCollector/Request.php';
+require __DIR__ . '/DataCollector/User.php';
+require __DIR__ . '/DataCollector/Request.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
