@@ -122,7 +122,7 @@
                     <header>
                         <h3>View</h3>
                     </header>
-                    <p>Gives you detailed insights of how many views (and partials) you rendered, how long they needed so and how much memory they consumed.</p>
+                    <p>Gives you detailed insights of how many views (and partials) were rendered, how long each needed and how much memory they consumed.</p>
                 </section>
                 <section class="4u 12u(2) feature">
                     <header>

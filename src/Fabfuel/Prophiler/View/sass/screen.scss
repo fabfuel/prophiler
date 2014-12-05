@@ -14,6 +14,7 @@ $c-event-5: rgba(216, 216, 216, 0.75);
 
 body {
   margin-top: 52px !important;
+  position: relative;
 }
 
 #prophiler {
@@ -164,7 +165,7 @@ body {
       .column-severity {
         text-align: right;
         width: 10%;
-        padding-top: 7px;
+        padding-top: 3px;
       }
 
       .column-component {
