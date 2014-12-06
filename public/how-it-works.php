@@ -12,6 +12,8 @@ $parsedown = new Parsedown();
 <html>
     <?php include "partials/head.php"; ?>
 
+    <link rel="stylesheet" href="/css/prism.css" />
+
 	<body class="no-sidebar">
 
         <!-- Header -->
@@ -39,6 +41,8 @@ $parsedown = new Parsedown();
 			</div>
 
     <?php include "partials/footer.php"; ?>
+
+    <script src="/js/prism.min.js"></script>
 
 	</body>
 </html>
