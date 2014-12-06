@@ -1,6 +1,6 @@
 {
     "name": "fabfuel/prophiler",
-    "description": "Phalcon profiler including dev toolbar",
+    "description": "PHP profiler & developer toolbar",
     "minimum-stability": "stable",
     "license": "BSD-3-Clause",
     "authors": [
@@ -10,8 +10,8 @@
         }
     ],
     "autoload": {
-        "psr-4": {
-            "Fabfuel\\Prophiler\\": "src/Fabfuel/Prophiler/"
+        "psr-0": {
+            "Fabfuel\\Prophiler\\": "src/"
         },
         "classmap": ["tests/"]
     },
@@ -24,7 +24,8 @@
         "phalcon/devtools": "1.3.x-dev",
         "phpunit/phpunit": "~4.0",
         "phpmd/phpmd": "~1.0",
-        "squizlabs/php_codesniffer": "~1.0"
+        "squizlabs/php_codesniffer": "~1.0",
+        "erusev/parsedown": "~1.1"
     },
     "repositories": [
         {
