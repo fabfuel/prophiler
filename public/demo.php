@@ -2,6 +2,8 @@
 <html>
 	<?php include "partials/head.php"; ?>
 
+    <link rel="stylesheet" href="/css/animate.css" />
+
     <body class="no-sidebar">
 
     <!-- Header -->

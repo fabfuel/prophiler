@@ -8,13 +8,10 @@
     <script src="/js/jquery.dropotron.min.js"></script>
     <script src="/js/skel.min.js"></script>
     <script src="/js/skel-layers.min.js"></script>
-    <script src="/js/prism.min.js"></script>
     <script src="/js/init.js"></script>
     <noscript>
         <link rel="stylesheet" href="/css/skel.css" />
         <link rel="stylesheet" href="/css/style.css" />
     </noscript>
-    <link rel="stylesheet" href="/css/animate.css" />
-    <link rel="stylesheet" href="/css/prism.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
 </head>

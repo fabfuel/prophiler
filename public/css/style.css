@@ -570,7 +570,7 @@
 			top: 0;
 			z-index: 1;
 			box-shadow: inset 0px 0px 0px 1px #e8e8e8;
-			background: #f6f8fb url('img/image-wrapper.svg');
+			background: #f6f8fb url('images/image-wrapper.svg');
 		}
 
 	#header-wrapper
@@ -961,9 +961,8 @@ pre code {
 }
 
 pre {
-    background-color: rgba(248,122,143,.1);
+    background-color: #f5f2f0;
     padding-left:10px;
-
 }
 
 h2 {
