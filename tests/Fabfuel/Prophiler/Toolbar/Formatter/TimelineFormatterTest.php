@@ -11,17 +11,17 @@ use Fabfuel\Prophiler\ProfilerInterface;
 class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BenchmarkFormatter
+     * @var BenchmarkFormatter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $formatter;
 
     /**
-     * @var ProfilerInterface
+     * @var ProfilerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $profiler;
 
     /**
-     * @var BenchmarkInterface
+     * @var BenchmarkInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $benchmark;
 
