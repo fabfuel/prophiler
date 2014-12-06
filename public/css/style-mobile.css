@@ -1,0 +1,249 @@
+/*
+	Telephasic by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body,input,textarea,select
+	{
+		font-size: 13pt;
+		letter-spacing: 0;
+	}
+
+	h2
+	{
+		font-size: 1.5em;
+		line-height: 1.25em;
+	}
+
+	/* Sections/Article */
+
+		header
+		{
+			margin-bottom: 1em;
+		}
+
+			header > p
+			{
+				font-size: 1em;
+			}
+
+	/* List */
+	
+		ul
+		{
+		}
+
+			ul.divided
+			{
+			}
+
+				ul.divided li
+				{
+					padding-top: 0.75em;
+					margin-top: 0.75em;
+				}
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+	.wrapper
+	{
+		padding: 3em 20px 3em 20px;
+	}
+
+	#header-wrapper
+	{
+		padding: 3em 20px 20px 20px;
+		text-align: center;
+	}
+	
+		.homepage #header-wrapper
+		{
+			padding: 3em 20px 3em 20px;
+		}
+	
+	#promo-wrapper
+	{
+		padding: 20px;
+	}
+
+	#footer-wrapper
+	{
+		padding: 3em 20px 3em 20px;
+	}
+	
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+	#logo
+	{
+		position: relative;
+	}
+	
+		#logo a
+		{
+			border: solid 1px rgba(255,255,255,0.75);
+			border-radius: 0.35em;
+			height: 3em;
+			line-height: 3em;
+		}
+
+/*********************************************************************************/
+/* Nav                                                                           */
+/*********************************************************************************/
+
+	#nav
+	{
+		display: none;
+	}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+	#footer
+	{
+	}
+
+		#footer ul.divided
+		{
+			margin: 0;
+		}
+
+			#footer ul.divided li:first-child
+			{
+				border-top: solid 1px #d2d7dc;
+				padding-top: 0.75em;
+				margin-top: 0.75em;
+			}
+
+			#footer ul.divided:first-child li:first-child
+			{
+				border-top: 0;
+				padding-top: 0;
+				margin-top: 0;
+			}
+
+    ul.icons
+    {
+        width:90%;
+    }
+
+    ul.icons li {
+        float:none;
+        margin-left:0;
+        margin-bottom:10px;
+    }
+			
+/*********************************************************************************/
+/* Hero                                                                          */
+/*********************************************************************************/
+
+	#hero
+	{
+		padding: 2.5em 2em 0 2em;
+	}
+
+		#hero header
+		{
+			margin: 0 0 1.25em 0;
+		}
+		
+			#hero header h2
+			{
+				font-size: 1.5em;
+			}
+			
+		#hero p
+		{
+			font-size: 1em;
+		}
+		
+/*********************************************************************************/
+/* UI                                                                            */
+/*********************************************************************************/
+
+	#navButton
+	{
+	}
+
+		#navButton .toggle
+		{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+		
+			#navButton .toggle:before
+			{
+				font-family: FontAwesome;
+				text-decoration: none;
+				font-style: normal;
+				font-weight: normal;
+				-webkit-font-smoothing:antialiased;
+				-moz-osx-font-smoothing:grayscale;
+
+				content: '\f0c9';
+				color: #fff;
+				font-size: 18px;
+				text-align: center;
+				display: block;
+				width: 80px;
+				height: 30px;
+				line-height: 30px;
+				position: absolute;
+				left: 50%;
+				margin-left: -40px;
+				background: rgba(128,132,136,0.35);
+				border-top: 0;
+				border-radius: 0 0 0.35em 0.35em;
+			}
+
+	#navPanel
+	{
+		position: relative;
+		box-shadow: inset 0px -2px 5px 0px rgba(0,0,0,0.25);
+		font-size: 1em;
+
+		background-color:		#45474a;
+		background-image:		url('images/overlay.png'),		url('images/navPanel.svg'),		-moz-linear-gradient(top, rgba(255,255,255,0), rgba(0,0,0,0.25));
+		background-image:		url('images/overlay.png'),		url('images/navPanel.svg'),		-webkit-linear-gradient(top, rgba(255,255,255,0), rgba(0,0,0,0.25));
+		background-image:		url('images/overlay.png'),		url('images/navPanel.svg'),		-o-linear-gradient(top, rgba(255,255,255,0), rgba(0,0,0,0.25));
+		background-image:		url('images/overlay.png'),		url('images/navPanel.svg'),		-ms-linear-gradient(top, rgba(255,255,255,0), rgba(0,0,0,0.25));
+		background-image:		url('images/overlay.png'),		url('images/navPanel.svg'),		linear-gradient(top, rgba(255,255,255,0), rgba(0,0,0,0.25));
+		background-size:		128px 128px,					100% 100%,						100% 100%;
+	}
+
+		#navPanel .link
+		{
+			position: relative;
+			z-index: 1;
+			display: block;
+			text-decoration: none;
+			padding: 0.75em;
+			color: #ddd;
+			border: 0;
+			border-top: dotted 1px rgba(255,255,255,0.1);
+		}
+		
+			#navPanel .link.depth-0
+			{
+				color: #fff;
+				font-weight: 400;
+			}
+
+			#navPanel .indent-1 { display: inline-block; width: 1em; }
+			#navPanel .indent-2 { display: inline-block; width: 2em; }
+			#navPanel .indent-3 { display: inline-block; width: 3em; }
+			#navPanel .indent-4 { display: inline-block; width: 4em; }
+			#navPanel .indent-5 { display: inline-block; width: 5em; }
+			#navPanel .depth-0 { color: #fff; }

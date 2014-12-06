@@ -1,4 +1,4 @@
-#Prophiler - A Phalcon Profiler & Dev Toolbar
+#Prophiler - A PHP Profiler & Developer Toolbar
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
@@ -7,7 +7,7 @@
 
 ## Demo
 Here you can see the toolbar in action:
-http://prophiler.fabfuel.de/
+http://prophiler.fabfuel.de/demo.php
 
 [![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
 
@@ -82,8 +82,6 @@ $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'],
 ...
 $profiler->stop();
 ```
-
-
 
 ## Tips
 

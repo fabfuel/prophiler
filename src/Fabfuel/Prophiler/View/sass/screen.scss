@@ -14,6 +14,11 @@ $c-event-5: rgba(216, 216, 216, 0.75);
 
 body {
   margin-top: 52px !important;
+  position: relative;
+}
+
+#skel-layers-wrapper {
+  -webkit-perspective: none !important;
 }
 
 #prophiler {
@@ -88,6 +93,7 @@ body {
     display: block;
     position: relative;
     @include clearfix();
+    white-space: nowrap;
 
     min-height: 50px;
     border: 1px solid transparent;
@@ -105,14 +111,24 @@ body {
     }
 
     nav {
+      float: left;
+      left: 150px;
+
       color: #fff;
+
+      a {
+        text-decoration: none;
+        border: none;
+      }
 
       a:hover {
         text-decoration: none;
       }
 
       ul {
+        margin: 0;
         li {
+          margin-top: 10px;
           padding: 7px;
           float: left;
           list-style: none;
@@ -153,7 +169,7 @@ body {
       .column-severity {
         text-align: right;
         width: 10%;
-        padding-top: 7px;
+        padding-top: 3px;
       }
 
       .column-component {
@@ -328,5 +344,17 @@ body {
   .severity-alert,
   .severity-emergency {
     @extend .color-0;
+  }
+}
+
+@media (max-width: 736px) {
+  .toolbar {
+    .logo {
+      display: none;
+    }
+
+    .fa {
+      display: none;
+    }
   }
 }
