@@ -1,6 +1,6 @@
 {
     "name": "fabfuel/prophiler",
-    "description": "A PHP Profiler & Developer Toolbar",
+    "description": "PHP profiler & developer toolbar",
     "minimum-stability": "stable",
     "license": "BSD-3-Clause",
     "authors": [
@@ -10,8 +10,8 @@
         }
     ],
     "autoload": {
-        "psr-4": {
-            "Fabfuel\\Prophiler\\": "src/Fabfuel/Prophiler/"
+        "psr-0": {
+            "Fabfuel\\Prophiler\\": "src/"
         },
         "classmap": ["tests/"]
     },
