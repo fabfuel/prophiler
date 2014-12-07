@@ -89,8 +89,12 @@ usleep($wait(25));
     $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123, 'array' => ['foo' => 'bar', 'lorem' => true, 'ipsum' => 1.5]], 'Application');
     usleep($wait(200));
 
-        $view = $profiler->start('Database::query', ['query' => 'SELECT `companies`.`id`, `companies`.`name`, `companies`.`telephone`, `companies`.`address`, `companies`.`city` FROM `companies`'], 'Database');
+        $view = $profiler->start('PDO::exec', ['query' => 'DELETE FROM users WHERE email = "foo@bar.com"'], 'Database');
         usleep($wait(50));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT userLoginEmail, userID, userLoginPassword FROM users LIMIT 2500;'], 'Database');
+        usleep($wait(350));
         $profiler->stop($view);
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');

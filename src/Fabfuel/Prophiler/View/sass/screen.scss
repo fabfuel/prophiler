@@ -324,6 +324,10 @@ body {
     border: none;
     background: none;
     color: inherit;
+
+    * {
+      color: inherit;
+    }
   }
 
   .severity-info,
