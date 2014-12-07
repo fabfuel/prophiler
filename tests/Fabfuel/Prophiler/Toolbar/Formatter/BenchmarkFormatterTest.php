@@ -21,7 +21,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->benchmark = $this->getBenchmarkMock();
+        $this->benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
         $this->formatter = new BenchmarkFormatter();
         $this->formatter->setBenchmark($this->benchmark);
@@ -32,22 +32,28 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(spl_object_hash($this->benchmark), $this->formatter->getId());
     }
 
-    public function testIdsAreUnique()
+    /**
+     * @dataProvider formatterProvider
+     */
+    public function testIdsAreUnique($benchmark)
     {
         $lastId = $this->formatter->getId();
 
-        $this->formatter->setBenchmark($this->getBenchmarkMock());
+        $this->formatter->setBenchmark($benchmark);
         $this->assertNotSame($lastId, $this->formatter->getId());
+    }
 
-        $lastId = $this->formatter->getId();
-
-        $this->formatter->setBenchmark($this->getBenchmarkMock());
-        $this->assertNotSame($lastId, $this->formatter->getId());
+    public function formatterProvider()
+    {
+        return [
+            [$this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface')],
+            [$this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface')]
+        ];
     }
 
     public function testGetName()
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getName')
             ->willReturn('Foobar');
 
@@ -56,7 +62,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetComponent()
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getComponent')
             ->willReturn('Foobar');
 
@@ -65,7 +71,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMemoryUsage()
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getMemoryUsage')
             ->willReturn(1234567);
 
@@ -74,7 +80,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDuration()
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getDuration')
             ->willReturn(0.012345);
 
@@ -88,11 +94,23 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetIcon($component, $icon)
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getComponent')
             ->willReturn($component);
 
         $this->assertSame($icon, $this->formatter->getIcon());
+    }
+
+    /**
+     * @return array
+     */
+    public function getIcons()
+    {
+        return [
+            ['MongoDB', 'leaf'],
+            ['Foobar', 'cog'],
+            ['Lorem Ipsum', 'cog'],
+        ];
     }
 
     /**
@@ -102,42 +120,11 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetColorClass($component, $colorClass)
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getComponent')
             ->willReturn($component);
 
         $this->assertSame($colorClass, $this->formatter->getColorClass());
-    }
-
-    public function testGetStartTime()
-    {
-        $time = microtime(true);
-
-        $this->benchmark->expects($this->once())
-            ->method('getStartTime')
-            ->willReturn($time);
-
-        $this->assertSame($time, $this->formatter->getStartTime());
-    }
-
-    public function testGetEndTime()
-    {
-        $time = microtime(true);
-
-        $this->benchmark->expects($this->once())
-            ->method('getEndTime')
-            ->willReturn($time);
-
-        $this->assertSame($time, $this->formatter->getEndTime());
-    }
-
-    public function testGetMetadata()
-    {
-        $this->benchmark->expects($this->once())
-            ->method('getMetadata')
-            ->willReturn(['lorem' => 'ipsum']);
-
-        $this->assertSame(['lorem' => 'ipsum'], $this->formatter->getMetadata());
     }
 
     /**
@@ -154,25 +141,34 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getIcons()
+    public function testGetStartTime()
     {
-        return [
-            ['MongoDB', 'leaf'],
-            ['Foobar', 'cog'],
-            ['Lorem Ipsum', 'cog'],
-        ];
+        $time = microtime(true);
+
+        $this->benchmark->expects($this->any())
+            ->method('getStartTime')
+            ->willReturn($time);
+
+        $this->assertSame($time, $this->formatter->getStartTime());
     }
 
-    /**
-     * @return BenchmarkInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getBenchmarkMock()
+    public function testGetEndTime()
     {
-        return $this->getMockBuilder('Fabfuel\Prophiler\Benchmark\Benchmark')
-        ->disableOriginalConstructor()
-        ->getMock();
+        $time = microtime(true);
+
+        $this->benchmark->expects($this->any())
+            ->method('getEndTime')
+            ->willReturn($time);
+
+        $this->assertSame($time, $this->formatter->getEndTime());
+    }
+
+    public function testGetMetadata()
+    {
+        $this->benchmark->expects($this->any())
+            ->method('getMetadata')
+            ->willReturn(['lorem' => 'ipsum']);
+
+        $this->assertSame(['lorem' => 'ipsum'], $this->formatter->getMetadata());
     }
 }
