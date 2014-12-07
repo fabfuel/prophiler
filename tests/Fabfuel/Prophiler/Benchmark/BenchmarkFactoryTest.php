@@ -19,7 +19,7 @@ class BenchmarkFactoryTest extends \PHPUnit_Framework_TestCase
 
         $benchmark = BenchmarkFactory::getBenchmark($name, $metadata, $component);
 
-        $this->assertInstanceOf('Fabfuel\Prophiler\Benchmark\Benchmark', $benchmark);
+        $this->assertInstanceOf('Fabfuel\Prophiler\Benchmark\BenchmarkInterface', $benchmark);
         $this->assertSame($name, $benchmark->getName());
         $this->assertSame($metadata, $benchmark->getMetadata());
         $this->assertSame($component, $benchmark->getComponent());

@@ -34,9 +34,7 @@ class ViewPluginTest extends PhalconPluginTest
     {
         $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
         $event = $this->getMockBuilder('Phalcon\Events\Event')
             ->disableOriginalConstructor()
@@ -79,9 +77,7 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testAfterRenderWithouPendingBenchmarks()
     {
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
         $event = $this->getMockBuilder('Phalcon\Events\Event')
             ->disableOriginalConstructor()
@@ -104,17 +100,11 @@ class ViewPluginTest extends PhalconPluginTest
     {
         $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $event = $this->getMockBuilder('Phalcon\Events\Event')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
         $this->viewPlugin->setBenchmark($view, $benchmark);
 
@@ -148,11 +138,9 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function testGetIdentifier()
     {
-        $view = $this->getMockBuilder('Phalcon\Mvc\View')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $view = $this->getMock('Phalcon\Mvc\View');
 
-        $view->expects($this->once())
+        $view->expects($this->any())
             ->method('getActiveRenderPath')
             ->willReturn('test');
 
@@ -172,7 +160,7 @@ class ViewPluginTest extends PhalconPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $view->expects($this->exactly(5))
+        $view->expects($this->any())
             ->method('getActiveRenderPath')
             ->willReturn('test');
 
@@ -192,6 +180,14 @@ class ViewPluginTest extends PhalconPluginTest
      */
     public function getRenderLevels()
     {
+        if(!extension_loaded('phalcon')) {
+            return [
+                ['foobar', ''],
+                ['lorem', ''],
+                ['', ''],
+            ];
+        }
+
         return [
             [\Phalcon\Mvc\View::LEVEL_ACTION_VIEW, 'action'],
             [\Phalcon\Mvc\View::LEVEL_AFTER_TEMPLATE, 'afterTemplate'],
