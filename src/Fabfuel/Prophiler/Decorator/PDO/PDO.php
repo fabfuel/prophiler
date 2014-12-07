@@ -72,7 +72,7 @@ class PDO
     /**
      * @param string $statement
      * @param array $options
-     * @return \PDOStatement|void
+     * @return PDOStatement
      */
     public function prepare($statement, $options = null)
     {
