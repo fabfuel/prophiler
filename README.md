@@ -3,6 +3,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
+[![License](https://poser.pugx.org/fabfuel/prophiler/license.svg)](https://packagist.org/packages/fabfuel/prophiler)
+[![Latest Stable Version](https://poser.pugx.org/fabfuel/prophiler/v/stable.svg)](https://packagist.org/packages/fabfuel/prophiler) 
 
 
 ## Demo
