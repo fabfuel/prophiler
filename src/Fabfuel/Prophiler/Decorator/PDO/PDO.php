@@ -51,9 +51,14 @@ class PDO
      */
     public function query($statement)
     {
-        $benchmark = $this->getProfiler()->start('PDO::query', ['statement' => $statement], 'Database');
+        $metadata = ['statement' => $statement];
+        $benchmark = $this->getProfiler()->start('PDO::query', [], 'Database');
         $result = $this->getPdo()->query($statement);
-        $this->getProfiler()->stop($benchmark, ['rows' => $result->rowCount(), 'columns' => $result->columnCount()]);
+        if ($result instanceof \PDOStatement) {
+            $metadata['rows'] = $result->rowCount();
+            $metadata['columns'] = $result->columnCount();
+        }
+        $this->getProfiler()->stop($benchmark, $metadata);
         return $result;
     }
 
@@ -63,23 +68,30 @@ class PDO
      */
     public function exec($statement)
     {
-        $benchmark = $this->getProfiler()->start('PDO::exec', ['statement' => $statement], 'Database');
+        $metadata = ['statement' => $statement];
+        $benchmark = $this->getProfiler()->start('PDO::exec', [], 'Database');
         $result = $this->getPdo()->exec($statement);
-        $this->getProfiler()->stop($benchmark, ['affected rows' => $result]);
+        if ($result !== false) {
+            $metadata['affected rows'] = $result;
+        }
+        $this->getProfiler()->stop($benchmark, $metadata);
         return $result;
     }
 
     /**
      * @param string $statement
      * @param array $options
-     * @return PDOStatement
+     * @return PDOStatement|bool
      */
     public function prepare($statement, $options = null)
     {
         $benchmark = $this->getProfiler()->start('PDO::prepare', ['statement' => $statement], 'Database');
         $pdoStatement = $this->getPdo()->prepare($statement, $options ?: []);
-        $profiledStatement = new PDOStatement($pdoStatement, $this->getProfiler());
         $this->getProfiler()->stop($benchmark);
+        if (!$pdoStatement) {
+            return false;
+        }
+        $profiledStatement = new PDOStatement($pdoStatement, $this->getProfiler());
         return $profiledStatement;
     }
 

@@ -79,12 +79,12 @@ class PDOTest extends \PHPUnit_Framework_TestCase
 
         $this->profiler->expects($this->once())
             ->method('start')
-            ->with('PDO::query', ['statement' => $query], 'Database')
+            ->with('PDO::query', [], 'Database')
             ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($benchmark, ['rows' => $rowCount, 'columns' => $columnCount]);
+            ->with($benchmark, ['statement' => $query, 'rows' => $rowCount, 'columns' => $columnCount]);
 
         $this->pdo->expects($this->once())
             ->method('query')
@@ -108,12 +108,12 @@ class PDOTest extends \PHPUnit_Framework_TestCase
 
         $this->profiler->expects($this->once())
             ->method('start')
-            ->with('PDO::exec', ['statement' => $query], 'Database')
+            ->with('PDO::exec', [], 'Database')
             ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())
             ->method('stop')
-            ->with($benchmark, ['affected rows' => $rowCount]);
+            ->with($benchmark, ['statement' => $query, 'affected rows' => $rowCount]);
 
         $this->pdo->expects($this->once())
             ->method('exec')
@@ -156,5 +156,35 @@ class PDOTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Fabfuel\Prophiler\Decorator\PDO\PDOStatement', $statement);
         $this->assertSame($statement->getStatement(), $pdoStatement);
         $this->assertSame($statement->getProfiler(), $this->profiler);
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Decorator\PDO\PDO::prepare
+     * @uses Fabfuel\Prophiler\Decorator\PDO\PDO
+     * @uses Fabfuel\Prophiler\Decorator\PDO\PDOStatement
+     */
+    public function testPrepareInvalidStatement()
+    {
+        $query = 'SELECT * FROM users;';
+        $options = ['foo' => 'bar'];
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $this->profiler->expects($this->once())
+            ->method('start')
+            ->with('PDO::prepare', ['statement' => $query], 'Database')
+            ->willReturn($benchmark);
+
+        $this->profiler->expects($this->once())
+            ->method('stop')
+            ->with($benchmark);
+
+        $this->pdo->expects($this->once())
+            ->method('prepare')
+            ->with($query, $options)
+            ->willReturn(false);
+
+        $statement = $this->decorator->prepare($query, $options);
+
+        $this->assertFalse($statement);
     }
 }
