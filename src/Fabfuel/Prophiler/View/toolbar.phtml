@@ -17,7 +17,7 @@
                     <span class="label color-2"><i class="fa fa-clock-o"></i> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
                 </li>
                 <li>
-                    <span class="label color-1"><i class="fa fa-tasks"></i> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                    <span class="label color-3"><i class="fa fa-tasks"></i> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
                 </li>
                 <li>
                     <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
