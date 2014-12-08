@@ -1,6 +1,6 @@
 {
     "name": "fabfuel/prophiler",
-    "description": "PHP profiler & developer toolbar",
+    "description": "PHP Profiler & Developer Toolbar built for Phalcon",
     "minimum-stability": "stable",
     "license": "BSD-3-Clause",
     "authors": [
