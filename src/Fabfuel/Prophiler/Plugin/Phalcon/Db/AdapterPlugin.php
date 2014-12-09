@@ -29,10 +29,16 @@ class AdapterPlugin extends PluginAbstract
     public function beforeQuery(Event $event, Adapter $database)
     {
         $metadata = [
-            'query' => $database->getSQLStatement(),
-            'params' => $database->getSQLVariables(),
-            'bindtypes' => $database->getSQLBindTypes()
+            'query' => $database->getSQLStatement()
         ];
+        $params = $database->getSQLVariables();
+        if (isset($params)) {
+            $metadata['params'] = $params;
+        }
+        $bindtypes = $database->getSQLBindTypes();
+        if (isset($bindtypes)) {
+            $metadata['bindTypes'] = $bindtypes;
+        }
         $desc = $database->getDescriptor();
         if (isset($desc['dbname'])) {
             $metadata['database'] = $desc['dbname'];
