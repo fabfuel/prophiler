@@ -12,7 +12,6 @@ use Phalcon\Mvc\DispatcherInterface;
 
 /**
  * Class DispatcherPlugin
- * @package Rocket\Toolbar\Plugin
  */
 class DispatcherPlugin extends PluginAbstract
 {

@@ -12,8 +12,7 @@ use Phalcon\Mvc\View;
 use Phalcon\Mvc\ViewInterface;
 
 /**
- * Class Dispatcher
- * @package Rocket\Toolbar\Plugin
+ * Class ViewPlugin
  */
 class ViewPlugin extends PluginAbstract implements ViewPluginInterface
 {
