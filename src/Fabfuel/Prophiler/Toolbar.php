@@ -5,7 +5,11 @@
  */
 namespace Fabfuel\Prophiler;
 
-class Toolbar
+use Phalcon\DI\Injectable;
+use Phalcon\Events\Event;
+use Phalcon\Mvc\ViewInterface;
+
+class Toolbar extends Injectable
 {
     /**
      * @var ProfilerInterface
@@ -41,7 +45,9 @@ class Toolbar
      */
     public function partial($viewPath, array $params = [])
     {
-        extract($params, EXTR_OVERWRITE);
+        foreach ($params as $paramName => $param) {
+            $$paramName = $param;
+        }
         require __DIR__ . '/View/' . $viewPath . '.phtml';
     }
 
@@ -78,5 +84,22 @@ class Toolbar
     public function getDataCollectors()
     {
         return $this->dataCollectors;
+    }
+
+    public function afterRender(Event $event, ViewInterface $view)
+    {
+        $view->setContent(
+            str_replace(
+                "</body>",
+                $this->render() . "</body>",
+                $view->getContent()
+            )
+        );
+    }
+
+    public function setEventsManager($eventsManager)
+    {
+        $eventsManager->attach('view:afterRender', $this);
+        parent::setEventsManager($eventsManager);
     }
 }
