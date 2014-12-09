@@ -22,7 +22,7 @@ You can use composer to install the Prophiler. Just add it as dependency:
     }
 
 ## Setup (general)
-Setting up the Prophiler and the developer toolbar can be done by these simple steps. It could all be done in your front-controller (e.g. public/index.php in Phalcon) 
+Setting up the Prophiler and the developer toolbar can be done via the following simple steps. It could all be done in your front-controller (e.g. `public/index.php` in Phalcon) 
 
 ###1. Initialize the Profiler (as soon as possible)
 Generally it makes sense to initialize the profiler as soon as possible, to measure as much execution time as you can. You should initialize the profiler in your front-controller or the bootstrap file right after requiring the Composer autoloader.
@@ -44,7 +44,7 @@ $toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
 echo $toolbar->render();
 ```
 
-You can also easily create you own data collectors, by implementing the ```DataCollectorInterface``` and adding an instance to the Toolbar.
+You can also easily create you own data collectors, by implementing the `DataCollectorInterface` and adding an instance to the Toolbar.
 
 
 ```php
@@ -57,14 +57,14 @@ $toolbar->addDataCollector(new \My\Custom\DataCollector());
 ## Additional setup for Phalcon applications
 
 ###1. Add the profiler to the dependency injection container
-Add the profiler instance to the DI container, that other plugins and adapters can use it accros the application. This should be done in or after your general DI setup.
+Add the profiler instance to the DI container, that other plugins and adapters can use it across the application. This should be done in or after your general DI setup.
 	
 ```php
 $di->setShared('profiler', $profiler);
 ```
 
 ###2. Initialize the plugin manager
-The plugin manager registers all included Phalcon plugins automatically and attaches them to the events manager. To make the plugins work properly, ensure the default events manger is attached to your Dispatcher, View and Connection services.
+The plugin manager registers all included Phalcon plugins automatically and attaches them to the events manager. To make the plugins work properly, make sure that the default events manager is attached to your Dispatcher, View and Connection services.
 
 ```php
 $pluginManager = new \Fabfuel\Prophiler\Plugin\Manager\Phalcon($profiler);
@@ -83,7 +83,7 @@ $profiler->stop($benchmark);
 ```
 
 ###Or stop without passing the benchmark
-In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
+In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the `stop()` method. Alternatively you can simply omit the `$benchmark` parameter. If that is the case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
 
 ```php
 $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'], 'My Component');
@@ -92,7 +92,7 @@ $profiler->stop();
 ```
 
 ## Logging
-You can use Prophiler to log events and other data and view it in the timeline and in the separate "Logs" tab. If you already have a logging infrastructure, you can add the PSR-3 compliant ```Logger```adapter to it. Otherwise you can also just instantiate and use it directly:
+You can use Prophiler to log events and other data and view it in the timeline and in the separate "Logs" tab. If you already have a logging infrastructure, you can add the PSR-3 compliant `Logger` adapter to it. Otherwise you can also just instantiate and use it directly:
 
 ```php
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
@@ -102,7 +102,7 @@ $logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo
 
 ## Adapters and Decorators
 ###PDO
-To profile your PDO database actions, you can use the Prophiler PDO decorator. It will record all ```query()``` & ```exec()``` calls and prepared statements as well. Just decorate your PDO instance with the Prophiler decorator and use that instead:
+To profile your PDO database actions, you can use the Prophiler PDO decorator. It will record all `query()` & `exec()` calls and prepared statements as well. Just decorate your PDO instance with the Prophiler decorator and use that instead:
 
 ```php
 $pdo = new PDO('mysql:host=localhost;dbname=test', 'user', 'password');
@@ -116,7 +116,7 @@ $db->prepare('SELECT * from users WHERE userId = ?');
 ## Tips
 
 ###Record session writing
-To record session writing, you can commit (also known as ```session_write_close()``` the session before rendering the toolbar
+To record session writing, you can commit (this is also known as `session_write_close()`) the session before rendering the toolbar
     
 ```php
 session_commit();
