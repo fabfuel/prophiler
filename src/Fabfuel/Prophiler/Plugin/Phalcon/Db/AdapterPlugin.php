@@ -11,8 +11,7 @@ use Phalcon\Events\Event;
 use Phalcon\Db\Adapter;
 
 /**
- * Class Dispatcher
- * @package Rocket\Toolbar\Plugin
+ * Class AdapterPlugin
  */
 class AdapterPlugin extends PluginAbstract
 {
@@ -32,6 +31,18 @@ class AdapterPlugin extends PluginAbstract
         $metadata = [
             'query' => $database->getSQLStatement()
         ];
+        $params = $database->getSQLVariables();
+        if (isset($params)) {
+            $metadata['params'] = $params;
+        }
+        $bindtypes = $database->getSQLBindTypes();
+        if (isset($bindtypes)) {
+            $metadata['bindTypes'] = $bindtypes;
+        }
+        $desc = $database->getDescriptor();
+        if (isset($desc['dbname'])) {
+            $metadata['database'] = $desc['dbname'];
+        }
 
         $this->benchmark = $this->getProfiler()->start(get_class($event->getSource()) . '::query', $metadata, 'Database');
     }
