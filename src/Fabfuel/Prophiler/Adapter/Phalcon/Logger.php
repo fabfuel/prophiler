@@ -9,8 +9,15 @@ use Fabfuel\Prophiler\Adapter\AdapterAbstract;
 use Phalcon\Logger\AdapterInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class Logger
+ * @package Fabfuel\Prophiler\Adapter\Phalcon
+ */
 class Logger extends AdapterAbstract implements LoggerInterface, AdapterInterface
 {
+    /**
+     * @var \Phalcon\Logger\FormatterInterface $formater Phalcon internal Formatter
+     */
     protected $formatter;
 
     /**
@@ -162,7 +169,7 @@ class Logger extends AdapterAbstract implements LoggerInterface, AdapterInterfac
      */
     public function getFormatter()
     {
-        if (empty($this->formatter) {
+        if (empty($this->formatter)) {
             $this->formatter = new \Phalcon\Logger\Formatter\Line();
         }
         return $this->formatter;
