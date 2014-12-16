@@ -25,7 +25,7 @@ class TimelineFormatter extends BenchmarkFormatterAbstract
     }
 
     /**
-     * @return double
+     * @return string
      */
     public function getWidth()
     {
@@ -34,7 +34,7 @@ class TimelineFormatter extends BenchmarkFormatterAbstract
     }
 
     /**
-     * @return double
+     * @return string
      */
     public function getOffset()
     {
