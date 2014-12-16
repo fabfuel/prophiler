@@ -11,7 +11,7 @@ use Fabfuel\Prophiler\ProfilerInterface;
 class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BenchmarkFormatter|\PHPUnit_Framework_MockObject_MockObject
+     * @var TimelineFormatter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $formatter;
 
@@ -54,6 +54,7 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getWidth
+     * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getProfilerDuration
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterAbstract
      */
@@ -70,13 +71,14 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('getDuration')
             ->willReturn($durationProfiler);
 
-        $expectedWidth = round(($durationBenchmark / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100), 2);
+        $expectedWidth = number_format(($durationBenchmark / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100), 2, '.', '');
 
         $this->assertSame($expectedWidth, $this->formatter->getWidth());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getOffset
+     * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getProfilerDuration
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterAbstract
      */
@@ -99,7 +101,7 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
             ->willReturn($durationProfiler);
 
         $offset = $startTimeBenchmark - $startTimeProfiler;
-        $expectedOffset = round($offset / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100, 2);
+        $expectedOffset = number_format($offset / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100, 2, '.', '');
 
         $this->assertSame($expectedOffset, $this->formatter->getOffset());
     }
