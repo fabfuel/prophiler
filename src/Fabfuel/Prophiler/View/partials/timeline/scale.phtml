@@ -25,7 +25,7 @@
     ?>
 
     <?php for ($t = 0; $t <= $durationScale; $t += $scale): ?>
-        <div class="marker" style="left: <?= round(($t/$durationScale)*100, 3) ?>%;">
+        <div class="marker" style="left: <?= number_format(($t/$durationScale)*100, 3, '.', '') ?>%;">
             <div class="label"><?= $t ?> ms</div>
             <div class="line"></div>
         </div>
