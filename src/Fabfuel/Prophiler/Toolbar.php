@@ -31,7 +31,10 @@ class Toolbar
     public function render()
     {
         ob_start();
-        $this->partial('toolbar', ['profiler' => $this->getProfiler(), 'dataCollectors' => $this->getDataCollectors()]);
+        $this->partial('toolbar', [
+            'profiler' => $this->getProfiler(),
+            'dataCollectors' => $this->getDataCollectors()
+        ]);
         return ob_get_clean();
     }
 
@@ -42,7 +45,15 @@ class Toolbar
     public function partial($viewPath, array $params = [])
     {
         extract($params, EXTR_OVERWRITE);
-        require __DIR__ . '/View/' . $viewPath . '.phtml';
+        $viewScriptPath = __DIR__ . '/View/' . $viewPath . '.phtml';
+
+        if (!file_exists($viewScriptPath)) {
+            throw new \InvalidArgumentException(sprintf(
+                'View not found: %s',
+                $viewScriptPath
+            ));
+        }
+        require $viewScriptPath;
     }
 
     /**

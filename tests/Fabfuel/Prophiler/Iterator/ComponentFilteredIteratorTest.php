@@ -44,4 +44,25 @@ class ComponentFilteredIteratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($iterator->accept());
     }
+
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @uses Fabfuel\Prophiler\Iterator\ComponentFilteredIterator
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testCount()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Foobar');
+
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar');
+
+        $this->assertSame(0, count($iterator));
+
+        $this->profiler->addBenchmark($benchmark);
+        $this->assertSame(1, count($iterator));
+    }
 }

@@ -44,6 +44,10 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp('/1000 ms/', $output);
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::partial
+     * @uses Fabfuel\Prophiler\Toolbar
+     */
     public function testPartial()
     {
         $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
@@ -55,6 +59,19 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $output = ob_get_clean();
 
         $this->assertSame("<lorem>ipsum</lorem>\n", $output);
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::partial
+     * @uses Fabfuel\Prophiler\Toolbar
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnknownPartial()
+    {
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+
+        $toolbar = new Toolbar($profiler);
+        $toolbar->partial('test-ipsum', ['foobar' => 'ipsum']);
     }
 
     /**
