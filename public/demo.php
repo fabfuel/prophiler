@@ -45,11 +45,7 @@
     <?php include "partials/footer.php"; ?>
 
 	</body>
-</html>
-
-
-
-<?php
+</html><?php
 
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -59,7 +55,7 @@ require __DIR__ . '/DataCollector/Request.php';
 $profiler = new \Fabfuel\Prophiler\Profiler();
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
 
-$multiplicator = 20;
+$multiplicator = 10;
 $wait = function ($time) use ($multiplicator) {
     return $time * rand($multiplicator * .8, $multiplicator*1.2);
 };

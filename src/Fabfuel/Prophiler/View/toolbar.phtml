@@ -22,9 +22,12 @@
                 <li>
                     <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
                 </li>
-                <li>
-                    <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');"><span class="label color-5"><i class="fa fa-align-left"></i> Logs</span></a>
-                </li>
+
+                <?php if (count(new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger')) >= 1): ?>
+                    <li>
+                        <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');"><span class="label color-5"><i class="fa fa-align-left"></i> Logs</span></a>
+                    </li>
+                <?php endif; ?>
 
                 <?php foreach ($dataCollectors as $dataCollector): ?>
                     <li>
