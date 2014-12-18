@@ -101,6 +101,15 @@ $logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo
 ```
 
 ## Adapters and Decorators
+
+###Doctrine
+To profile all SQL queries made by Doctrine, you just have to register the SQLLogger adapter in your Doctrine configuration, for example in your `bootstrap.php` like that:
+
+```php
+$sqlLogger = new Fabfuel\Prophiler\Adapter\Doctrine\SQLLogger($profiler);
+$entityManager->getConnection()->getConfiguration()->setSQLLogger($sqlLogger);
+```
+
 ###PDO
 To profile your PDO database actions, you can use the Prophiler PDO decorator. It will record all `query()` & `exec()` calls and prepared statements as well. Just decorate your PDO instance with the Prophiler decorator and use that instead:
 
