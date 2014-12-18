@@ -15,9 +15,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAndSetProfiler()
     {
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
 
         $toolbar = new Toolbar($profiler);
 
@@ -33,29 +31,26 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
 
         $profiler->expects($this->exactly(2))
             ->method('getDuration')
-            ->willReturn(100);
+            ->willReturn(1);
 
         $toolbar = new Toolbar($profiler);
 
-        $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
-        $toolbar->dispatcher = $dispatcher;
-
         $output = $toolbar->render();
 
-        $this->assertNotEmpty($output);
+        $this->assertRegExp('/1000 ms/', $output);
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::partial
+     * @uses Fabfuel\Prophiler\Toolbar
+     */
     public function testPartial()
     {
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
 
         $toolbar = new Toolbar($profiler);
 
@@ -63,8 +58,20 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         $toolbar->partial('../../../../tests/Fabfuel/Prophiler/View/test', ['foobar' => 'ipsum']);
         $output = ob_get_clean();
 
-        $this->assertSame('<lorem>ipsum</lorem>
-', $output);
+        $this->assertSame("<lorem>ipsum</lorem>\n", $output);
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Toolbar::partial
+     * @uses Fabfuel\Prophiler\Toolbar
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnknownPartial()
+    {
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+
+        $toolbar = new Toolbar($profiler);
+        $toolbar->partial('test-ipsum', ['foobar' => 'ipsum']);
     }
 
     /**

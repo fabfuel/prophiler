@@ -20,13 +20,16 @@ class Request implements DataCollectorInterface
     }
 
     /**
-     * Get the bootstrap icon class
+     * Get the icon HTML markup
+     *
+     * For example font-awesome icons: <i class="fa fa-pie-chart"></i>
+     * See: http://fortawesome.github.io/Font-Awesome/icons/
      *
      * @return string
      */
     public function getIcon()
     {
-        return 'log-in';
+        return '<i class="fa fa-arrow-circle-o-down"></i>';
     }
 
     /**

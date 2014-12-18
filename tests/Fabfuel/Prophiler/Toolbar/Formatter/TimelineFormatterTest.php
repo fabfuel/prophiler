@@ -11,12 +11,12 @@ use Fabfuel\Prophiler\ProfilerInterface;
 class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BenchmarkFormatter
+     * @var TimelineFormatter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $formatter;
 
     /**
-     * @var ProfilerInterface
+     * @var ProfilerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $profiler;
 
@@ -27,8 +27,8 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->benchmark = $this->getBenchmarkMock();
-        $this->profiler = $this->getProfilerMock();
+        $this->benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $this->profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
 
         $this->formatter = new TimelineFormatter($this->profiler);
         $this->formatter->setBenchmark($this->benchmark);
@@ -42,19 +42,19 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAndGetProfiler()
     {
-        $profiler = $this->getProfilerMock();
-        $formatter = new TimelineFormatter($profiler);
-        $this->assertSame($profiler, $formatter->getProfiler());
+        $profilerA = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+        $profilerB = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
 
-        $anotherProfiler = $this->getProfilerMock();
-        $this->assertNotSame($anotherProfiler, $formatter->getProfiler());
+        $formatter = new TimelineFormatter($profilerA);
+        $this->assertSame($profilerA, $formatter->getProfiler());
 
-        $formatter->setProfiler($anotherProfiler);
-        $this->assertSame($anotherProfiler, $formatter->getProfiler());
+        $formatter->setProfiler($profilerB);
+        $this->assertSame($profilerB, $formatter->getProfiler());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getWidth
+     * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getProfilerDuration
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterAbstract
      */
@@ -63,21 +63,22 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
         $durationBenchmark = 50;
         $durationProfiler = 100;
 
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getDuration')
             ->willReturn($durationBenchmark);
 
-        $this->profiler->expects($this->once())
+        $this->profiler->expects($this->any())
             ->method('getDuration')
             ->willReturn($durationProfiler);
 
-        $expectedWidth = round(($durationBenchmark/($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) *100), 2);
+        $expectedWidth = number_format(($durationBenchmark / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100), 2, '.', '');
 
         $this->assertSame($expectedWidth, $this->formatter->getWidth());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getOffset
+     * @covers Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter::getProfilerDuration
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter
      * @uses Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatterAbstract
      */
@@ -87,40 +88,21 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
         $startTimeProfiler  = 100050;
         $durationProfiler = 100;
 
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getStartTime')
             ->willReturn($startTimeBenchmark);
 
-        $this->profiler->expects($this->once())
+        $this->profiler->expects($this->any())
             ->method('getStartTime')
             ->willReturn($startTimeProfiler);
 
-        $this->profiler->expects($this->once())
+        $this->profiler->expects($this->any())
             ->method('getDuration')
             ->willReturn($durationProfiler);
 
         $offset = $startTimeBenchmark - $startTimeProfiler;
-        $expectedOffset = round($offset / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100, 2);
+        $expectedOffset = number_format($offset / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100, 2, '.', '');
 
         $this->assertSame($expectedOffset, $this->formatter->getOffset());
-    }
-
-    /**
-     * @return BenchmarkInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getBenchmarkMock()
-    {
-        return $this->getMockBuilder('Fabfuel\Prophiler\Benchmark\Benchmark')
-        ->disableOriginalConstructor()
-        ->getMock();
-    }
-    /**
-     * @return ProfilerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getProfilerMock()
-    {
-        return $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-        ->disableOriginalConstructor()
-        ->getMock();
     }
 }

@@ -6,14 +6,19 @@ $c-lines: #eee;
 $c-headline: #777;
 
 $c-event-0: rgba(218, 88, 84, .75);
-$c-event-1: rgba(57, 126, 185, .75);
+$c-event-1: rgba(240, 175, 83, .75);
 $c-event-2: rgba(97, 186, 97, .75);
-$c-event-3: rgba(240, 175, 83, .75);
+$c-event-3: rgba(57, 126, 185, .75);
 $c-event-4: rgba(96, 194, 223, .75);
 $c-event-5: rgba(216, 216, 216, 0.75);
 
 body {
   margin-top: 52px !important;
+  position: relative;
+}
+
+#skel-layers-wrapper {
+  -webkit-perspective: none !important;
 }
 
 #prophiler {
@@ -88,6 +93,7 @@ body {
     display: block;
     position: relative;
     @include clearfix();
+    white-space: nowrap;
 
     min-height: 50px;
     border: 1px solid transparent;
@@ -105,14 +111,24 @@ body {
     }
 
     nav {
+      float: left;
+      left: 150px;
+
       color: #fff;
+
+      a {
+        text-decoration: none;
+        border: none;
+      }
 
       a:hover {
         text-decoration: none;
       }
 
       ul {
+        margin: 0;
         li {
+          margin-top: 10px;
           padding: 7px;
           float: left;
           list-style: none;
@@ -153,7 +169,7 @@ body {
       .column-severity {
         text-align: right;
         width: 10%;
-        padding-top: 7px;
+        padding-top: 3px;
       }
 
       .column-component {
@@ -174,12 +190,6 @@ body {
 
       &:hover {
         background-color: rgba(200, 200, 200, .2);
-        .timeline {
-          .benchmark {
-            overflow: visible;
-            width: auto !important;
-          }
-        }
       }
 
       &.header {
@@ -308,6 +318,10 @@ body {
     border: none;
     background: none;
     color: inherit;
+
+    * {
+      color: inherit;
+    }
   }
 
   .severity-info,
@@ -328,5 +342,17 @@ body {
   .severity-alert,
   .severity-emergency {
     @extend .color-0;
+  }
+}
+
+@media (max-width: 736px) {
+  .toolbar {
+    .logo {
+      display: none;
+    }
+
+    .fa {
+      display: none;
+    }
   }
 }

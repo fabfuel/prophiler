@@ -7,7 +7,7 @@ namespace Fabfuel\Prophiler\Iterator;
 
 use Fabfuel\Prophiler\ProfilerInterface;
 
-class ComponentFilteredIterator extends \FilterIterator
+class ComponentFilteredIterator extends \FilterIterator implements \Countable
 {
     /**
      * @var string
@@ -32,5 +32,13 @@ class ComponentFilteredIterator extends \FilterIterator
     public function accept()
     {
         return $this->current()->getComponent() === $this->component;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count(iterator_to_array($this));
     }
 }

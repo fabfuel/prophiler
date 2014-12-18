@@ -19,7 +19,8 @@ interface DataCollectorInterface
     public function getTitle();
 
     /**
-     * Get the bootstrap icon class
+     * Get the font-awesome icon class (e.g. fa-pie-chart)
+     * http://fortawesome.github.io/Font-Awesome/icons/
      *
      * @return string
      */

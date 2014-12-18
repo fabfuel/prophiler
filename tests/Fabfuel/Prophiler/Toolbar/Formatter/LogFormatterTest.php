@@ -10,7 +10,7 @@ use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 class LogFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BenchmarkFormatter
+     * @var BenchmarkFormatter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $formatter;
 
@@ -21,7 +21,7 @@ class LogFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->benchmark = $this->getBenchmarkMock();
+        $this->benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
         $this->formatter = new LogFormatter();
         $this->formatter->setBenchmark($this->benchmark);
@@ -34,25 +34,11 @@ class LogFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetColorClass($severity, $colorClass)
     {
-        $this->benchmark->expects($this->once())
+        $this->benchmark->expects($this->any())
             ->method('getMetadata')
             ->willReturn(['severity' => $severity]);
 
         $this->assertSame($colorClass, $this->formatter->getColorClass());
-    }
-
-    /**
-     * @param string $severity
-     * @param string $colorClass
-     * @dataProvider getLabels
-     */
-    public function testGetLabels($severity, $colorClass)
-    {
-        $this->benchmark->expects($this->exactly(2))
-            ->method('getMetadata')
-            ->willReturn(['severity' => $severity]);
-
-        $this->assertSame($colorClass, $this->formatter->getLabel());
     }
 
     /**
@@ -68,6 +54,20 @@ class LogFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $severity
+     * @param string $colorClass
+     * @dataProvider getLabels
+     */
+    public function testGetLabels($severity, $colorClass)
+    {
+        $this->benchmark->expects($this->any())
+            ->method('getMetadata')
+            ->willReturn(['severity' => $severity]);
+
+        $this->assertSame($colorClass, $this->formatter->getLabel());
+    }
+
+    /**
      * @return array
      */
     public function getLabels()
@@ -77,16 +77,5 @@ class LogFormatterTest extends \PHPUnit_Framework_TestCase
             ['AB', '<span class="label severity-AB">AB</span>'],
             ['ABC', '<span class="label severity-ABC">ABC</span>'],
         ];
-    }
-
-
-    /**
-     * @return BenchmarkInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getBenchmarkMock()
-    {
-        return $this->getMockBuilder('Fabfuel\Prophiler\Benchmark\Benchmark')
-        ->disableOriginalConstructor()
-        ->getMock();
     }
 }

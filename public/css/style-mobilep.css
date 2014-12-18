@@ -1,0 +1,163 @@
+/*
+	Telephasic by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body,input,textarea,select
+	{
+		font-size: 12pt;
+		letter-spacing: 0;
+	}
+
+	.feature
+	{
+		text-align: left;
+	}
+
+	/* Sections/Article */
+	
+		section,
+		article,
+		.row > section,
+		.row > article
+		{
+			margin-bottom: 2em;
+		}
+
+		header
+		{
+		}
+
+			header.major
+			{
+				text-align: left;
+			}
+
+	/* Image */
+
+		.image
+		{
+			display: block;
+		}
+		
+			.image.full,
+			.image.left,
+			.image-centered
+			{
+				float: none;
+				display: block;
+				width: 100%;
+				margin: 0 0 1.5em 0;
+			}
+
+	/* List */
+
+		ul.actions
+		{
+		}
+		
+			ul.actions li
+			{
+				display: block;
+				margin: 1em 0 0 0;
+			}
+
+			ul.actions li:first-child
+			{
+				margin-top: 0;
+			}
+
+			ul.actions.major
+			{
+				text-align: left !important;
+			}
+			
+	/* Form */
+
+		form
+		{
+		}
+		
+			form textarea
+			{
+				min-height: 10em;
+			}
+
+	/* Button */
+		
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"],
+		.button
+		{
+			display: block;
+			width: 100%;
+			text-align: center;
+		}
+
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+	#logo
+	{
+		position: relative;
+		left: 0;
+		top: 0;
+		margin: 0;
+		width: 100%;
+	}
+
+/*********************************************************************************/
+/* Hero                                                                          */
+/*********************************************************************************/
+
+	#hero
+	{
+		padding: 2.5em 0 0 0;
+	}
+		
+/*********************************************************************************/
+/* Promo                                                                         */
+/*********************************************************************************/
+
+	#promo
+	{
+		padding: 20px;
+	}
+
+/*********************************************************************************/
+/* Content                                                                       */
+/*********************************************************************************/
+
+	#content
+	{
+		margin-bottom: 2em;
+	}
+
+/*********************************************************************************/
+/* Sidebar                                                                       */
+/*********************************************************************************/
+
+	#sidebar
+	{
+		margin-bottom: 2em;
+	}
+		
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+	#footer
+	{
+	}
+		
+		#footer header.major
+		{
+			margin-bottom: 1em;
+		}

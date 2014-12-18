@@ -10,6 +10,14 @@ use Phalcon\DI\FactoryDefault;
 
 class PhalconTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+        if(!extension_loaded('phalcon')) {
+            $this->markTestSkipped('Phalcon extension isn\'t installed');
+            return;
+        }
+    }
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::register
@@ -18,6 +26,7 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::setProfiler
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::setDI
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::getDI
+     * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
      */
@@ -25,9 +34,7 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
     {
         DI::setDefault(new FactoryDefault());
 
-        $profiler = $this->getMockBuilder('Fabfuel\Prophiler\Profiler')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $profiler = $this->getMock('Fabfuel\Prophiler\Profiler');
 
         $pluginManager = new Phalcon($profiler);
 
