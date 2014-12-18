@@ -25,20 +25,22 @@ class TimelineFormatter extends BenchmarkFormatterAbstract
     }
 
     /**
-     * @return double
+     * @return string
      */
     public function getWidth()
     {
-        return round($this->getBenchmark()->getDuration() / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
+        $widthPercentage = $this->getBenchmark()->getDuration() / $this->getProfilerDuration() * 100;
+        return number_format($widthPercentage, 2, '.', '');
     }
 
     /**
-     * @return double
+     * @return string
      */
     public function getOffset()
     {
         $offset = $this->getBenchmark()->getStartTime() - $this->getProfiler()->getStartTime();
-        return round($offset / ($this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR) * 100, 2);
+        $offsetPercentage = $offset / $this->getProfilerDuration() * 100;
+        return number_format($offsetPercentage, 2, '.', '');
     }
 
     /**
@@ -55,5 +57,13 @@ class TimelineFormatter extends BenchmarkFormatterAbstract
     public function setProfiler(ProfilerInterface $profiler)
     {
         $this->profiler = $profiler;
+    }
+
+    /**
+     * @return float
+     */
+    protected function getProfilerDuration()
+    {
+        return $this->getProfiler()->getDuration() * self::TIMEBUFFER_FACTOR;
     }
 }

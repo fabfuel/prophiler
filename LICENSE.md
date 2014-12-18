@@ -1,4 +1,4 @@
-Prophiler - A Phalcon Profiler & Dev Toolbar
+Prophiler - A PHP Profiler & Developer Toolbar
 
 Copyright (c) 2014, Fabian Fuelling <fabian@fabfuel.de>.
 All rights reserved.

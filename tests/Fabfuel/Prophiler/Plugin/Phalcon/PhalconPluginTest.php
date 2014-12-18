@@ -5,13 +5,12 @@
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon;
 
-use Fabfuel\Prophiler\Profiler;
 use Fabfuel\Prophiler\ProfilerInterface;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\DI\InjectionAwareInterface;
 use Phalcon\DiInterface;
 
-abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase implements InjectionAwareInterface
+abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DiInterface
@@ -25,8 +24,13 @@ abstract class PhalconPluginTest extends \PHPUnit_Framework_TestCase implements 
 
     public function setUp()
     {
+        if(!extension_loaded('phalcon')) {
+            $this->markTestSkipped('Phalcon extension isn\'t installed');
+            return;
+        }
+
         $this->setDI(new FactoryDefault());
-        $this->setProfiler($this->getMockBuilder('Fabfuel\Prophiler\Profiler')->getMock());
+        $this->setProfiler($this->getMock('Fabfuel\Prophiler\Profiler'));
     }
 
     /**

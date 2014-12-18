@@ -1,13 +1,15 @@
-#Prophiler - A Phalcon Profiler & Dev Toolbar
+#Prophiler - A PHP Profiler & Developer Toolbar built for Phalcon
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Build Status](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/build-status/develop)
+[![License](https://poser.pugx.org/fabfuel/prophiler/license.svg)](https://packagist.org/packages/fabfuel/prophiler)
+[![Latest Stable Version](https://poser.pugx.org/fabfuel/prophiler/v/stable.svg)](https://packagist.org/packages/fabfuel/prophiler) 
 
 
 ## Demo
 Here you can see the toolbar in action:
-http://prophiler.fabfuel.de/
+http://prophiler.fabfuel.de/demo.php
 
 [![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
 
@@ -19,36 +21,22 @@ You can use composer to install the Prophiler. Just add it as dependency:
        	"fabfuel/prophiler": "~1.0",
     }
 
-## Setup
-Setting up the Prophiler and the developer toolbar can be done by these simple steps. It could all be done in your front controller (e.g. public/index.php) 
+## Setup (general)
+Setting up the Prophiler and the developer toolbar can be done via the following simple steps. It could all be done in your front-controller (e.g. `public/index.php` in Phalcon) 
 
-#####1. Initialize the Profiler (as soon as possible)
-Generally it makes sense to initialize the profiler as soon as possible, to measure as much execution time as you can. You should initialize the profiler in your frontcontroller or a separat bootstrap file right after requiring the Composer autoloader.
+###1. Initialize the Profiler (as soon as possible)
+Generally it makes sense to initialize the profiler as soon as possible, to measure as much execution time as you can. You should initialize the profiler in your front-controller or the bootstrap file right after requiring the Composer autoloader.
 
 ```php
 $profiler = new \Fabfuel\Prophiler\Profiler();
 ```
 
-#####2. Add the profiler to the dependency injection container
-Add the profiler instance to the DI container, that other plugins and adapters can use it accros the application. This should be done in or after your general DI setup.
-	
-```php
-$di->setShared('profiler', $profiler);
-```
+###2. Initialize and register the Toolbar
 
-#####3. Initialize the plugin manager
-The plugin manager registers all included framework plugins automatically and attaches them to the events manager.  
-
-```php
-$pluginManager = new \Fabfuel\Prophiler\Plugin\Manager\Phalcon($profiler);
-$pluginManager->register();
-```
-
-#####4. Initialize and register the Toolbar
-
-To visualize the profiling results, you have to initialize and render the Prophiler Toolbar. This component will take care for rendering all results of the Profiler benchmarks and other data collectors. Put that at the end of the frontcontroller.
+To visualize the profiling results, you have to initialize and render the Prophiler Toolbar. This component takes care for rendering all results of the profiler benchmarks and other data collectors. Put that at the end of the front-controller.
 
 You can also add other data collectors to the Toolbar, to show e.g. request data like in this example.
+
 
 ```php
 $toolbar = new \Fabfuel\Prophiler\Toolbar($profiler);
@@ -56,13 +44,33 @@ $toolbar->addDataCollector(new \Fabfuel\Prophiler\DataCollector\Request());
 echo $toolbar->render();
 ```
 
-You can also easily create you own data collectors, by implementing the DataCollectorInterface and adding an instance to the Toolbar at this point.
+You can also easily create you own data collectors, by implementing the `DataCollectorInterface` and adding an instance to the Toolbar.
+
 
 ```php
 ...
 $toolbar->addDataCollector(new \My\Custom\DataCollector());
 ...
 ```
+
+
+## Additional setup for Phalcon applications
+
+###1. Add the profiler to the dependency injection container
+Add the profiler instance to the DI container, that other plugins and adapters can use it across the application. This should be done in or after your general DI setup.
+	
+```php
+$di->setShared('profiler', $profiler);
+```
+
+###2. Initialize the plugin manager
+The plugin manager registers all included Phalcon plugins automatically and attaches them to the events manager. To make the plugins work properly, make sure that the default events manager is attached to your Dispatcher, View and Connection services.
+
+```php
+$pluginManager = new \Fabfuel\Prophiler\Plugin\Manager\Phalcon($profiler);
+$pluginManager->register();
+```
+
 
 ## Custom Benchmarks
 
@@ -74,8 +82,8 @@ $benchmark = $profiler->start('\My\Class::doSomething', ['additional' => 'inform
 $profiler->stop($benchmark);
 ```
 
-#####Or stop without passing the benchmark
-In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the ```stop()``` method. Alternatively you can omit the ```$benchmark``` parameter. In this that case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
+###Or stop without passing the benchmark
+In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the `stop()` method. Alternatively you can simply omit the `$benchmark` parameter. If that is the case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
 
 ```php
 $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'], 'My Component');
@@ -83,20 +91,42 @@ $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'],
 $profiler->stop();
 ```
 
+## Logging
+You can use Prophiler to log events and other data and view it in the timeline and in the separate "Logs" tab. If you already have a logging infrastructure, you can add the PSR-3 compliant `Logger` adapter to it. Otherwise you can also just instantiate and use it directly:
 
+```php
+$logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
+$logger->warning('This is a warning!', ['some' => 'context']);
+$logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo' => 'bar]);
+```
+
+## Adapters and Decorators
+
+###Doctrine
+To profile all SQL queries made by Doctrine, you just have to register the SQLLogger adapter in your Doctrine configuration, for example in your `bootstrap.php` like that:
+
+```php
+$sqlLogger = new Fabfuel\Prophiler\Adapter\Doctrine\SQLLogger($profiler);
+$entityManager->getConnection()->getConfiguration()->setSQLLogger($sqlLogger);
+```
+
+###PDO
+To profile your PDO database actions, you can use the Prophiler PDO decorator. It will record all `query()` & `exec()` calls and prepared statements as well. Just decorate your PDO instance with the Prophiler decorator and use that instead:
+
+```php
+$pdo = new PDO('mysql:host=localhost;dbname=test', 'user', 'password');
+$db = new \Fabfuel\Prophiler\Decorator\PDO\PDO($pdo, $profiler);
+
+$db->query('SELECT * from users');
+$db->exec('DELETE FROM users WHERE active = 0');
+$db->prepare('SELECT * from users WHERE userId = ?');
+```
 
 ## Tips
 
-To render the toolbar as very last action, you can also register it as shutdown function:
-
-```php
-register_shutdown_function([$toolbar, 'render']);
-```
-
-To record session writing, you can commit or write & close the session before rendering the toolbar
+###Record session writing
+To record session writing, you can commit (this is also known as `session_write_close()`) the session before rendering the toolbar
     
 ```php
 session_commit();
-
-session_write_close() // same behavior
 ```
