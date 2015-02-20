@@ -36,6 +36,11 @@ body {
   opacity: 0.97;
   @include box-shadow(0 3px 10px rgba(0, 0, 0, .125));
 
+  * {
+    background: none;
+    color: $c-headline;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
@@ -53,22 +58,45 @@ body {
 
   .color-0 {
     background-color: $c-event-0;
+    color: #fff;
+    * {
+      color: inherit;
+    }
   }
   .color-1 {
     background-color: $c-event-1;
+    color: #fff;
+    * {
+      color: inherit;
+    }
   }
   .color-2 {
     background-color: $c-event-2;
+    color: #fff;
+    * {
+      color: inherit;
+    }
   }
   .color-3 {
     background-color: $c-event-3;
+    color: #fff;
+    * {
+      color: inherit;
+    }
   }
   .color-4 {
     background-color: $c-event-4;
+    color: #fff;
+    * {
+      color: inherit;
+    }
   }
   .color-5 {
     background-color: $c-event-5;
     color: darken($c-event-5, 65%) !important;
+    * {
+      color: inherit;
+    }
   }
 
   .label {
@@ -227,7 +255,6 @@ body {
     .details {
       position: relative;
       @include box-shadow(inset 0 0 5px rgba(0, 0, 0, .25));
-      color: #fff;
       padding: 10px;
       display: none;
     }
@@ -292,6 +319,7 @@ body {
   }
 
   dl {
+    @include clearfix();
     margin-top: 0;
     margin-bottom: 0;
 
