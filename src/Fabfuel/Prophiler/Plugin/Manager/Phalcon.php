@@ -28,6 +28,18 @@ class Phalcon extends Injectable
 
     public function register()
     {
+        if (!$this->dispatcher->getEventsManager()) {
+            $this->dispatcher->setEventsManager($this->eventsManager);
+        }
+
+        if (!$this->view->getEventsManager()) {
+            $this->view->setEventsManager($this->eventsManager);
+        }
+
+        if (!$this->db->getEventsManager()) {
+            $this->db->setEventsManager($this->eventsManager);
+        }
+
         $this->eventsManager->attach('dispatch', DispatcherPlugin::getInstance($this->getProfiler()));
         $this->eventsManager->attach('view', ViewPlugin::getInstance($this->getProfiler()));
         $this->eventsManager->attach('db', AdapterPlugin::getInstance($this->getProfiler()));
