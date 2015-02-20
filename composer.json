@@ -25,11 +25,8 @@
         "squizlabs/php_codesniffer": "~1.0",
         "fabfuel/mongo": "~0.4",
         "doctrine/orm": "~2.4",
-        "erusev/parsedown": "~1.1"
-    },
-    "suggest": {
-        "phalcon/devtools": "This tools provide you useful scripts, helping to develop applications that use with Phalcon.",
-        "fabfuel/mongo": "ORM for Mongo, supports lazy loading, object references, subdocument classes and their collections."
+        "erusev/parsedown": "~1.1",
+        "phalcon/devtools": "1.3.x-dev"
     },
     "repositories": [
         {

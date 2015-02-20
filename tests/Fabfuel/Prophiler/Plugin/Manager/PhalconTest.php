@@ -38,8 +38,16 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
 
         $pluginManager = new Phalcon($profiler);
 
-        $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
+        $dispatcher = $this->getMock('Phalcon\Mvc\Dispatcher');
         $pluginManager->dispatcher = $dispatcher;
+
+        $view = $this->getMock('Phalcon\Mvc\View');
+        $pluginManager->view = $view;
+
+        $db = $this->getMockBuilder('Phalcon\Db\Adapter\Pdo')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pluginManager->db = $db;
 
         $this->assertFalse($pluginManager->eventsManager->hasListeners('dispatch'));
         $this->assertFalse($pluginManager->eventsManager->hasListeners('view'));
