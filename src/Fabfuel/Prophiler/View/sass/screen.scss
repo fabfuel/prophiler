@@ -109,6 +109,7 @@ body {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+    @include text-shadow(none);
 
     a {
       color: #fff;
