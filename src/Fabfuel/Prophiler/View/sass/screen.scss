@@ -89,13 +89,14 @@ body {
   }
 
   .toolbar {
+    box-sizing: border-box;
 
     display: block;
     position: relative;
     @include clearfix();
     white-space: nowrap;
 
-    min-height: 50px;
+    min-height: 31px;
     border: 1px solid transparent;
     background-color: #f8f8f8;
     border-color: #e7e7e7;
@@ -103,8 +104,7 @@ body {
     h1 {
       color: $c-headline;
       float: left;
-      height: 50px;
-      padding: 15px 15px;
+      padding: 5px 15px;
       font-size: 18px;
       line-height: 20px;
       margin: 0;
@@ -128,7 +128,6 @@ body {
       ul {
         margin: 0;
         li {
-          margin-top: 10px;
           padding: 7px;
           float: left;
           list-style: none;
