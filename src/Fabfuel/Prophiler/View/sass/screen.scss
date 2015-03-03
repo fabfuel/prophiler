@@ -239,6 +239,11 @@ body {
         position: relative;
         height: 23px;
 
+        &:before,
+        &:after {
+          display: none;
+        }
+
         .benchmark {
           position: absolute;
           display: inline;
