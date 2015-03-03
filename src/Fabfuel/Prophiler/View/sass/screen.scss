@@ -13,7 +13,7 @@ $c-event-4: rgba(96, 194, 223, .75);
 $c-event-5: rgba(216, 216, 216, 0.75);
 
 body {
-  margin-top: 52px !important;
+  margin-top: 33px !important;
   position: relative;
 }
 
@@ -22,7 +22,6 @@ body {
 }
 
 #prophiler {
-
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 12px;
   line-height: 1.42857143;
@@ -110,6 +109,7 @@ body {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+    @include text-shadow(none);
 
     a {
       color: #fff;
@@ -117,13 +117,12 @@ body {
   }
 
   .toolbar {
-
     display: block;
     position: relative;
     @include clearfix();
     white-space: nowrap;
 
-    min-height: 50px;
+    min-height: 31px;
     border: 1px solid transparent;
     background-color: #f8f8f8;
     border-color: #e7e7e7;
@@ -131,8 +130,7 @@ body {
     h1 {
       color: $c-headline;
       float: left;
-      height: 50px;
-      padding: 15px 15px;
+      padding: 5px 15px;
       font-size: 18px;
       line-height: 20px;
       margin: 0;
@@ -156,7 +154,6 @@ body {
       ul {
         margin: 0;
         li {
-          margin-top: 10px;
           padding: 7px;
           float: left;
           list-style: none;
