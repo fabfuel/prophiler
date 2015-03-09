@@ -99,7 +99,7 @@ body {
   }
 
   .label {
-    display: inline;
+    display: inline-block;
     font-size: 1em;
     padding: .15em .6em .15em;
     font-weight: 500;
@@ -238,6 +238,11 @@ body {
 
         position: relative;
         height: 23px;
+
+        &:before,
+        &:after {
+          display: none;
+        }
 
         .benchmark {
           position: absolute;
