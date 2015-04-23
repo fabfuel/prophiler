@@ -66,7 +66,7 @@ $profiler->stop($bootstrap);
 
 $logger->info('Bootstrap has finished', ['some' => 'context']);
 
-$sessionLoad = $profiler->start('Session::load', ['lorem' => 'ipsum'], 'Sessions');
+$sessionLoad = $profiler->start('Session::load', ['lorem' => ''], 'Sessions');
 usleep($wait(45));
 $profiler->stop($sessionLoad);
 
