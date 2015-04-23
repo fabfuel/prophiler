@@ -71,12 +71,10 @@ class ComponentFilteredIterator extends \FilterIterator implements \Countable
      */
     protected function acceptFilter(BenchmarkInterface $benchmark, $field, $value)
     {
-        if (is_array($value) && !in_array($benchmark->getMetadataValue($field), $value, true)) {
-            return false;
-        } elseif (!is_array($value) && $benchmark->getMetadataValue($field) !== $value) {
-            return false;
+        if (is_array($value)) {
+            return in_array($benchmark->getMetadataValue($field), $value, true);
         }
-        return true;
+        return $benchmark->getMetadataValue($field) === $value;
     }
 
     /**
