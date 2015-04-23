@@ -56,13 +56,26 @@ class ComponentFilteredIterator extends \FilterIterator implements \Countable
     protected function acceptFilters()
     {
         foreach ($this->filters as $field => $value) {
-            if (is_array($value) && !in_array($this->current()->getMetadataValue($field), $value, true)) {
-                return false;
-            } elseif (!is_array($value) && $this->current()->getMetadataValue($field) !== $value) {
+            if ($this->acceptFilter($this->current(), $field, $value) !== true) {
                 return false;
             }
         }
+        return true;
+    }
 
+    /**
+     * @param BenchmarkInterface $benchmark
+     * @param string $field
+     * @param mixed $value
+     * @return bool
+     */
+    protected function acceptFilter(BenchmarkInterface $benchmark, $field, $value)
+    {
+        if (is_array($value) && !in_array($benchmark->getMetadataValue($field), $value, true)) {
+            return false;
+        } elseif (!is_array($value) && $benchmark->getMetadataValue($field) !== $value) {
+            return false;
+        }
         return true;
     }
 
