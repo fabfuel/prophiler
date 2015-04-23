@@ -27,6 +27,7 @@ class ComponentFilteredIteratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
      * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
      * @uses Fabfuel\Prophiler\Profiler
      */
     public function testAccept()
@@ -40,9 +41,143 @@ class ComponentFilteredIteratorTest extends \PHPUnit_Framework_TestCase
         $this->profiler->addBenchmark($benchmark);
 
         $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar');
-        $iterator->rewind();
+        $this->assertSame(1, $iterator->count());
+    }
 
-        $this->assertTrue($iterator->accept());
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAcceptWithAnotherComponent()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Lorem Ipsum');
+
+        $this->profiler->addBenchmark($benchmark);
+
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar');
+        $this->assertSame(0, $iterator->count());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilters
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilter
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAcceptWithMatchingStringFilter()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Foobar');
+
+        $benchmark->expects($this->any())
+            ->method('getMetadataValue')
+            ->with('lorem')
+            ->willReturn('ipsum');
+
+        $this->profiler->addBenchmark($benchmark);
+
+        $filters = ['lorem' => 'ipsum'];
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar', $filters);
+
+        $this->assertSame(1, $iterator->count());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilters
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilter
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAcceptWithMatchingArrayFilter()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Foobar');
+
+        $benchmark->expects($this->any())
+            ->method('getMetadataValue')
+            ->with('foobars')
+            ->willReturn('foobar2');
+
+        $this->profiler->addBenchmark($benchmark);
+
+        $filters = [
+            'foobars' => [
+                'foobar1',
+                'foobar2'
+            ]
+        ];
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar', $filters);
+
+        $this->assertSame(1, $iterator->count());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilters
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilter
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAcceptWithNonMathingStringFilter()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Foobar');
+
+        $this->profiler->addBenchmark($benchmark);
+
+        $filters = ['lorem' => 'ipsum'];
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar', $filters);
+
+        $this->assertSame(0, $iterator->count());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::__construct
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::accept
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::count
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilters
+     * @covers Fabfuel\Prophiler\Iterator\ComponentFilteredIterator::acceptFilter
+     * @uses Fabfuel\Prophiler\Profiler
+     */
+    public function testAcceptWithNonMathingArrayFilters()
+    {
+        $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+
+        $benchmark->expects($this->any())
+            ->method('getComponent')
+            ->willReturn('Foobar');
+
+        $this->profiler->addBenchmark($benchmark);
+
+        $filters = [
+            'foobars' => [
+                'foobar1',
+                'foobar2'
+            ]
+        ];
+        $iterator = new ComponentFilteredIterator($this->profiler, 'Foobar', $filters);
+
+        $this->assertSame(0, $iterator->count());
     }
 
     /**

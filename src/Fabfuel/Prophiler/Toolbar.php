@@ -5,6 +5,9 @@
  */
 namespace Fabfuel\Prophiler;
 
+use Fabfuel\Prophiler\Adapter\Psr\Log\Logger;
+use Fabfuel\Prophiler\Iterator\ComponentFilteredIterator;
+
 class Toolbar
 {
     /**
@@ -30,10 +33,24 @@ class Toolbar
      */
     public function render()
     {
+        $alertsSeverities = [
+            Logger::SEVERITY_ALERT,
+            Logger::SEVERITY_ERROR,
+            Logger::SEVERITY_EMERGENCY,
+            Logger::SEVERITY_CRITICAL
+        ];
+
+        $alertCount = count(new ComponentFilteredIterator(
+            $this->profiler,
+            'Logger',
+            ['severity' => $alertsSeverities]
+        ));
+
         ob_start();
         $this->partial('toolbar', [
             'profiler' => $this->getProfiler(),
-            'dataCollectors' => $this->getDataCollectors()
+            'dataCollectors' => $this->getDataCollectors(),
+            'alertCount' => $alertCount
         ]);
         return ob_get_clean();
     }
