@@ -187,6 +187,16 @@ class BenchmarkTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan($firstMemoryUsage, $this->benchmark->getMemoryUsageEnd());
     }
 
+    /**
+     * @covers Fabfuel\Prophiler\Benchmark\Benchmark::getMetadataValue
+     * @uses Fabfuel\Prophiler\Benchmark\Benchmark
+     */
+    public function testGetMetadataValue()
+    {
+        $this->assertNull($this->benchmark->getMetadataValue('foobar'));
+        $this->assertSame('ipsum', $this->benchmark->getMetadataValue('lorem'));
+    }
+
     protected function wasteMemory()
     {
         $str = 'Lorem ipsum usu amet dicat nullam ea. Nec detracto lucilius democritum in, ne usu delenit offendit deterruisset.

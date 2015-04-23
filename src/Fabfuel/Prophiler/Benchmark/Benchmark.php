@@ -1,7 +1,7 @@
 <?php
 /**
  * @author @fabfuel <fabian@fabfuel.de>
- * @created 13.11.14, 08:11 
+ * @created 13.11.14, 08:11
  */
 namespace Fabfuel\Prophiler\Benchmark;
 
@@ -65,8 +65,8 @@ class Benchmark implements BenchmarkInterface
      */
     public function start()
     {
-        $this->startTime = (double) microtime(true);
-        $this->startMemory = (double) memory_get_usage();
+        $this->startTime = (double)microtime(true);
+        $this->startMemory = (double)memory_get_usage();
     }
 
     /**
@@ -76,8 +76,8 @@ class Benchmark implements BenchmarkInterface
      */
     public function stop()
     {
-        $this->endTime = (double) microtime(true);
-        $this->endMemory = (double) memory_get_usage();
+        $this->endTime = (double)microtime(true);
+        $this->endMemory = (double)memory_get_usage();
     }
 
     /**
@@ -102,7 +102,7 @@ class Benchmark implements BenchmarkInterface
     public function getEndTime()
     {
         if ($this->endTime < $this->startTime) {
-            $this->endTime = (double) microtime(true);
+            $this->endTime = (double)microtime(true);
         }
         return $this->endTime;
     }
@@ -135,7 +135,7 @@ class Benchmark implements BenchmarkInterface
     public function getMemoryUsageEnd()
     {
         if ($this->endMemory < $this->startMemory) {
-            $this->endMemory = (double) memory_get_usage();
+            $this->endMemory = (double)memory_get_usage();
         }
         return $this->endMemory;
     }
@@ -165,6 +165,15 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
+     * @param string $key Metadata key to receive
+     * @return mixed Custom metadata value
+     */
+    public function getMetadataValue($key = null)
+    {
+        return array_key_exists($key, $this->metadata) ? $this->metadata[$key] : null;
+    }
+
+    /**
      * Add interesting metadata to the benchmark
      *
      * @param array $metadata Additional metadata
@@ -185,7 +194,7 @@ class Benchmark implements BenchmarkInterface
     /**
      * @param string $component
      */
-        public function setComponent($component)
+    public function setComponent($component)
     {
         $this->component = $component;
     }

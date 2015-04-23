@@ -97,7 +97,7 @@ You can use Prophiler to log events and other data and view it in the timeline a
 ```php
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
 $logger->warning('This is a warning!', ['some' => 'context']);
-$logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo' => 'bar]);
+$logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo' => 'bar']);
 ```
 
 ## Adapters and Decorators
