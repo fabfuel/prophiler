@@ -16,10 +16,10 @@
         "classmap": ["tests/"]
     },
     "require": {
+        "psr/log": "~1.0",
         "php" : "~5.4"
     },
     "require-dev": {
-        "psr/log": "~1.0",
         "phpunit/phpunit": "~4.0",
         "phpmd/phpmd": "~1.0",
         "squizlabs/php_codesniffer": "~1.0",
