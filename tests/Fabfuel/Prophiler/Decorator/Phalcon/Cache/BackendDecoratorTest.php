@@ -104,9 +104,11 @@ class BackendDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $benchmark = $this->getMock('Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
 
-        $this->backend->expects($this->once())
-            ->method($method)
-            ->withAsArray($params);
+        $methodMock = $this->backend
+            ->expects($this->once())
+            ->method($method);
+
+        call_user_func_array([$methodMock, 'with'], $params);
 
         $this->profiler->expects($this->once())
             ->method('start')
