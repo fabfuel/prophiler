@@ -12,7 +12,7 @@
 
     <?php if ($benchmark->getMetadata()): ?>
         <?php foreach ($benchmark->getMetadata() as $metadataName => $metadata): ?>
-            <?php $this->partial('partials/details/data', ['data' => $metadata, 'dataName' => $metadataName, 'json' => $benchmark->getComponent() === 'MongoDB']); ?>
+            <?php $this->partial('partials/details/data', ['data' => $metadata, 'dataName' => $metadataName, 'json' => in_array($benchmark->getComponent(), ['MongoDB', 'Elasticsearch'])]); ?>
         <?php endforeach; ?>
     <?php endif; ?>
 </dl>
