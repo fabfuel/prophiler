@@ -53,6 +53,8 @@ require __DIR__ . '/DataCollector/User.php';
 require __DIR__ . '/DataCollector/Request.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
+$profiler->addAggregator(new \Fabfuel\Prophiler\Aggregator\Database\QueryAggregator());
+
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
 
 $multiplicator = 10;
@@ -91,6 +93,18 @@ usleep($wait(25));
 
         $view = $profiler->start('PDO::query', ['query' => 'SELECT userLoginEmail, userID, userLoginPassword FROM users LIMIT 2500;'], 'Database');
         usleep($wait(350));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(50));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(60));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(70));
         $profiler->stop($view);
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');

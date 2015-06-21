@@ -1,0 +1,46 @@
+<?php
+
+use \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
+/**
+ * @var \Fabfuel\Prophiler\Aggregator\AggregationInterface $aggregation
+ */
+?><div id="prophiler-aggregator-<?= spl_object_hash($aggregator) ?>" class="benchmarks">
+    <div class="table">
+
+        <div class="row header">
+            <div class="column column-aggregation">Command</div>
+            <div class="column column-duration">Executions</div>
+            <div class="column column-duration">Total Duration</div>
+            <div class="column column-duration">Min</div>
+            <div class="column column-duration">Max</div>
+            <div class="column column-duration">Average</div>
+        </div>
+
+        <?php foreach ($aggregator->getAggregations() as $aggregation): ?>
+
+            <div class="section">
+                <div class="row" onclick="$('#prophiler-aggregation-details-<?= spl_object_hash($aggregation) ?>').slideToggle('fast');">
+                    <div class="column column-aggregation" title="<?= $aggregation->getCommand() ?>"><?= $aggregation->getCommand() ?></div>
+                    <div class="column column-duration" title="<?= $aggregation->getTotalDuration() ?>"><?= $aggregation->getTotalExecutions() ?></div>
+                    <div class="column column-duration" title="<?= $aggregation->getTotalDuration() ?>">
+                        <?= BenchmarkFormatter::formatDuration($aggregation->getTotalDuration()) ?>
+                    </div>
+                    <div class="column column-duration" title="<?= $aggregation->getTotalDuration() ?>">
+                        <?= BenchmarkFormatter::formatDuration($aggregation->getMinDuration()) ?>
+                    </div>
+                    <div class="column column-duration" title="<?= $aggregation->getTotalDuration() ?>">
+                        <?= BenchmarkFormatter::formatDuration($aggregation->getMaxDuration()) ?>
+                    </div>
+                    <div class="column column-duration" title="<?= $aggregation->getTotalDuration() ?>">
+                        <?= BenchmarkFormatter::formatDuration($aggregation->getAvgDuration()) ?>
+                    </div>
+                </div>
+
+                <div class="aggregation-details" id="prophiler-aggregation-details-<?= spl_object_hash($aggregation) ?>">
+                    <?php $this->partial('partials/benchmarks', ['profiler' => $profiler, 'benchmarks' => $aggregation->getBenchmarks(), ]); ?>
+                </div>
+            </div>
+
+        <?php endforeach; ?>
+    </div>
+</div>
