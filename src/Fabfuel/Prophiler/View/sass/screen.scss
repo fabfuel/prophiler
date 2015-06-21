@@ -193,19 +193,25 @@ body {
 
   .table {
     color: lighten(#000, 30%);
-    padding: 5px 0;
+    padding: 10px 0;
     position: relative;
+
+    .section {
+      &:nth-child(even) {
+        background-color: rgba(200, 200, 200, .15);
+      }
+    }
 
     .row {
       margin: 0;
       position: relative;
-      height: 22px;
+      height: 24px;
       @include clearfix();
       cursor: pointer;
 
       .column {
         float: left;
-        padding: .3em .6em .2em;
+        padding: .4em .6em .4em;
         border-left: 1px solid $c-lines;
         overflow: hidden;
         white-space: nowrap;
@@ -214,6 +220,10 @@ body {
 
       .column-name {
         width: 25%;
+      }
+
+      .column-aggregation {
+        width: 62.5%;
       }
 
       .column-message {
@@ -290,6 +300,22 @@ body {
       display: none;
     }
 
+    .aggregation-details {
+      position: relative;
+      @include box-shadow(inset 0 0 5px rgba(0, 0, 0, .25));
+      display: none;
+      background-color: rgba(200, 200, 200, .1);
+
+      .table {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .timeline-scale {
+          top: 10px;
+        }
+      }
+    }
+
     .timeline-scale {
       position: absolute;
       top: 5px;
@@ -336,6 +362,20 @@ body {
   }
 
   .datacollector {
+    display: none;
+    padding: 20px;
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    h2 {
+      font-size: 1.4em;
+      margin: 0;
+      color: $c-headline;
+    }
+  }
+
+  .aggregator {
     display: none;
     padding: 20px;
     max-height: 500px;

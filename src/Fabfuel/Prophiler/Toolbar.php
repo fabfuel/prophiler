@@ -50,6 +50,7 @@ class Toolbar
         $this->partial('toolbar', [
             'profiler' => $this->getProfiler(),
             'dataCollectors' => $this->getDataCollectors(),
+            'aggregators' => $this->getProfiler()->getAggregators(),
             'alertCount' => $alertCount
         ]);
         return ob_get_clean();

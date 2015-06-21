@@ -37,6 +37,10 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->method('getDuration')
             ->willReturn(1);
 
+        $profiler->expects($this->exactly(1))
+            ->method('getAggregators')
+            ->willReturn([]);
+
         $toolbar = new Toolbar($profiler);
 
         $output = $toolbar->render();
