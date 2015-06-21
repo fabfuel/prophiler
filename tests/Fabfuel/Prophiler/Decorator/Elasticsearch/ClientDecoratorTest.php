@@ -37,13 +37,13 @@ class ClientDecoratorTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::__construct
      * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::getProfiler
      * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::setProfiler
-     * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::getClient
-     * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::setClient
+     * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::getDecorated
+     * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::setDecorated
      */
     public function testConstruct()
     {
         $this->assertSame($this->profiler, $this->decorator->getProfiler());
-        $this->assertSame($this->client, $this->decorator->getClient());
+        $this->assertSame($this->client, $this->decorator->getDecorated());
     }
 
     /**
@@ -56,6 +56,15 @@ class ClientDecoratorTest extends \PHPUnit_Framework_TestCase
         $name = $this->decorator->getBenchmarkName($method);
 
         $this->assertSame($expected, $name);
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator::getComponentName
+     */
+    public function testGetComponentName()
+    {
+        $name = $this->decorator->getComponentName();
+        $this->assertSame('Elasticsearch', $name);
     }
 
     /**
@@ -72,7 +81,7 @@ class ClientDecoratorTest extends \PHPUnit_Framework_TestCase
 
         $this->profiler->expects($this->once())
             ->method('start')
-            ->with('ElasticMock::get', $payload, 'Elasticsearch')
+            ->with('ElasticMock::get', [$payload], 'Elasticsearch')
             ->willReturn($benchmark);
 
         $this->profiler->expects($this->once())

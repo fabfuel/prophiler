@@ -6,6 +6,7 @@
 
 namespace Fabfuel\Prophiler\Decorator\Phalcon\Cache;
 
+use Fabfuel\Prophiler\Decorator\AbstractDecorator;
 use Fabfuel\Prophiler\ProfilerInterface;
 use Phalcon\Cache\BackendInterface;
 
@@ -13,49 +14,16 @@ use Phalcon\Cache\BackendInterface;
  * Class BackendDecorator
  * @package Common\Prophiler\Decorator\Phalcon\Cache
  */
-class BackendDecorator implements BackendInterface
+class BackendDecorator extends AbstractDecorator implements BackendInterface
 {
-    /**
-     * @var BackendInterface
-     */
-    private $backend;
-
-    /**
-     * @var ProfilerInterface
-     */
-    private $profiler;
-
     /**
      * @param BackendInterface $backend
      * @param ProfilerInterface $profiler
      */
     public function __construct(BackendInterface $backend, ProfilerInterface $profiler)
     {
-        $this->setBackend($backend);
+        $this->setDecorated($backend);
         $this->setProfiler($profiler);
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call($name, array $arguments)
-    {
-        $benchmark = $this->getProfiler()->start($this->getBenchmarkName($name), $arguments, $this->getComponentName());
-        $result = call_user_func_array([$this->getBackend(), $name], $arguments);
-        $this->getProfiler()->stop($benchmark);
-        return $result;
-    }
-
-    /**
-     * @param string $method
-     * @return string
-     */
-    public function getBenchmarkName($method)
-    {
-        $name = sprintf('%s::%s', get_class($this->getBackend()), $method);
-        return $name;
     }
 
     /**
@@ -63,7 +31,7 @@ class BackendDecorator implements BackendInterface
      */
     public function getComponentName()
     {
-        $class = get_class($this->getBackend());
+        $class = get_class($this->getDecorated());
         $class = basename(str_replace('\\', '/', $class));
         return sprintf('Cache %s', $class);
     }
@@ -220,38 +188,5 @@ class BackendDecorator implements BackendInterface
     public function flush()
     {
         return $this->__call('flush', []);
-    }
-
-
-    /**
-     * @return BackendInterface
-     */
-    public function getBackend()
-    {
-        return $this->backend;
-    }
-
-    /**
-     * @param BackendInterface $backend
-     */
-    public function setBackend($backend)
-    {
-        $this->backend = $backend;
-    }
-
-    /**
-     * @return ProfilerInterface
-     */
-    public function getProfiler()
-    {
-        return $this->profiler;
-    }
-
-    /**
-     * @param ProfilerInterface $profiler
-     */
-    public function setProfiler($profiler)
-    {
-        $this->profiler = $profiler;
     }
 }

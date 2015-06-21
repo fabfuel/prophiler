@@ -55,13 +55,13 @@ class BackendDecoratorTest extends \PHPUnit_Framework_TestCase
      * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::__construct
      * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::getProfiler
      * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::setProfiler
-     * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::getBackend
-     * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::setBackend
+     * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::getDecorated
+     * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::setDecorated
      */
     public function testConstruct()
     {
         $this->assertSame($this->profiler, $this->decorator->getProfiler());
-        $this->assertSame($this->backend, $this->decorator->getBackend());
+        $this->assertSame($this->backend, $this->decorator->getDecorated());
     }
 
     /**
@@ -84,7 +84,6 @@ class BackendDecoratorTest extends \PHPUnit_Framework_TestCase
         $name = $this->decorator->getComponentName();
         $this->assertSame('Cache CacheMock', $name);
     }
-
 
     /**
      * @covers Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator::__call
