@@ -28,8 +28,26 @@ class BackendDecoratorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        /**
+         * Methods need to be specified manually, as this interface changed from Phalcon 1.3 to 2.0
+         */
+        $this->backend = $this->getMock('\Phalcon\Cache\BackendInterface', [
+            'start',
+            'stop',
+            'getFrontend',
+            'getOptions',
+            'isFresh',
+            'isStarted',
+            'setLastKey',
+            'getLastKey',
+            'get',
+            'save',
+            'delete',
+            'queryKeys',
+            'exists',
+            'flush',
+        ], [], 'CacheMock');
         $this->profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
-        $this->backend = $this->getMock('\Phalcon\Cache\BackendInterface', [], [], 'CacheMock');
         $this->decorator = new BackendDecorator($this->backend, $this->profiler);
     }
 
