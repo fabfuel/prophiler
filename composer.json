@@ -16,17 +16,22 @@
         "classmap": ["tests/"]
     },
     "require": {
+        "psr/log": "~1.0",
         "php" : "~5.4"
     },
     "require-dev": {
-        "psr/log": "~1.0",
         "phpunit/phpunit": "~4.0",
         "phpmd/phpmd": "~1.0",
         "squizlabs/php_codesniffer": "~1.0",
         "fabfuel/mongo": "~0.4",
         "doctrine/orm": "~2.4",
-        "erusev/parsedown": "~1.1",
-        "phalcon/devtools": "1.3.x-dev"
+        "erusev/parsedown": "~1.5",
+        "phalcon/devtools": "1.3.*@dev",
+        "elasticsearch/elasticsearch": "~1.3"
+    },
+    "suggest": {
+        "phalcon/devtools": "This tools provide you useful scripts, helping to develop applications that use with Phalcon.",
+        "fabfuel/mongo": "ORM for Mongo, supports lazy loading, object references, subdocument classes and their collections."
     },
     "repositories": [
         {
