@@ -25,7 +25,14 @@
 
                 <?php if (count(new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger')) >= 1): ?>
                     <li>
-                        <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');"><span class="label color-5"><i class="fa fa-align-left"></i> Logs</span></a>
+                        <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');">
+                            <span class="label <?= $alertCount ? 'color-0' : 'color-5' ?>">
+                                <i class="fa fa-align-left"></i> Logs
+                                <?php if ($alertCount): ?>
+                                    <span class="badge"><?= $alertCount ?></span>
+                                <?php endif; ?>
+                            </span>
+                        </a>
                     </li>
                 <?php endif; ?>
 
@@ -52,9 +59,9 @@
 </div>
 
 <script>
-	if (!window.jQuery) {
-		document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
-	}
+    if (!window.jQuery) {
+        document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
+    }
     window.addEventListener("load", function () {
         $('json').each(function (index, el) {
             el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
