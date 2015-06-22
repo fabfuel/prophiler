@@ -37,18 +37,107 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
         $profiler = $this->getMock('Fabfuel\Prophiler\Profiler');
 
         $pluginManager = new Phalcon($profiler);
-
-        $dispatcher = $this->getMockBuilder('Phalcon\Mvc\Dispatcher')->getMock();
-        $pluginManager->dispatcher = $dispatcher;
-
-        $this->assertFalse($pluginManager->eventsManager->hasListeners('dispatch'));
-        $this->assertFalse($pluginManager->eventsManager->hasListeners('view'));
-        $this->assertFalse($pluginManager->eventsManager->hasListeners('db'));
+        $pluginManager->dispatcher = $this->getMock('Phalcon\Mvc\Dispatcher');
+        $pluginManager->view = $this->getMock('Phalcon\Mvc\View');
+        $pluginManager->db = $this->getMockBuilder('Phalcon\Db\Adapter\Pdo')->disableOriginalConstructor()->getMock();
 
         $pluginManager->register();
 
         $this->assertTrue($pluginManager->eventsManager->hasListeners('dispatch'));
         $this->assertTrue($pluginManager->eventsManager->hasListeners('view'));
         $this->assertTrue($pluginManager->eventsManager->hasListeners('db'));
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDispatcher
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
+     */
+    public function testRegisterDispatcher()
+    {
+        $dispatcher = new \Phalcon\Mvc\Dispatcher();
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+
+        $eventsManager = $this->getMock('\Phalcon\Events\ManagerInterface');
+        $eventsManager->expects($this->once())
+            ->method('attach')
+            ->with('dispatch', $this->isInstanceOf('Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin'));
+
+        DI::setDefault(new FactoryDefault());
+        $di = DI::getDefault();
+        $di->set('dispatcher', $dispatcher);
+        $di->set('eventsManager', $eventsManager);
+
+        $pluginManager = new Phalcon($profiler);
+
+        $this->assertNull($dispatcher->getEventsManager());
+        $pluginManager->registerDispatcher();
+        $this->assertSame($eventsManager, $dispatcher->getEventsManager());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerView
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
+     */
+    public function testRegisterView()
+    {
+        $view = new \Phalcon\Mvc\View();
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+
+        $eventsManager = $this->getMock('\Phalcon\Events\ManagerInterface');
+        $eventsManager->expects($this->once())
+            ->method('attach')
+            ->with('view', $this->isInstanceOf('Fabfuel\Prophiler\Plugin\Phalcon\Mvc\ViewPlugin'));
+
+        DI::setDefault(new FactoryDefault());
+        $di = DI::getDefault();
+        $di->set('view', $view);
+        $di->set('eventsManager', $eventsManager);
+
+        $pluginManager = new Phalcon($profiler);
+
+        $this->assertNull($view->getEventsManager());
+        $pluginManager->registerView();
+        $this->assertSame($eventsManager, $view->getEventsManager());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDatabase
+     * @uses Fabfuel\Prophiler\Profiler
+     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
+     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
+     */
+    public function testRegisterDatabase()
+    {
+        $eventsManager = $this->getMock('\Phalcon\Events\ManagerInterface');
+        $eventsManager->expects($this->once())
+            ->method('attach')
+            ->with('db', $this->isInstanceOf('Fabfuel\Prophiler\Plugin\Phalcon\Db\AdapterPlugin'));
+
+        $db = $this->getMockBuilder('Phalcon\Db\Adapter\Pdo')
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $db->expects($this->once())
+            ->method('getEventsManager')
+            ->willReturn(null);
+
+        $db->expects($this->once())
+            ->method('setEventsManager')
+            ->with($eventsManager);
+
+        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
+
+        DI::setDefault(new FactoryDefault());
+        $di = DI::getDefault();
+        $di->set('db', $db);
+        $di->set('eventsManager', $eventsManager);
+
+        $pluginManager = new Phalcon($profiler);
+        $pluginManager->registerDatabase();
     }
 }
