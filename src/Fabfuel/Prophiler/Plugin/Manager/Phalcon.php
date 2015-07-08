@@ -26,6 +26,9 @@ class Phalcon extends Injectable
         $this->setProfiler($profiler);
     }
 
+    /**
+     * Register all event manager plugins
+     */
     public function register()
     {
         $this->registerDatabase();
@@ -33,28 +36,52 @@ class Phalcon extends Injectable
         $this->registerView();
     }
 
+    /**
+     * Register database AdapterPlugin in "db" event manager
+     */
     public function registerDatabase()
     {
-        if (!$this->db->getEventsManager()) {
+        if (!method_exists($this->db, 'getEventsManager')) {
+            return;
+        }
+
+        if (!$this->db->getEventsManager() && method_exists($this->db, 'setEventsManager')) {
             $this->db->setEventsManager($this->eventsManager);
         }
-        $this->eventsManager->attach('db', AdapterPlugin::getInstance($this->getProfiler()));
+
+        $this->db->getEventsManager()->attach('db', AdapterPlugin::getInstance($this->getProfiler()));
     }
 
+    /**
+     * Register ViewPlugin in "dispatcher" event manager
+     */
     public function registerDispatcher()
     {
-        if (!$this->dispatcher->getEventsManager()) {
+        if (!method_exists($this->dispatcher, 'getEventsManager')) {
+            return;
+        }
+
+        if (!$this->dispatcher->getEventsManager() && method_exists($this->dispatcher, 'setEventsManager')) {
             $this->dispatcher->setEventsManager($this->eventsManager);
         }
-        $this->eventsManager->attach('dispatch', DispatcherPlugin::getInstance($this->getProfiler()));
+
+        $this->dispatcher->getEventsManager()->attach('dispatch', DispatcherPlugin::getInstance($this->getProfiler()));
     }
 
+    /**
+     * Register ViewPlugin in "view" event manager
+     */
     public function registerView()
     {
-        if (!$this->view->getEventsManager()) {
+        if (!method_exists($this->view, 'getEventsManager')) {
+            return;
+        }
+
+        if (!$this->view->getEventsManager() && method_exists($this->view, 'setEventsManager')) {
             $this->view->setEventsManager($this->eventsManager);
         }
-        $this->eventsManager->attach('view', ViewPlugin::getInstance($this->getProfiler()));
+
+        $this->view->getEventsManager()->attach('view', ViewPlugin::getInstance($this->getProfiler()));
     }
 
     /**
