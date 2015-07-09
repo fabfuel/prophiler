@@ -98,6 +98,7 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerView
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::ensureEventsManager
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::__construct
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::setProfiler
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::getProfiler
@@ -123,12 +124,12 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
         $pluginManager = new Phalcon($profiler);
 
         $this->assertNull($view->getEventsManager());
-        $pluginManager->registerView();
-        $this->assertSame($eventsManager, $view->getEventsManager());
+        $this->assertTrue($pluginManager->registerView());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDatabase
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::ensureEventsManager
      * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
@@ -162,6 +163,7 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDatabase
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::ensureEventsManager
      * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
@@ -203,6 +205,7 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDispatcher
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::ensureEventsManager
      * @uses Fabfuel\Prophiler\Profiler
      * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
      * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
@@ -215,31 +218,12 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
         DI::getDefault()->set('dispatcher', new \stdClass());
 
         $pluginManager = new Phalcon($profiler);
-        $this->assertNull($pluginManager->registerDispatcher());
-    }
-
-    /**
-     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerView
-     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::__construct
-     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::setProfiler
-     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::getProfiler
-     * @uses Fabfuel\Prophiler\Profiler
-     * @uses Fabfuel\Prophiler\Plugin\PluginAbstract
-     * @uses Fabfuel\Prophiler\Plugin\Phalcon\Mvc\DispatcherPlugin
-     */
-    public function testRegisterViewIfNotExisting()
-    {
-        $profiler = $this->getMock('Fabfuel\Prophiler\ProfilerInterface');
-
-        DI::setDefault(new FactoryDefault());
-        DI::getDefault()->set('view', new \stdClass());
-
-        $pluginManager = new Phalcon($profiler);
-        $this->assertNull($pluginManager->registerView());
+        $this->assertFalse($pluginManager->registerDispatcher());
     }
 
     /**
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::registerDatabase
+     * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::ensureEventsManager
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::__construct
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::setProfiler
      * @covers Fabfuel\Prophiler\Plugin\Manager\Phalcon::getProfiler
@@ -255,6 +239,6 @@ class PhalconTest extends \PHPUnit_Framework_TestCase
         DI::getDefault()->set('db', new \stdClass());
 
         $pluginManager = new Phalcon($profiler);
-        $this->assertNull($pluginManager->registerDatabase());
+        $this->assertFalse($pluginManager->registerDatabase());
     }
 }
