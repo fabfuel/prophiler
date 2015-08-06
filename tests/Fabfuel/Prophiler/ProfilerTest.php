@@ -240,4 +240,34 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->profiler->next();
         $this->assertFalse($this->profiler->valid());
     }
+
+    /**
+     * @covers Fabfuel\Prophiler\Profiler::addAggregator
+     * @covers Fabfuel\Prophiler\Profiler::getAggregators
+     */
+    public function testAddAggregator()
+    {
+        $this->assertCount(0, $this->profiler->getAggregators());
+
+        $aggregator = $this->getMock('\Fabfuel\Prophiler\AggregatorInterface');
+        $this->profiler->addAggregator($aggregator);
+
+        $this->assertCount(1, $this->profiler->getAggregators());
+
+        $firstAggregator = current($this->profiler->getAggregators());
+        $this->assertSame($aggregator, $firstAggregator);
+    }
+
+    public function testAggregate()
+    {
+        $benchmark = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $aggregator = $this->getMock('\Fabfuel\Prophiler\AggregatorInterface');
+
+        $aggregator->expects($this->once())
+            ->method('aggregate')
+            ->with($benchmark);
+
+        $this->profiler->addAggregator($aggregator);
+        $this->profiler->aggregate($benchmark);
+    }
 }
