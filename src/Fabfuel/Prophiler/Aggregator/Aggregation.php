@@ -25,7 +25,7 @@ class Aggregation implements AggregationInterface
     /**
      * @var float
      */
-    private $totalDuration = 0;
+    private $totalDuration = 0.0;
 
     /**
      * @var float
@@ -56,6 +56,27 @@ class Aggregation implements AggregationInterface
     }
 
     /**
+     * @param BenchmarkInterface $benchmark
+     */
+    public function aggregate(BenchmarkInterface $benchmark)
+    {
+        $this->totalExecutions += 1;
+        $this->totalDuration += (float) $benchmark->getDuration();
+
+        $this->avgDuration = (float) $this->totalDuration / $this->totalExecutions;
+
+        if ($benchmark->getDuration() > $this->maxDuration) {
+            $this->maxDuration = (float) $benchmark->getDuration();
+        }
+
+        if ($benchmark->getDuration() < $this->minDuration || !$this->minDuration) {
+            $this->minDuration = (float) $benchmark->getDuration();
+        }
+
+        $this->benchmarks[] = $benchmark;
+    }
+
+    /**
      * @return string
      */
     public function getCommand()
@@ -64,24 +85,11 @@ class Aggregation implements AggregationInterface
     }
 
     /**
-     * @param BenchmarkInterface $benchmark
+     * @return BenchmarkInterface[]
      */
-    public function aggregate(BenchmarkInterface $benchmark)
+    public function getBenchmarks()
     {
-        $this->totalExecutions += 1;
-        $this->totalDuration += $benchmark->getDuration();
-
-        $this->avgDuration = $this->totalDuration / $this->totalExecutions;
-
-        if ($benchmark->getDuration() > $this->maxDuration) {
-            $this->maxDuration = $benchmark->getDuration();
-        }
-
-        if ($benchmark->getDuration() < $this->minDuration || !$this->minDuration) {
-            $this->minDuration = $benchmark->getDuration();
-        }
-
-        $this->benchmarks[] = $benchmark;
+        return $this->benchmarks;
     }
 
     /**
@@ -122,13 +130,5 @@ class Aggregation implements AggregationInterface
     public function getMaxDuration()
     {
         return $this->maxDuration;
-    }
-
-    /**
-     * @return array
-     */
-    public function getBenchmarks()
-    {
-        return $this->benchmarks;
     }
 }

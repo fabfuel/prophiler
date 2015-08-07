@@ -31,6 +31,11 @@ interface AggregationInterface
     public function getCommand();
 
     /**
+     * @return BenchmarkInterface[]
+     */
+    public function getBenchmarks();
+
+    /**
      * @return int
      */
     public function getTotalExecutions();
