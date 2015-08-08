@@ -23,21 +23,29 @@ abstract class AbstractAggregator implements AggregatorInterface
     protected $aggregations = [];
 
     /**
+     * Number of executions per command, which should mark the aggregation as warning
+     *
      * @var int
      */
     protected $countWarning = 10;
 
     /**
+     * Number of executions per command, which should mark the aggregation as critical
+     *
      * @var int
      */
     protected $countCritical = 20;
 
     /**
+     * Duration threshold (in ms), which should mark the aggregation as warning
+     *
      * @var int
      */
     protected $durationWarning = 10;
 
     /**
+     * Duration threshold (in ms), which should mark the aggregation as critical
+     *
      * @var int
      */
     protected $durationCritical = 20;

@@ -61,7 +61,7 @@ class AggregationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0.0, $this->aggregation->getMinDuration());
         $this->assertSame(0.0, $this->aggregation->getMaxDuration());
 
-        // 100
+        // + 100 ms benchmark
         $this->aggregation->aggregate($benchmark100);
         $this->assertCount(1, $this->aggregation->getBenchmarks());
         $this->assertSame(1, $this->aggregation->getTotalExecutions());
@@ -70,7 +70,7 @@ class AggregationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(100.0, $this->aggregation->getMinDuration());
         $this->assertSame(100.0, $this->aggregation->getMaxDuration());
 
-        // 200
+        // + 200 ms benchmark
         $this->aggregation->aggregate($benchmark200);
         $this->assertCount(2, $this->aggregation->getBenchmarks());
         $this->assertSame(2, $this->aggregation->getTotalExecutions());
@@ -79,7 +79,7 @@ class AggregationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(100.0, $this->aggregation->getMinDuration());
         $this->assertSame(200.0, $this->aggregation->getMaxDuration());
 
-        // 300
+        // + 300 ms benchmark
         $this->aggregation->aggregate($benchmark300);
         $this->assertCount(3, $this->aggregation->getBenchmarks());
         $this->assertSame(3, $this->aggregation->getTotalExecutions());
