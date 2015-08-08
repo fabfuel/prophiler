@@ -1,11 +1,12 @@
 <?php
 /**
  * @author @fabfuel <fabian@fabfuel.de>
- * @created: 23.04.15 17:53
+ * @created: 23.04.15 07:53
  */
 
 namespace Fabfuel\Prophiler\Aggregator;
 
+use Fabfuel\Prophiler\Adapter\Psr\Log\Logger;
 use Fabfuel\Prophiler\AggregatorInterface;
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 
@@ -14,12 +15,12 @@ abstract class AbstractAggregator implements AggregatorInterface
     /**
      * @var AggregationInterface
      */
-    private $total;
+    protected $total;
 
     /**
      * @var AggregationInterface[]
      */
-    private $aggregations = [];
+    protected $aggregations = [];
 
     /**
      * @var int
@@ -46,6 +47,12 @@ abstract class AbstractAggregator implements AggregatorInterface
      * @return bool
      */
     public abstract function accept(BenchmarkInterface $benchmark);
+
+    /**
+     * @param BenchmarkInterface $benchmark
+     * @return string
+     */
+    public abstract function getCommand(BenchmarkInterface $benchmark);
 
     /**
      * Add Benchmark to aggregator
@@ -100,7 +107,7 @@ abstract class AbstractAggregator implements AggregatorInterface
     public function getTotal()
     {
         if ($this->total === null) {
-            $this->total = new Aggregation();
+            $this->total = new Aggregation('total');
         }
 
         return $this->total;
@@ -112,13 +119,31 @@ abstract class AbstractAggregator implements AggregatorInterface
     public function getSeverity()
     {
         if ($this->count() === 0) {
-            return 'info';
-        } elseif ($this->count() >= $this->getCountCritical() || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationCritical()) {
-            return 'critical';
-        } elseif ($this->count() >= $this->getCountWarning() || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationWarning()) {
-            return 'warning';
+            return Logger::SEVERITY_INFO;
+        } elseif ($this->isCritical()) {
+            return Logger::SEVERITY_CRITICAL;
+        } elseif ($this->isWarning()) {
+            return Logger::SEVERITY_WARNING;
         }
-        return 'debug';
+        return Logger::SEVERITY_DEBUG;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCritical()
+    {
+        return $this->count() >= $this->getCountCritical()
+            || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationCritical();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWarning()
+    {
+        return $this->count() >= $this->getCountWarning()
+            || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationWarning();
     }
 
     /**

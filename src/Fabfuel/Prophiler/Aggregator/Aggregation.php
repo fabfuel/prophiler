@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: fabfuel
- * Date: 21.06.15
- * Time: 15:39
+ * @author @fabfuel <fabian@fabfuel.de>
+ * @created 21.06.15 15:39
  */
 
 namespace Fabfuel\Prophiler\Aggregator;
@@ -50,7 +48,7 @@ class Aggregation implements AggregationInterface
     /**
      * @param string $command
      */
-    public function __construct($command = '')
+    public function __construct($command)
     {
         $this->command = $command;
     }
