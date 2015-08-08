@@ -1,10 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: fabfuel
- * Date: 21.06.15
- * Time: 15:47
+ * @author @fabfuel <fabian@fabfuel.de>
+ * @created 21.06.15 07:47
  */
+
 namespace Fabfuel\Prophiler\Aggregator;
 
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
