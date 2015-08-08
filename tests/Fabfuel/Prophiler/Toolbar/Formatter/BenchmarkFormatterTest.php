@@ -171,4 +171,14 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(['lorem' => 'ipsum'], $this->formatter->getMetadata());
     }
+
+    public function testFormatDuration()
+    {
+        $this->assertSame('12.35 ms', BenchmarkFormatter::formatDuration(0.012345));
+    }
+
+    public function testFormatMemoryUsage()
+    {
+        $this->assertSame('1.177 MB', BenchmarkFormatter::formatMemoryUsage(1234567));
+    }
 }

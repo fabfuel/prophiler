@@ -23,6 +23,22 @@
                     <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
                 </li>
 
+                <?php foreach ($aggregators as $aggregator): ?>
+                    <li>
+                        <?php if (count($aggregator)): ?>
+                            <a href="#" onclick="return $('#prophiler-aggregator-<?= spl_object_hash($aggregator) ?>').slideToggle('fast');">
+                        <?php endif; ?>
+
+                        <span class="label severity-<?= $aggregator->getSeverity() ?>">
+                            <?= $aggregator->getIcon() ?> <?= $aggregator->getTitle() ?>
+                            <span class="badge"><?= count($aggregator) ?></span>
+                        </span>
+                        <?php if (count($aggregator)): ?>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+
                 <?php if (count(new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger')) >= 1): ?>
                     <li>
                         <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');">
@@ -46,7 +62,7 @@
     </div>
 
     <div id="prophiler-benchmarks" class="benchmarks">
-        <?php $this->partial('partials/benchmarks', ['profiler' => $profiler]); ?>
+        <?php $this->partial('partials/benchmarks', ['profiler' => $profiler, 'benchmarks' => $profiler, ]); ?>
     </div>
 
     <div id="prophiler-logs" class="logs">
@@ -55,6 +71,10 @@
 
     <?php foreach ($dataCollectors as $dataCollector): ?>
         <?php $this->partial('partials/datacollector', ['dataCollector' => $dataCollector]); ?>
+    <?php endforeach; ?>
+
+    <?php foreach ($aggregators as $aggregator): ?>
+        <?php $this->partial('partials/aggregator', ['profiler' => $profiler, 'aggregator' => $aggregator]); ?>
     <?php endforeach; ?>
 </div>
 

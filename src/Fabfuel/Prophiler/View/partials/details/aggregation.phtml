@@ -1,0 +1,18 @@
+<?php
+/**
+ * @var \Fabfuel\Prophiler\Aggregator\AggregationInterface $aggregation
+ */
+?>
+<dl>
+    <dt>Duration</dt>
+    <dd><?= $aggregation->getTotalDuration() ?></dd>
+
+    <dt>Memory usage</dt>
+    <dd><?= $aggregation->getMemoryUsage() ?></dd>
+
+    <?php if ($aggregation->getMetadata()): ?>
+        <?php foreach ($aggregation->getMetadata() as $metadataName => $metadata): ?>
+            <?php $this->partial('partials/details/data', ['data' => $metadata, 'dataName' => $metadataName, 'json' => in_array($aggregation->getComponent(), ['MongoDB', 'Elasticsearch'])]); ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</dl>

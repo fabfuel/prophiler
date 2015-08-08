@@ -9,12 +9,17 @@ use Fabfuel\Prophiler\Benchmark\BenchmarkFactory;
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Exception\UnknownBenchmarkException;
 
-class Profiler implements ProfilerInterface, \Countable
+class Profiler implements ProfilerInterface
 {
     /**
      * @var BenchmarkInterface[]
      */
     protected $benchmarks = [];
+
+    /**
+     * @var AggregatorInterface[]
+     */
+    protected $aggregators = [];
 
     /**
      * @var double Starting time
@@ -68,6 +73,9 @@ class Profiler implements ProfilerInterface, \Countable
         }
         $benchmark->stop();
         $benchmark->addMetadata($metadata);
+
+        $this->aggregate($benchmark);
+
         return $benchmark;
     }
 
@@ -127,6 +135,35 @@ class Profiler implements ProfilerInterface, \Countable
             return $lastBenchmark;
         }
         throw new UnknownBenchmarkException('No benchmarks to return last one');
+    }
+
+    /**
+     * Add an aggregator to the profiler
+     *
+     * @param AggregatorInterface $aggregator
+     * @return $this
+     */
+    public function addAggregator(AggregatorInterface $aggregator)
+    {
+        $this->aggregators[] = $aggregator;
+    }
+
+    /**
+     * @return AggregatorInterface[]
+     */
+    public function getAggregators()
+    {
+        return $this->aggregators;
+    }
+
+    /**
+     * @param BenchmarkInterface $benchmark
+     */
+    public function aggregate(BenchmarkInterface $benchmark)
+    {
+        foreach ($this->getAggregators() as $aggregator) {
+            $aggregator->aggregate($benchmark);
+        }
     }
 
     /**
