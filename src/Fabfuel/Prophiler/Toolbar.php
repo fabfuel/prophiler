@@ -10,6 +10,13 @@ use Fabfuel\Prophiler\Iterator\ComponentFilteredIterator;
 
 class Toolbar
 {
+    protected $alertSeverities = [
+        Logger::SEVERITY_ALERT,
+        Logger::SEVERITY_ERROR,
+        Logger::SEVERITY_EMERGENCY,
+        Logger::SEVERITY_CRITICAL
+    ];
+
     /**
      * @var ProfilerInterface
      */
@@ -33,24 +40,18 @@ class Toolbar
      */
     public function render()
     {
-        $alertsSeverities = [
-            Logger::SEVERITY_ALERT,
-            Logger::SEVERITY_ERROR,
-            Logger::SEVERITY_EMERGENCY,
-            Logger::SEVERITY_CRITICAL
-        ];
-
-        $alertCount = count(new ComponentFilteredIterator(
+        $alerts = new ComponentFilteredIterator(
             $this->profiler,
             'Logger',
-            ['severity' => $alertsSeverities]
-        ));
+            ['severity' => $this->alertSeverities]
+        );
 
         ob_start();
         $this->partial('toolbar', [
             'profiler' => $this->getProfiler(),
             'dataCollectors' => $this->getDataCollectors(),
-            'alertCount' => $alertCount
+            'aggregators' => $this->getProfiler()->getAggregators(),
+            'alertCount' => count($alerts)
         ]);
         return ob_get_clean();
     }

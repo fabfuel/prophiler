@@ -19,8 +19,10 @@ interface DataCollectorInterface
     public function getTitle();
 
     /**
-     * Get the font-awesome icon class (e.g. fa-pie-chart)
-     * http://fortawesome.github.io/Font-Awesome/icons/
+     * Get the icon HTML markup
+     *
+     * For example font-awesome icons: <i class="fa fa-pie-chart"></i>
+     * See: http://fortawesome.github.io/Font-Awesome/icons/
      *
      * @return string
      */

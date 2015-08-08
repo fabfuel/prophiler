@@ -82,7 +82,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $this->benchmark->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.012345);
+            ->willReturn(12.345);
 
         $this->assertSame('12.35 ms', $this->formatter->getDuration());
     }
@@ -170,5 +170,15 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
             ->willReturn(['lorem' => 'ipsum']);
 
         $this->assertSame(['lorem' => 'ipsum'], $this->formatter->getMetadata());
+    }
+
+    public function testFormatDuration()
+    {
+        $this->assertSame('12.35 ms', BenchmarkFormatter::formatDuration(12.345));
+    }
+
+    public function testFormatMemoryUsage()
+    {
+        $this->assertSame('1.177 MB', BenchmarkFormatter::formatMemoryUsage(1234567));
     }
 }

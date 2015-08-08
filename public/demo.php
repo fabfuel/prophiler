@@ -53,6 +53,9 @@ require __DIR__ . '/DataCollector/User.php';
 require __DIR__ . '/DataCollector/Request.php';
 
 $profiler = new \Fabfuel\Prophiler\Profiler();
+$profiler->addAggregator(new \Fabfuel\Prophiler\Aggregator\Database\QueryAggregator());
+$profiler->addAggregator(new \Fabfuel\Prophiler\Aggregator\Cache\CacheAggregator());
+
 $logger = new \Fabfuel\Prophiler\Adapter\Psr\Log\Logger($profiler);
 
 $multiplicator = 10;
@@ -85,12 +88,44 @@ usleep($wait(25));
     $controller = $profiler->start('Controller', ['some' => 'value', 'foobar' => 123, 'array' => ['foo' => 'bar', 'lorem' => true, 'ipsum' => 1.5]], 'Application');
     usleep($wait(200));
 
+        $cache = $profiler->start('Phalcon\Cache\Backend\Apc::get', ['get' => 'app_data__lorem_ipsum'], 'Cache');
+        usleep($wait(20));
+        $profiler->stop($cache);
+
         $view = $profiler->start('PDO::exec', ['query' => 'DELETE FROM users WHERE email = "foo@bar.com"'], 'Database');
         usleep($wait(50));
         $profiler->stop($view);
 
+        $cache = $profiler->start('Phalcon\Cache\Backend\Apc::exists', ['get' => 'app_data__lorem_ipsum'], 'Cache');
+        usleep($wait(20));
+        $profiler->stop($cache);
+
+        $cache = $profiler->start('Phalcon\Cache\Backend\Apc::get', ['get' => 'app_data__lorem_ipsum'], 'Cache');
+        usleep($wait(20));
+        $profiler->stop($cache);
+
         $view = $profiler->start('PDO::query', ['query' => 'SELECT userLoginEmail, userID, userLoginPassword FROM users LIMIT 2500;'], 'Database');
         usleep($wait(350));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(50));
+        $profiler->stop($view);
+
+        $cache = $profiler->start('Phalcon\Cache\Backend\Apc::exists', ['get' => 'app_data__lorem_ipsum'], 'Cache');
+        usleep($wait(20));
+        $profiler->stop($cache);
+
+        $cache = $profiler->start('Phalcon\Cache\Backend\Apc::get', ['get' => 'app_data__lorem_ipsum'], 'Cache');
+        usleep($wait(20));
+        $profiler->stop($cache);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(60));
+        $profiler->stop($view);
+
+        $view = $profiler->start('PDO::query', ['query' => 'SELECT lorem, ipsum FROM foobar WHERE id = ? LIMIT 1;'], 'Database');
+        usleep($wait(70));
         $profiler->stop($view);
 
         $view = $profiler->start('View::render', ['data' => ['user' => ['name' => 'John Doe', 'age' => 26]], 'foobar' => 123], 'View');

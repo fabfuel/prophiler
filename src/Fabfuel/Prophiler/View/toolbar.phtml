@@ -2,6 +2,9 @@
 /**
  * @var \Fabfuel\Prophiler\ProfilerInterface $profiler
  */
+
+use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
+
 ?><style>
     <?php echo file_get_contents(__DIR__ . '/css/screen.css'); ?>
 </style>
@@ -14,14 +17,30 @@
         <nav>
             <ul>
                 <li>
-                    <span class="label color-2"><i class="fa fa-clock-o"></i> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
+                    <span class="label color-2"><i class="fa fa-clock-o"></i> <?php echo BenchmarkFormatter::formatDuration($profiler->getDuration()) ?></span>
                 </li>
                 <li>
-                    <span class="label color-3"><i class="fa fa-tasks"></i> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                    <span class="label color-3"><i class="fa fa-tasks"></i> <?php echo BenchmarkFormatter::formatMemoryUsage(memory_get_peak_usage()) ?></span>
                 </li>
                 <li>
                     <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
                 </li>
+
+                <?php foreach ($aggregators as $aggregator): ?>
+                    <li>
+                        <?php if (count($aggregator)): ?>
+                            <a href="#" onclick="return $('#prophiler-aggregator-<?= spl_object_hash($aggregator) ?>').slideToggle('fast');">
+                        <?php endif; ?>
+
+                        <span class="label severity-<?= $aggregator->getSeverity() ?>">
+                            <?= $aggregator->getIcon() ?> <?= $aggregator->getTitle() ?>
+                            <span class="badge"><?= count($aggregator) ?></span>
+                        </span>
+                        <?php if (count($aggregator)): ?>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
 
                 <?php if (count(new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger')) >= 1): ?>
                     <li>
@@ -46,7 +65,7 @@
     </div>
 
     <div id="prophiler-benchmarks" class="benchmarks">
-        <?php $this->partial('partials/benchmarks', ['profiler' => $profiler]); ?>
+        <?php $this->partial('partials/benchmarks', ['profiler' => $profiler, 'benchmarks' => $profiler, ]); ?>
     </div>
 
     <div id="prophiler-logs" class="logs">
@@ -55,6 +74,10 @@
 
     <?php foreach ($dataCollectors as $dataCollector): ?>
         <?php $this->partial('partials/datacollector', ['dataCollector' => $dataCollector]); ?>
+    <?php endforeach; ?>
+
+    <?php foreach ($aggregators as $aggregator): ?>
+        <?php $this->partial('partials/aggregator', ['profiler' => $profiler, 'aggregator' => $aggregator]); ?>
     <?php endforeach; ?>
 </div>
 

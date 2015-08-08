@@ -91,6 +91,23 @@ $profiler->start('\My\Class::doSomeOtherThing', ['additional' => 'information'],
 $profiler->stop();
 ```
 
+## Aggregations
+Prophiler now features benchmark aggregations. These give you a lot more insights and are extremely useful to:
+- quickly see the total number of recurring executions (e.g. database or cache queries)
+- analyze minimum, maximum and average execution times of recurring executions
+- easily see (e.g. accidentally) recurring executions of the same database query
+- get a warning, if the total number of executions exceeds a custom threshold
+- get a warning, if the maximum execution time exceeds a custom threshold
+
+### Setup
+Prophiler comes with some aggregators, but you can easily create your own. To Set up an aggregator, all you need to do is to register the aggregator at the profiler instance:
+```php
+$profiler->addAggregator(new \Fabfuel\Prophiler\Aggregator\Database\QueryAggregator());
+$profiler->addAggregator(new \Fabfuel\Prophiler\Aggregator\Cache\CacheAggregator());
+```
+That's it. You immediately see all database and cache queries, grouped by command/query, including the total number of executions, the total duration of all executions as well as the minimum, maximum and average execution time.
+
+
 ## Logging
 You can use Prophiler to log events and other data and view it in the timeline and in the separate "Logs" tab. If you already have a logging infrastructure, you can add the PSR-3 compliant `Logger` adapter to it. Otherwise you can also just instantiate and use it directly:
 
@@ -121,6 +138,23 @@ $db->query('SELECT * from users');
 $db->exec('DELETE FROM users WHERE active = 0');
 $db->prepare('SELECT * from users WHERE userId = ?');
 ```
+
+###Cache
+To profile Phalcon cache backend requests, you only need to decorate the cache backend with the BackendDecorator. It will benchmark all cache operations automatically. Here is an example with the APC backend:
+```php
+$cacheFrontend = new \Phalcon\Cache\Frontend\Data(['lifetime' => 172800]);
+$cacheBackend = new \Phalcon\Cache\Backend\Apc($cacheFrontend, ['prefix' => 'app-data']);
+
+$cache = \Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator($cacheBackend, $profiler);
+```
+
+###Elasticsearch
+To profile Elasticsearch requests, you only need to decorate the Elasticsearch client with the ClientDecorator:
+```php
+$elasticsearch = new Elasticsearch\Client(['your' => 'config']);
+$client = new \Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator($client, $profiler);
+```
+
 
 ## Tips
 

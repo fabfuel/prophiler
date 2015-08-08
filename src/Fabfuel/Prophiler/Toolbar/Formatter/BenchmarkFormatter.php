@@ -7,6 +7,16 @@ namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
 class BenchmarkFormatter extends BenchmarkFormatterAbstract implements BenchmarkFormatterInterface
 {
+    public static function formatDuration($duration)
+    {
+        return sprintf('%.2f ms', $duration);
+    }
+
+    public static function formatMemoryUsage($memoryUsage)
+    {
+        return sprintf('%.3f MB', ($memoryUsage /1024 /1024 ));
+    }
+
     /**
      * @return string
      */
@@ -20,6 +30,6 @@ class BenchmarkFormatter extends BenchmarkFormatterAbstract implements Benchmark
      */
     public function getDuration()
     {
-        return sprintf('%.2f ms', ($this->getBenchmark()->getDuration() * 1000));
+        return sprintf('%.2f ms', $this->getBenchmark()->getDuration());
     }
 }
