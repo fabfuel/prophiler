@@ -151,6 +151,56 @@ class AbstractAggregatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::isWarning
+     * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::getSeverity
+     */
+    public function testIsWarningByDuration()
+    {
+        $benchmarkFast = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $benchmarkFast->expects($this->any())
+            ->method('getDuration')
+            ->willReturn(0.005);
+
+        $benchmarkSlow = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $benchmarkSlow->expects($this->any())
+            ->method('getDuration')
+            ->willReturn(0.015);
+
+        $this->aggregator->aggregate($benchmarkFast);
+        $this->assertFalse($this->aggregator->isWarning());
+
+        $this->aggregator->aggregate($benchmarkSlow);
+        $this->assertTrue($this->aggregator->isWarning());
+
+        $this->assertSame(Logger::SEVERITY_WARNING, $this->aggregator->getSeverity());
+    }
+
+    /**
+     * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::isCritical
+     * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::getSeverity
+     */
+    public function testIsCriticalByDuration()
+    {
+        $benchmarkFast = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $benchmarkFast->expects($this->any())
+            ->method('getDuration')
+            ->willReturn(0.015);
+
+        $benchmarkSlow = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
+        $benchmarkSlow->expects($this->any())
+            ->method('getDuration')
+            ->willReturn(0.025);
+
+        $this->aggregator->aggregate($benchmarkFast);
+        $this->assertFalse($this->aggregator->isCritical());
+
+        $this->aggregator->aggregate($benchmarkSlow);
+        $this->assertTrue($this->aggregator->isCritical());
+
+        $this->assertSame(Logger::SEVERITY_CRITICAL, $this->aggregator->getSeverity());
+    }
+
+    /**
      * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::isCritical
      * @covers Fabfuel\Prophiler\Aggregator\AbstractAggregator::getSeverity
      */
