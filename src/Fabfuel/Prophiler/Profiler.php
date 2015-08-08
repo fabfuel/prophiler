@@ -98,9 +98,9 @@ class Profiler implements ProfilerInterface
     public function getDuration()
     {
         if ($this->count()) {
-            return $this->getLastBenchmark()->getEndTime() - $this->getStartTime();
+            return ($this->getLastBenchmark()->getEndTime() - $this->getStartTime()) * 1000;
         }
-        return microtime(true) - $this->getStartTime();
+        return (microtime(true) - $this->getStartTime()) * 1000;
     }
 
     /**

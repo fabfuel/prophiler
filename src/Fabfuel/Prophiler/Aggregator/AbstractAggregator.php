@@ -142,7 +142,7 @@ abstract class AbstractAggregator implements AggregatorInterface
     public function isCritical()
     {
         return $this->count() >= $this->getCountCritical()
-            || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationCritical();
+            || $this->getTotal()->getMaxDuration() > $this->getDurationCritical();
     }
 
     /**
@@ -151,7 +151,7 @@ abstract class AbstractAggregator implements AggregatorInterface
     public function isWarning()
     {
         return $this->count() >= $this->getCountWarning()
-            || $this->getTotal()->getMaxDuration() * 1000 > $this->getDurationWarning();
+            || $this->getTotal()->getMaxDuration() > $this->getDurationWarning();
     }
 
     /**

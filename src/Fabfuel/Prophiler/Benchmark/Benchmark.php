@@ -81,11 +81,11 @@ class Benchmark implements BenchmarkInterface
     }
 
     /**
-     * @return double Timestamp in microtime
+     * @return double Duration in milliseconds
      */
     public function getDuration()
     {
-        return $this->getEndTime() - $this->getStartTime();
+        return ($this->getEndTime() - $this->getStartTime()) * 1000;
     }
 
     /**

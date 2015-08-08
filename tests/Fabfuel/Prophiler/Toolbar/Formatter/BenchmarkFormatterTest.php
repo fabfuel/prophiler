@@ -82,7 +82,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
     {
         $this->benchmark->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.012345);
+            ->willReturn(12.345);
 
         $this->assertSame('12.35 ms', $this->formatter->getDuration());
     }
@@ -174,7 +174,7 @@ class BenchmarkFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testFormatDuration()
     {
-        $this->assertSame('12.35 ms', BenchmarkFormatter::formatDuration(0.012345));
+        $this->assertSame('12.35 ms', BenchmarkFormatter::formatDuration(12.345));
     }
 
     public function testFormatMemoryUsage()

@@ -100,7 +100,7 @@ class TimelineFormatterTest extends \PHPUnit_Framework_TestCase
             ->method('getDuration')
             ->willReturn($durationProfiler);
 
-        $offset = $startTimeBenchmark - $startTimeProfiler;
+        $offset = ($startTimeBenchmark - $startTimeProfiler) * 1000;
         $expectedOffset = number_format($offset / ($durationProfiler * TimelineFormatter::TIMEBUFFER_FACTOR) * 100, 2, '.', '');
 
         $this->assertSame($expectedOffset, $this->formatter->getOffset());

@@ -42,7 +42,7 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
         $this->profiler->stop($benchmark);
 
         $this->assertSame(
-            $benchmark->getEndTime() - $this->profiler->getStartTime(),
+            ($benchmark->getEndTime() - $this->profiler->getStartTime()) * 1000,
             $this->profiler->getDuration()
         );
     }

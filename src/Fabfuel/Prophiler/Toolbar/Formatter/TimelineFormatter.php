@@ -38,7 +38,7 @@ class TimelineFormatter extends BenchmarkFormatterAbstract
      */
     public function getOffset()
     {
-        $offset = $this->getBenchmark()->getStartTime() - $this->getProfiler()->getStartTime();
+        $offset = ($this->getBenchmark()->getStartTime() - $this->getProfiler()->getStartTime()) * 1000;
         $offsetPercentage = $offset / $this->getProfilerDuration() * 100;
         return number_format($offsetPercentage, 2, '.', '');
     }

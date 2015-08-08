@@ -9,7 +9,7 @@ class BenchmarkFormatter extends BenchmarkFormatterAbstract implements Benchmark
 {
     public static function formatDuration($duration)
     {
-        return sprintf('%.2f ms', ($duration * 1000));
+        return sprintf('%.2f ms', $duration);
     }
 
     public static function formatMemoryUsage($memoryUsage)
@@ -30,6 +30,6 @@ class BenchmarkFormatter extends BenchmarkFormatterAbstract implements Benchmark
      */
     public function getDuration()
     {
-        return sprintf('%.2f ms', ($this->getBenchmark()->getDuration() * 1000));
+        return sprintf('%.2f ms', $this->getBenchmark()->getDuration());
     }
 }

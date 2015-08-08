@@ -2,6 +2,9 @@
 /**
  * @var \Fabfuel\Prophiler\ProfilerInterface $profiler
  */
+
+use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
+
 ?><style>
     <?php echo file_get_contents(__DIR__ . '/css/screen.css'); ?>
 </style>
@@ -14,10 +17,10 @@
         <nav>
             <ul>
                 <li>
-                    <span class="label color-2"><i class="fa fa-clock-o"></i> <?php printf('%.2f ms ', $profiler->getDuration() * 1000) ?></span>
+                    <span class="label color-2"><i class="fa fa-clock-o"></i> <?php echo BenchmarkFormatter::formatDuration($profiler->getDuration()) ?></span>
                 </li>
                 <li>
-                    <span class="label color-3"><i class="fa fa-tasks"></i> <?php printf('%.3f MB', memory_get_peak_usage() / 1024 / 1024) ?></span>
+                    <span class="label color-3"><i class="fa fa-tasks"></i> <?php echo BenchmarkFormatter::formatMemoryUsage(memory_get_peak_usage()) ?></span>
                 </li>
                 <li>
                     <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>

@@ -159,12 +159,12 @@ class AbstractAggregatorTest extends \PHPUnit_Framework_TestCase
         $benchmarkFast = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
         $benchmarkFast->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.005);
+            ->willReturn(5);
 
         $benchmarkSlow = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
         $benchmarkSlow->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.015);
+            ->willReturn(15);
 
         $this->aggregator->aggregate($benchmarkFast);
         $this->assertFalse($this->aggregator->isWarning());
@@ -184,12 +184,12 @@ class AbstractAggregatorTest extends \PHPUnit_Framework_TestCase
         $benchmarkFast = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
         $benchmarkFast->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.015);
+            ->willReturn(15);
 
         $benchmarkSlow = $this->getMock('\Fabfuel\Prophiler\Benchmark\BenchmarkInterface');
         $benchmarkSlow->expects($this->any())
             ->method('getDuration')
-            ->willReturn(0.025);
+            ->willReturn(25);
 
         $this->aggregator->aggregate($benchmarkFast);
         $this->assertFalse($this->aggregator->isCritical());
