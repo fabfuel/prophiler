@@ -12,6 +12,7 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 <div id="prophiler">
 
     <div class="toolbar">
+
         <h1 class="logo">Prophiler</h1>
 
         <nav>
@@ -79,6 +80,13 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
     <?php foreach ($aggregators as $aggregator): ?>
         <?php $this->partial('partials/aggregator', ['profiler' => $profiler, 'aggregator' => $aggregator]); ?>
     <?php endforeach; ?>
+
+</div>
+
+<div id="prophiler-toggle">
+    <a href="javascript:void(0);">
+        <i class="fa fa-angle-up"></i>
+    </a>
 </div>
 
 <script>
@@ -89,5 +97,27 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
         $('json').each(function (index, el) {
             el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
         });
+
+        // Move toggle event to delegate handler
+        $('body')
+            .on('click', '#prophiler-toggle', function() {
+                $(this).find('.fa').toggleClass('fa-angle-up fa-angle-down');
+                var visible = !!$('#prophiler, #prophiler-placeholder').slideToggle('fast').eq(0).height();
+                if(visible) {
+                    document.cookie = 'prophiler_toolbar_hidden=; max-age=0; path=/';
+                } else {
+                    document.cookie = 'prophiler_toolbar_hidden=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+                }
+            })
+            .prepend('<div id="prophiler-placeholder"></div>');
+
+        // Persistent toolbar state
+        if(document.cookie.match(/(^|;)\s*prophiler_toolbar_hidden\s*=/)) {
+            $('#prophiler, #prophiler-placeholder').hide();
+            $('#prophiler-toggle').find('.fa').toggleClass('fa-angle-up fa-angle-down');
+        }
+
+        // Prevent jumpy loading
+        $('#prophiler').css({visibility:'visible'});
     });
 </script>
