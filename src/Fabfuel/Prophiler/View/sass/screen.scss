@@ -2,7 +2,7 @@
 @import "compass/css3";
 @import "compass/utilities/general/clearfix";
 
-$c-background: #fff;
+$c-background: #f8f8f8;
 $c-lines: #eee;
 $c-headline: #777;
 
@@ -19,10 +19,6 @@ body {
   position: relative;
 }
 
-#prophiler-placeholder {
-  margin-top:33px;
-}
-
 #skel-layers-wrapper {
   -webkit-perspective: none !important;
 }
@@ -36,11 +32,18 @@ body {
   border-radius: 0 0 6px 0;
 
   a {
+    visibility: hidden;
     display: block;
     border: none;
-    padding: 0 12px;
-    line-height: 33px;
-    height: 36px;
+    padding: 0 8px;
+    line-height: 32px;
+    height: 37px;
+    &:after {
+      content: '\25b2';
+    }
+    &.prophiler-hidden:after {
+      content: '\25bc';
+    }
   }
 }
 
@@ -178,7 +181,7 @@ body {
 
     min-height: 31px;
     border: 1px solid transparent;
-    background-color: #f8f8f8;
+    background-color: $c-background;
     border-color: #e7e7e7;
 
     h1 {

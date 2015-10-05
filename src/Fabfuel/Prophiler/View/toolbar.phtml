@@ -84,12 +84,11 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 </div>
 
 <div id="prophiler-toggle">
-    <a href="javascript:void(0);">
-        <i class="fa fa-angle-up"></i>
-    </a>
+    <a href="javascript:void(0);"></a>
 </div>
 
 <script>
+
     if (!window.jQuery) {
         document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
     }
@@ -98,26 +97,38 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
             el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
         });
 
-        // Move toggle event to delegate handler
-        $('body')
-            .on('click', '#prophiler-toggle', function() {
-                $(this).find('.fa').toggleClass('fa-angle-up fa-angle-down');
-                var visible = !!$('#prophiler, #prophiler-placeholder').slideToggle('fast').eq(0).height();
-                if(visible) {
-                    document.cookie = 'prophiler_toolbar_hidden=; max-age=0; path=/';
-                } else {
-                    document.cookie = 'prophiler_toolbar_hidden=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
-                }
-            })
-            .prepend('<div id="prophiler-placeholder"></div>');
+        // A bit more optimized
+        var $body = $('body');
+        var $prophiler = $('#prophiler');
+        var $prophilerToggle = $('#prophiler-toggle a');
+        var height = parseFloat($prophilerToggle.outerHeight())+'px';
+
+        $prophilerToggle.on('click', function() {
+            var visible = !$(this).toggleClass('prophiler-hidden').hasClass('prophiler-hidden');
+            if(visible) {
+                $body.clearQueue().animate({marginTop:height},'fast');
+                $prophiler.clearQueue().slideDown('fast');
+                document.cookie = 'prophiler_toolbar_hidden=; max-age=0; path=/';
+            } else {
+                $body.clearQueue().animate({marginTop:'0'},'fast');
+                $prophiler.clearQueue().slideUp('fast');
+                document.cookie = 'prophiler_toolbar_hidden=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+            }
+        });
 
         // Persistent toolbar state
         if(document.cookie.match(/(^|;)\s*prophiler_toolbar_hidden\s*=/)) {
-            $('#prophiler, #prophiler-placeholder').hide();
-            $('#prophiler-toggle').find('.fa').toggleClass('fa-angle-up fa-angle-down');
+            $body.css({marginTop:0});
+            $prophiler.hide();
+            $prophilerToggle.addClass('prophiler-hidden');
+        } else {
+            $body.css({marginTop:height});
+            $prophiler.show();
+            $prophilerToggle.removeClass('prophiler-hidden');
         }
 
-        // Prevent jumpy loading
-        $('#prophiler').css({visibility:'visible'});
+        // Minimize jumpy loading
+        $prophilerToggle.css({visibility:'visible'});
+        $prophiler.css({visibility:'visible'});
     });
 </script>
