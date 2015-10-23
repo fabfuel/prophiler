@@ -41,6 +41,7 @@ class Container extends AdapterAbstract implements ContainerInterface
 
             $entry = $this->container->get($id);
         } catch (\Exception $e) {
+            // exception needs to be catched and thrown after stopping the profiler
         }
 
         $this->profiler->stop($benchmark);
