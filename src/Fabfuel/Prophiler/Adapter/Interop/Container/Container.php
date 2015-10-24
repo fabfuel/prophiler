@@ -33,21 +33,24 @@ class Container extends AdapterAbstract implements ContainerInterface
      */
     public function get($id)
     {
-        try {
-            $metadata = [
-                'id' => $id
-            ];
-            $benchmark = $this->profiler->start('Container::get', $metadata, 'Container-Interop');
+        $entry = null;
+        $metadata = [
+            'id' => $id
+        ];
 
+        try {
+            $benchmark = $this->profiler->start('Container::get', $metadata, 'Container-Interop');
             $entry = $this->container->get($id);
         } catch (\Exception $e) {
             // exception needs to be catched and thrown after stopping the profiler
         }
 
         $this->profiler->stop($benchmark);
+
         if (isset($e)) {
             throw $e;
         }
+
         return $entry;
     }
 
