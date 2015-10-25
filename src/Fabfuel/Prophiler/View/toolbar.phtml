@@ -23,13 +23,13 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
                     <span class="label color-3"><i class="fa fa-tasks"></i> <?php echo BenchmarkFormatter::formatMemoryUsage(memory_get_peak_usage()) ?></span>
                 </li>
                 <li>
-                    <a href="#" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
+                    <a href="javascript:void(0);" onclick="return $('#prophiler-benchmarks').slideToggle('fast');"><span class="label color-5"><i class="fa fa-tachometer"></i> Timeline</span></a>
                 </li>
 
                 <?php foreach ($aggregators as $aggregator): ?>
                     <li>
                         <?php if (count($aggregator)): ?>
-                            <a href="#" onclick="return $('#prophiler-aggregator-<?= spl_object_hash($aggregator) ?>').slideToggle('fast');">
+                            <a href="javascript:void(0);" onclick="return $('#prophiler-aggregator-<?= spl_object_hash($aggregator) ?>').slideToggle('fast');">
                         <?php endif; ?>
 
                         <span class="label severity-<?= $aggregator->getSeverity() ?>">
@@ -44,7 +44,7 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 
                 <?php if (count(new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger')) >= 1): ?>
                     <li>
-                        <a href="#" onclick="return $('#prophiler-logs').slideToggle('fast');">
+                        <a href="javascript:void(0);" onclick="return $('#prophiler-logs').slideToggle('fast');">
                             <span class="label <?= $alertCount ? 'color-0' : 'color-5' ?>">
                                 <i class="fa fa-align-left"></i> Logs
                                 <?php if ($alertCount): ?>
@@ -57,7 +57,7 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 
                 <?php foreach ($dataCollectors as $dataCollector): ?>
                     <li>
-                        <a href="#" onclick="return $('#prophiler-datacollector-<?= md5($dataCollector->getTitle()) ?>').slideToggle('fast');"><span class="label color-5"><?= $dataCollector->getIcon() ?> <?= $dataCollector->getTitle() ?></span></a>
+                        <a href="javascript:void(0);" onclick="return $('#prophiler-datacollector-<?= md5($dataCollector->getTitle()) ?>').slideToggle('fast');"><span class="label color-5"><?= $dataCollector->getIcon() ?> <?= $dataCollector->getTitle() ?></span></a>
                     </li>
                 <?php endforeach; ?>
             </ul>
