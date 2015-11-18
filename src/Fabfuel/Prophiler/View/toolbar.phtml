@@ -82,12 +82,60 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 </div>
 
 <script>
-    if (!window.jQuery) {
-        document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
-    }
-    window.addEventListener("load", function () {
-        $('json').each(function (index, el) {
-            el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
+    // What to do after jQuery is loaded
+    var prophilerJqueryLoadCallback = function() {
+        window.addEventListener("load", function () {
+            $('json').each(function (index, el) {
+                el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
+            });
         });
-    });
+    };
+
+    // Choose protocol between HTTP/HTTPS basing on current document's protocol.
+    var protocol = "https";
+    if (window.location.protocol != protocol) {
+        protocol = "http";
+    }
+
+    // Setup the jQuery URL
+    var jqueryUrl = protocol + "://code.jquery.com/jquery-2.1.1.min.js";
+
+    /**
+     * Function for loading JS file
+     *
+     * @param url URL of JS file to load
+     * @param callback What to do after the file is loaded
+     */
+    function loadScript(url, callback) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+
+        if (script.readyState) { //IE
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else { //Others
+            script.onload = function () {
+                callback();
+            };
+        }
+
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+
+    // Check if jQuery is loaded. If NO then load it and call the callback function
+    // Else just execute the callback function.
+    if (!window.jQuery) {
+        (function () {
+            loadScript(jqueryUrl, function () {
+                prophilerJqueryLoadCallback();
+            });
+        })();
+    } else {
+        prophilerJqueryLoadCallback();
+    }
 </script>
