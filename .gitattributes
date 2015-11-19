@@ -2,7 +2,6 @@
 # Git normalization
 #
 build/              export-ignore
-tools/              export-ignore
 public/             export-ignore
 .idea               export-ignore
 .gitattributes      export-ignore
