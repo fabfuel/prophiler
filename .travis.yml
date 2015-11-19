@@ -12,4 +12,5 @@ before_script:
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
