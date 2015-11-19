@@ -17,7 +17,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/orm" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/elasticsearch/elasticsearch" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fabfuel/mongo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzle/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
@@ -76,7 +75,6 @@
           <root url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/orm" />
           <root url="file://$MODULE_DIR$/vendor/elasticsearch/elasticsearch" />
-          <root url="file://$MODULE_DIR$/vendor/erusev/parsedown" />
           <root url="file://$MODULE_DIR$/vendor/fabfuel/mongo" />
           <root url="file://$MODULE_DIR$/vendor/guzzle/guzzle" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
@@ -116,7 +114,6 @@
           <root url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/orm" />
           <root url="file://$MODULE_DIR$/vendor/elasticsearch/elasticsearch" />
-          <root url="file://$MODULE_DIR$/vendor/erusev/parsedown" />
           <root url="file://$MODULE_DIR$/vendor/fabfuel/mongo" />
           <root url="file://$MODULE_DIR$/vendor/guzzle/guzzle" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
