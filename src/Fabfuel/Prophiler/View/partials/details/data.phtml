@@ -17,8 +17,7 @@
                     <?php
                     ob_start();
                     var_dump($data);
-                    echo htmlentities(ob_get_contents());
-                    ob_end_clean();
+                    echo htmlentities(ob_get_clean());
                     ?>
                 </pre>
             <?php endif; ?>
