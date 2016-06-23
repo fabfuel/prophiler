@@ -1,4 +1,4 @@
-<?php if (!is_null($data) && $data !== []): ?>
+<?php if (!is_null($data) && $data !== []):?>
     <dt><?= $dataName ?></dt>
     <dd>
         <?php if (is_array($data)): ?>
@@ -10,9 +10,17 @@
         <?php elseif (is_string($data)): ?>
             <?= nl2br($data) ?>
         <?php else: ?>
-            <pre>
+            <?php if (extension_loaded('xdebug')): ?>
                 <?php var_dump($data); ?>
-            </pre>
+            <?php else: ?>
+                <pre>
+                    <?php
+                    ob_start();
+                    var_dump($data);
+                    echo htmlentities(ob_get_clean());
+                    ?>
+                </pre>
+            <?php endif; ?>
         <?php endif; ?>
     </dd>
 <?php endif; ?>
