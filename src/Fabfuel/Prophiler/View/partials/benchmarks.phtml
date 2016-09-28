@@ -9,8 +9,10 @@
         <div class="column column-memory">Memory</div>
     </div>
 
-    <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter(); ?>
-    <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler); ?>
+    <?php $benchmarkFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter();
+          $benchmarkFormatter->setEncoder(new \Fabfuel\Prophiler\Toolbar\Formatter\Encoder\HtmlEncoder()); ?>
+    <?php $timelineFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\TimelineFormatter($profiler);
+          $timelineFormatter->setEncoder(new \Fabfuel\Prophiler\Toolbar\Formatter\Encoder\HtmlEncoder()); ?>
     <?php foreach ($benchmarks as $benchmark): ?>
         <?php $benchmarkFormatter->setBenchmark($benchmark); ?>
         <?php $timelineFormatter->setBenchmark($benchmark); ?>
