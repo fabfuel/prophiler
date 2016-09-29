@@ -26,7 +26,7 @@ class HtmlEncoder implements EncoderInterface
     public function encode($encode)
     {
         return is_string($encode)
-            ? htmlentities($encode, static::getFlage(), '', false)
+            ? htmlentities($encode, static::getFlags(), '', false)
             : $encode;
     }
 
