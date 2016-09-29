@@ -5,8 +5,6 @@ namespace Fabfuel\Prophiler\Toolbar\Formatter\Encoder;
 class HtmlEncoder implements EncoderInterface
 {
 
-    const ENCODER_FLAGS = ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE;
-
     /**
      * @var string
      */
@@ -28,8 +26,15 @@ class HtmlEncoder implements EncoderInterface
     public function encode($encode)
     {
         return is_string($encode)
-            ? htmlentities($encode, static::ENCODER_FLAGS, '', false)
+            ? htmlentities($encode, static::getFlage(), '', false)
             : $encode;
     }
 
+    /**
+     * @return int
+     */
+    protected static function getFlags()
+    {
+        return ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE;
+    }
 }
