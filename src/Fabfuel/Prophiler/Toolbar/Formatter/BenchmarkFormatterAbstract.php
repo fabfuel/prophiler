@@ -1,11 +1,12 @@
 <?php
 /**
  * @author @fabfuel <fabian@fabfuel.de>
- * @created 22.11.14, 08:20 
+ * @created 22.11.14, 08:20
  */
 namespace Fabfuel\Prophiler\Toolbar\Formatter;
 
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
+use Fabfuel\Prophiler\Toolbar\Formatter\Encoder\EncoderInterface;
 
 class BenchmarkFormatterAbstract
 {
@@ -17,11 +18,20 @@ class BenchmarkFormatterAbstract
     protected $benchmark;
 
     /**
+     * @var EncoderInterface
+     */
+    protected $encoder;
+
+    /**
      * @return string
      */
     public function getName()
     {
-        return $this->getBenchmark()->getName();
+        $encoder = $this->getEncoder();
+
+        return $encoder
+            ? $encoder->encode($this->getBenchmark()->getName())
+            : $this->getBenchmark()->getName();
     }
 
     /**
@@ -29,7 +39,11 @@ class BenchmarkFormatterAbstract
      */
     public function getComponent()
     {
-        return $this->getBenchmark()->getComponent();
+        $encoder = $this->getEncoder();
+
+        return $encoder
+            ? $encoder->encode($this->getBenchmark()->getComponent())
+            : $this->getBenchmark()->getComponent();
     }
 
     /**
@@ -46,6 +60,22 @@ class BenchmarkFormatterAbstract
     public function setBenchmark(BenchmarkInterface $benchmark)
     {
         $this->benchmark = $benchmark;
+    }
+
+    /**
+     * @return EncoderInterface
+     */
+    public function getEncoder()
+    {
+        return $this->encoder;
+    }
+
+    /**
+     * @param EncoderInterface $encoder
+     */
+    public function setEncoder(EncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
     }
 
     /**
