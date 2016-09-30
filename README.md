@@ -8,8 +8,9 @@
 
 
 ## Demo
-Here you can see the toolbar in action:
-http://prophiler.fabfuel.de/demo.php
+The demo website has been moved to a separate repository: https://github.com/fabfuel/prophiler-demo
+
+Here you can see the toolbar in action: http://prophiler.fabfuel.de/demo.php
 
 [![Timeline Preview](http://prophiler.fabfuel.de/img/timeline.png)](http://prophiler.fabfuel.de/)
 

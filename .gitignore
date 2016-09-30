@@ -1,4 +1,5 @@
-vendor
-build
+/vendor
+/build
 .sass-cache
-.idea/commandlinetools
+/.idea/commandlinetools
+/composer.phar
