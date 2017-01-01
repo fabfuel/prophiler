@@ -85,7 +85,7 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
     
     window.addEventListener("load", function () {
         
-        if (!window.jQuery) {
+        if (typeof jQuery == 'undefined') {
             document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
         }
         
