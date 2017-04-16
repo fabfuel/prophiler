@@ -1,4 +1,4 @@
-#Prophiler - A PHP Profiler & Developer Toolbar built for Phalcon
+# Prophiler - A PHP Profiler & Developer Toolbar built for Phalcon
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/fabfuel/prophiler/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/fabfuel/prophiler/?branch=develop)
@@ -25,14 +25,14 @@ You can use composer to install the Prophiler. Just add it as dependency:
 ## Setup (general)
 Setting up the Prophiler and the developer toolbar can be done via the following simple steps. It could all be done in your front-controller (e.g. `public/index.php` in Phalcon) 
 
-###1. Initialize the Profiler (as soon as possible)
+### 1. Initialize the Profiler (as soon as possible)
 Generally it makes sense to initialize the profiler as soon as possible, to measure as much execution time as you can. You should initialize the profiler in your front-controller or the bootstrap file right after requiring the Composer autoloader.
 
 ```php
 $profiler = new \Fabfuel\Prophiler\Profiler();
 ```
 
-###2. Initialize and register the Toolbar
+### 2. Initialize and register the Toolbar
 
 To visualize the profiling results, you have to initialize and render the Prophiler Toolbar. This component takes care for rendering all results of the profiler benchmarks and other data collectors. Put that at the end of the front-controller.
 
@@ -57,14 +57,14 @@ $toolbar->addDataCollector(new \My\Custom\DataCollector());
 
 ## Additional setup for Phalcon applications
 
-###1. Add the profiler to the dependency injection container
+### 1. Add the profiler to the dependency injection container
 Add the profiler instance to the DI container, that other plugins and adapters can use it across the application. This should be done in or after your general DI setup.
 	
 ```php
 $di->setShared('profiler', $profiler);
 ```
 
-###2. Initialize the plugin manager
+### 2. Initialize the plugin manager
 The plugin manager registers all included Phalcon plugins automatically and attaches them to the events manager. To make the plugins work properly, make sure that the default events manager is attached to your Dispatcher, View and Connection services.
 
 ```php
@@ -83,7 +83,7 @@ $benchmark = $profiler->start('\My\Class::doSomething', ['additional' => 'inform
 $profiler->stop($benchmark);
 ```
 
-###Or stop without passing the benchmark
+### Or stop without passing the benchmark
 In some scenarios (e.g. custom adapters) it might be hard to pass the received benchmark to the `stop()` method. Alternatively you can simply omit the `$benchmark` parameter. If that is the case, the profiler simply stops the last started benchmark, but it is not possible to run overlapping benchmarks.
 
 ```php
@@ -120,7 +120,7 @@ $logger->debug('Some debugging information', ['query' => ['user' => 12345], 'foo
 
 ## Adapters and Decorators
 
-###Doctrine
+### Doctrine
 To profile all SQL queries made by Doctrine, you just have to register the SQLLogger adapter in your Doctrine configuration, for example in your `bootstrap.php` like that:
 
 ```php
@@ -128,7 +128,7 @@ $sqlLogger = new Fabfuel\Prophiler\Adapter\Doctrine\SQLLogger($profiler);
 $entityManager->getConnection()->getConfiguration()->setSQLLogger($sqlLogger);
 ```
 
-###PDO
+### PDO
 To profile your PDO database actions, you can use the Prophiler PDO decorator. It will record all `query()` & `exec()` calls and prepared statements as well. Just decorate your PDO instance with the Prophiler decorator and use that instead:
 
 ```php
@@ -140,7 +140,7 @@ $db->exec('DELETE FROM users WHERE active = 0');
 $db->prepare('SELECT * from users WHERE userId = ?');
 ```
 
-###Cache
+### Cache
 To profile Phalcon cache backend requests, you only need to decorate the cache backend with the BackendDecorator. It will benchmark all cache operations automatically. Here is an example with the APC backend:
 ```php
 $cacheFrontend = new \Phalcon\Cache\Frontend\Data(['lifetime' => 172800]);
@@ -149,7 +149,7 @@ $cacheBackend = new \Phalcon\Cache\Backend\Apc($cacheFrontend, ['prefix' => 'app
 $cache = \Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator($cacheBackend, $profiler);
 ```
 
-###Elasticsearch
+### Elasticsearch
 To profile Elasticsearch requests, you only need to decorate the Elasticsearch client with the ClientDecorator:
 ```php
 $elasticsearch = new Elasticsearch\Client(['your' => 'config']);
@@ -159,7 +159,7 @@ $client = new \Fabfuel\Prophiler\Decorator\Elasticsearch\ClientDecorator($client
 
 ## Tips
 
-###Record session writing
+### Record session writing
 To record session writing, you can commit (this is also known as `session_write_close()`) the session before rendering the toolbar
     
 ```php
