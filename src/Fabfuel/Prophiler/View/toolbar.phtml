@@ -82,10 +82,13 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 </div>
 
 <script>
-    if (!window.jQuery) {
-        document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
-    }
+    
     window.addEventListener("load", function () {
+        
+        if (typeof jQuery == 'undefined') {
+            document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
+        }
+        
         $('json').each(function (index, el) {
             el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
         });
