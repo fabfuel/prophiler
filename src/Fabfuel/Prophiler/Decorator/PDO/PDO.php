@@ -13,7 +13,7 @@ use Fabfuel\Prophiler\ProfilerInterface;
  * @pattern decorator
  * @mixin \PDOStatement
  */
-class PDO
+class PDO extends \PDO
 {
     /**
      * @var \PDO
