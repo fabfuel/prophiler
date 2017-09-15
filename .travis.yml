@@ -6,6 +6,7 @@ php:
   - "5.4"
 
 before_script:
+  - ./tests/install-php-extension.sh
   - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
   - composer install --prefer-dist -o
