@@ -1,12 +1,12 @@
 <?php
 /**
  * @author @fabfuel <fabian@fabfuel.de>
- * @created 25.11.14, 08:12 
+ * @created 25.11.14, 08:12
  */
 namespace Fabfuel\Prophiler\Plugin\Phalcon\Mvc;
 
 use Phalcon\Events\Event;
-use Phalcon\Mvc\ViewInterface;
+use Phalcon\Mvc\ViewBaseInterface as ViewInterface;
 
 interface ViewPluginInterface
 {

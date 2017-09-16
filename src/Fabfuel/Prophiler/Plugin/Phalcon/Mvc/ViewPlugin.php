@@ -9,7 +9,7 @@ use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
 use Phalcon\Mvc\View;
-use Phalcon\Mvc\ViewInterface;
+use Phalcon\Mvc\ViewBaseInterface as ViewInterface;
 
 /**
  * Class ViewPlugin
@@ -42,9 +42,11 @@ class ViewPlugin extends PluginAbstract implements ViewPluginInterface
     public function beforeRenderView(Event $event, ViewInterface $view)
     {
         $name = get_class($event->getSource()) . '::render: ' . basename($view->getActiveRenderPath());
+        $isViewSimpler = stripos(get_class($view), 'simple') !== false;
+
         $metadata = [
             'view' => realpath($view->getActiveRenderPath()) ?: $view->getActiveRenderPath(),
-            'level' => $this->getRenderLevel($view->getCurrentRenderLevel()),
+            'level' => $isViewSimpler ?  View::LEVEL_ACTION_VIEW : $this->getRenderLevel($view->getCurrentRenderLevel()),
         ];
 
         $this->setBenchmark($view, $this->getProfiler()->start($name, $metadata, 'View'));
