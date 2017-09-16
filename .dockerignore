@@ -2,3 +2,4 @@
 vendor
 build
 tools
+composer.lock
