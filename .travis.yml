@@ -53,12 +53,10 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - $(phpenv which php) --ri phalcon
 
-before_script:
-  - echo -e "Host bitbucket.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 addons:
   apt:

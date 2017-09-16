@@ -5,7 +5,8 @@
         <div class="column column-message">Message</div>
     </div>
 
-    <?php $logFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\LogFormatter(); ?>
+    <?php $logFormatter = new \Fabfuel\Prophiler\Toolbar\Formatter\LogFormatter();
+          $logFormatter->setEncoder(new \Fabfuel\Prophiler\Toolbar\Formatter\Encoder\HtmlEncoder()); ?>
     <?php foreach (new \Fabfuel\Prophiler\Iterator\ComponentFilteredIterator($profiler, 'Logger') as $benchmark): ?>
         <?php $logFormatter->setBenchmark($benchmark); ?>
 

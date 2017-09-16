@@ -1,6 +1,6 @@
-vendor
-build
+/vendor
+/build
 .sass-cache
-.idea
+/.idea
 /composer.lock
 /composer.phar
