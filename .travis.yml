@@ -58,6 +58,10 @@ install:
   - $(phpenv which php) --ri phalcon
 
 
+before_script:
+  - echo -e "Host bitbucket.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+
 #before_script:
 #  - ./tests/install-php-extension.sh
 #  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
