@@ -43,9 +43,6 @@ before_install:
   - export PHP_MAJOR="$(echo $TRAVIS_PHP_VERSION | cut -d '.' -f 1)"
   - export PHP_EXTENSION_DIR=$(php-config --extension-dir)
   - phpenv config-rm xdebug.ini || true
-#  - bash tests/_ci/pear_setup.sh
-#  - bash tests/_ci/install_prereqs_$PHP_MAJOR.sh
-#  - if [ ! -z "${GH_TOKEN}" ]; then composer config github-oauth.github.com ${GH_TOKEN}; echo "Configured Github token"; fi;
   - if [ ! -f "$HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini" ]; then mkdir -p $HOME/cphalcon/$PHALCON_VERSION && git clone -q --depth=1 https://github.com/phalcon/cphalcon.git $HOME/cphalcon/$PHALCON_VERSION >/dev/null 2>&1; fi;
 
 install:
@@ -56,35 +53,19 @@ install:
   - cd $TRAVIS_BUILD_DIR
   - $(phpenv which php) --ri phalcon
 
-
 before_script:
   - echo -e "Host bitbucket.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-
-
-#before_script:
-#  - ./tests/install-php-extension.sh
-#  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-#  - composer self-update
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
-
 addons:
   apt:
     packages:
-#      - re2c
-#      - beanstalkd
       - python-bcrypt
       - build-essential
       - autoconf
       - libssl-dev
       - libyaml-dev
       - liblua5.1-dev
-#      - mysql-server-5.6
-#      - mysql-server-core-5.6
-#      - mysql-client-5.6
-#  hosts:
-#    - db
-#    - incubator.local
