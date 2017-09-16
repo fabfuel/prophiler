@@ -1,0 +1,5 @@
+.git
+vendor
+build
+tools
+composer.lock

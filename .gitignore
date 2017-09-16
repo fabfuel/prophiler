@@ -1,5 +1,6 @@
 /vendor
 /build
 .sass-cache
-/.idea/commandlinetools
+/.idea
+/composer.lock
 /composer.phar
