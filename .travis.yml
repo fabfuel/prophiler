@@ -36,7 +36,6 @@ env:
 before_install:
   - export PHP_MAJOR="$(echo $TRAVIS_PHP_VERSION | cut -d '.' -f 1)"
   - export PHP_EXTENSION_DIR=$(php-config --extension-dir)
-  - phpenv config-rm xdebug.ini || true
   - if [ ! -f "$HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini" ]; then mkdir -p $HOME/cphalcon/$PHALCON_VERSION && git clone -q --depth=1 https://github.com/phalcon/cphalcon.git $HOME/cphalcon/$PHALCON_VERSION >/dev/null 2>&1; fi;
 
 install:
