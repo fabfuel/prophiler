@@ -12,6 +12,7 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
 <div id="prophiler">
 
     <div class="toolbar">
+
         <h1 class="logo">Prophiler</h1>
 
         <nav>
@@ -79,9 +80,15 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
     <?php foreach ($aggregators as $aggregator): ?>
         <?php $this->partial('partials/aggregator', ['profiler' => $profiler, 'aggregator' => $aggregator]); ?>
     <?php endforeach; ?>
+
+</div>
+
+<div id="prophiler-toggle">
+    <a href="javascript:void(0);"></a>
 </div>
 
 <script>
+
     if (!window.jQuery) {
         document.write('<script src="//code.jquery.com/jquery-2.1.1.min.js"><\/script>');
     }
@@ -89,5 +96,39 @@ use Fabfuel\Prophiler\Toolbar\Formatter\BenchmarkFormatter;
         $('json').each(function (index, el) {
             el.innerHTML = JSON.stringify(JSON.parse(el.innerHTML), null, '    ');
         });
+
+        // A bit more optimized
+        var $body = $('body');
+        var $prophiler = $('#prophiler');
+        var $prophilerToggle = $('#prophiler-toggle a');
+        var height = parseFloat($prophilerToggle.outerHeight())+'px';
+
+        $prophilerToggle.on('click', function() {
+            var visible = !$(this).toggleClass('prophiler-hidden').hasClass('prophiler-hidden');
+            if(visible) {
+                $body.clearQueue().animate({marginTop:height},'fast');
+                $prophiler.clearQueue().slideDown('fast');
+                document.cookie = 'prophiler_toolbar_hidden=; max-age=0; path=/';
+            } else {
+                $body.clearQueue().animate({marginTop:'0'},'fast');
+                $prophiler.clearQueue().slideUp('fast');
+                document.cookie = 'prophiler_toolbar_hidden=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+            }
+        });
+
+        // Persistent toolbar state
+        if(document.cookie.match(/(^|;)\s*prophiler_toolbar_hidden\s*=/)) {
+            $body.css({marginTop:0});
+            $prophiler.hide();
+            $prophilerToggle.addClass('prophiler-hidden');
+        } else {
+            $body.css({marginTop:height});
+            $prophiler.show();
+            $prophilerToggle.removeClass('prophiler-hidden');
+        }
+
+        // Minimize jumpy loading
+        $prophilerToggle.css({visibility:'visible'});
+        $prophiler.css({visibility:'visible'});
     });
 </script>

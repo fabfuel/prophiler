@@ -2,6 +2,7 @@
 @import "compass/css3";
 @import "compass/utilities/general/clearfix";
 
+$c-background: #f8f8f8;
 $c-lines: #eee;
 $c-headline: #777;
 
@@ -12,8 +13,9 @@ $c-event-blue: rgba(57, 126, 185, .75);
 $c-event-sky: rgba(96, 194, 223, .75);
 $c-event-grey: rgba(216, 216, 216, 0.75);
 
+$z-index: 10000;
+
 body {
-  margin-top: 33px !important;
   position: relative;
 }
 
@@ -21,17 +23,43 @@ body {
   -webkit-perspective: none !important;
 }
 
+#prophiler-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index;
+  background-color: $c-background;
+  border-radius: 0 0 6px 0;
+
+  a {
+    visibility: hidden;
+    display: block;
+    border: none;
+    padding: 0 8px;
+    line-height: 32px;
+    height: 37px;
+    &:after {
+      content: '\25b2';
+    }
+    &.prophiler-hidden:after {
+      content: '\25bc';
+    }
+  }
+}
+
 #prophiler {
+  visibility: hidden;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 12px;
   line-height: 1.42857143;
   position: fixed;
   display: block;
+  padding-left: 24px;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10000;
-  background-color: #fff;
+  z-index: $z-index;
+  background-color: $c-background;
   opacity: 0.97;
   @include box-shadow(0 3px 10px rgba(0, 0, 0, .125));
 
@@ -153,7 +181,7 @@ body {
 
     min-height: 31px;
     border: 1px solid transparent;
-    background-color: #f8f8f8;
+    background-color: $c-background;
     border-color: #e7e7e7;
 
     h1 {
@@ -161,7 +189,7 @@ body {
       float: left;
       padding: 5px 15px;
       font-size: 18px;
-      line-height: 20px;
+      line-height: 22px;
       margin: 0;
     }
 
