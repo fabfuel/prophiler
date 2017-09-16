@@ -5,4 +5,4 @@ tools:
     external_code_coverage: true
 
 filter:
-    excluded_paths: [build/*, tools/*, tests/*, public/*]
+    excluded_paths: [build/*, tests/*]

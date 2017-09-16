@@ -1,15 +1,64 @@
-language: php
-php:
-  - "5.6"
-  - "5.5"
-  - "5.4"
+#  Based on Phalcon Incubator travis config:
+#  https://raw.githubusercontent.com/phalcon/incubator/master/.travis.yml
 
-before_script:
-  - ./tests/install-php-extension.sh
-  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - composer self-update
-  - composer install --prefer-dist -o
+language: php
+
+dist: trusty
+sudo: required
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+git:
+  depth: 1
+
+cache:
+  apt: true
+  ccache: true
+  timeout: 691200
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+    - $HOME/pear
+    - $HOME/cphalcon
+    - $HOME/ext
+
+env:
+  global:
+    - ZEND_DONT_UNLOAD_MODULES=1
+    - CC="ccache gcc"
+    - PATH="$PATH:~/bin"
+    - PHALCON_VERSION="v3.2.1"
+
+before_install:
+  - export PHP_MAJOR="$(echo $TRAVIS_PHP_VERSION | cut -d '.' -f 1)"
+  - export PHP_EXTENSION_DIR=$(php-config --extension-dir)
+  - if [ ! -f "$HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini" ]; then mkdir -p $HOME/cphalcon/$PHALCON_VERSION && git clone -q --depth=1 https://github.com/phalcon/cphalcon.git $HOME/cphalcon/$PHALCON_VERSION >/dev/null 2>&1; fi;
+
+install:
+  - travis_retry composer install --prefer-dist --no-interaction --quiet --no-ansi --no-progress --optimize-autoloader --dev --no-suggest --ignore-platform-reqs
+  - if [ ! -f $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so ]; then cd $HOME/cphalcon/$PHALCON_VERSION/build && bash ./install --phpize $(phpenv which phpize) --php-config $(phpenv which php-config) && mkdir -p $HOME/ext/$PHP_VERSION/$PHALCON_VERSION && cp $PHP_EXTENSION_DIR/phalcon.so $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so; fi;
+  - if [ -f $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so ]; then cp $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so $PHP_EXTENSION_DIR/phalcon.so; fi;
+  - phpenv config-add $HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini
+  - cd $TRAVIS_BUILD_DIR
+  - $(phpenv which php) --ri phalcon
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - php tools/scrutinizer/ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+after_script:
+  - if [ "$TRAVIS_PHP_VERSION" != "7.0" ] && [ "$TRAVIS_PHP_VERSION" != "7.1" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "7.0" ] && [ "$TRAVIS_PHP_VERSION" != "7.1" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+
+addons:
+  apt:
+    packages:
+      - python-bcrypt
+      - build-essential
+      - autoconf
+      - libssl-dev
+      - libyaml-dev
+      - liblua5.1-dev
