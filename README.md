@@ -146,7 +146,7 @@ To profile Phalcon cache backend requests, you only need to decorate the cache b
 $cacheFrontend = new \Phalcon\Cache\Frontend\Data(['lifetime' => 172800]);
 $cacheBackend = new \Phalcon\Cache\Backend\Apc($cacheFrontend, ['prefix' => 'app-data']);
 
-$cache = \Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator($cacheBackend, $profiler);
+$cache = new \Fabfuel\Prophiler\Decorator\Phalcon\Cache\BackendDecorator($cacheBackend, $profiler);
 ```
 
 ### Elasticsearch
