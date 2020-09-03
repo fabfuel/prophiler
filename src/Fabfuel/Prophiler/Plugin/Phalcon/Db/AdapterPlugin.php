@@ -8,7 +8,7 @@ namespace Fabfuel\Prophiler\Plugin\Phalcon\Db;
 use Fabfuel\Prophiler\Benchmark\BenchmarkInterface;
 use Fabfuel\Prophiler\Plugin\PluginAbstract;
 use Phalcon\Events\Event;
-use Phalcon\Db\Adapter;
+use Phalcon\Db\Adapter\AbstractAdapter as Adapter;
 
 /**
  * Class AdapterPlugin
